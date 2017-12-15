@@ -7,7 +7,6 @@ import { signup } from '../home/actions';
 import { addDropSite } from '../dropSites/actions';
 
 
-
 class Admin extends Component {
 
   handleSignUp = event => {
@@ -52,10 +51,10 @@ class Admin extends Component {
         <form onSubmit={event => this.handleSignUp(event)}>
           <label>name: <input name="name"/></label>
           <label>role: <select name="roles">
-                <option key="0" value="staff">Staff</option>
-                <option key="1" value="donor">Donor</option>
-                <option key="2" value="admin">Admin</option>
-              </select>
+            <option key="0" value="donor">Donor</option>
+            <option key="1" value="staff">Staff</option>
+            <option key="2" value="admin">Admin</option>
+          </select>
           </label>
           <label>email: <input name="email"/></label>
           <label>password: <input type="password" name="password"/></label>
