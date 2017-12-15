@@ -17,12 +17,10 @@ export function loadDonations() {
     //Socket code, listening for 'newDonation' message
    
     socket.on('newDonation', donation => {
-      console.log('heard newDonation');
       dispatch({
         type: actions.ADD_DONATION,
         payload: donation
       });
-      console.log('after addDonation dispatch');
     }); 
   };
 }
