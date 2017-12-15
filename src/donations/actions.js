@@ -15,7 +15,6 @@ export function loadDonations() {
     });
     
     //Socket code, listening for 'newDonation' message
-   
     socket.on('newDonation', donation => {
       dispatch({
         type: actions.ADD_DONATION,
@@ -33,7 +32,6 @@ export function loadMyDonations() {
     });
 
     // Socket code, listening for 'updatedDonation' message
-
     socket.on('updatedDonation', donation => {
       dispatch({
         type: actions.UPDATE_DONATION,
