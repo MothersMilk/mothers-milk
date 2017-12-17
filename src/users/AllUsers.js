@@ -28,10 +28,10 @@ class AllUsers extends PureComponent {
   }
 
   fieldCheck = item => {
-    if (typeof item === 'object') {
-      return item.name;
-    } else if (typeof item === 'array') {
+    if(Array.isArray(item)) {
       return item[0];
+    } else if(typeof item === 'object') {
+      return item.name;
     } else {
       return item;
     }
@@ -42,9 +42,10 @@ class AllUsers extends PureComponent {
     const { editing } = this.state;
 
     const tableusers = users.length ? users.map(item => {
-      const rowusers = Object.values(item).filter(item => item !== null);
+      let rowusers = Object.values(item).filter(item => item !== null);
+      rowusers = rowusers.filter(item => item !== true);
       const id = rowusers.shift();
-      const row = rowusers.map((value, index) => <li style={{ display:'inline', margin:'5px' }}>{this.fieldCheck(value)}</li>);
+      const row = rowusers.map((value, index) => <li className="user-table-cell">{this.fieldCheck(value)}</li>);
       return (
         <ul>
           {row}

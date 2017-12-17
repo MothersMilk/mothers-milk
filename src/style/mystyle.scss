@@ -77,3 +77,14 @@ span {
     background-image: url('/images/baby.jpeg');
     width:100%;
 }
+
+.table-cell {
+    display: inline-block;
+    border: 1px solid black;
+    width: 120px;
+}
+.user-table-cell {
+    display: inline-block;
+    border: 1px solid black;
+    width: 190px;
+}
