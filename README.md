@@ -1,5 +1,7 @@
 # Mother's Milk
 
+// initial grading/feedback PR
+
 Mother's Milk is a mobile-friendly web app developed for the [NW Mothers Milk Bank](https://www.donatemilk.org), a nonprofit organization dedicated to helping deliver donated breastmilk to hospitals in the northwest to help babies in need. Our goal is to streamline the process between donors and the organization. To do this, we created an app that allows a donor to notify the organization where they are making a donation, and how much milk they are donating. The organization will be able to use the app to confirm receipt, letting the donor know that her donation was received, as well as how much milk she has donated in total.
 
 # The Team
