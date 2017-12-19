@@ -10,6 +10,9 @@ class App extends Component {
   
   componentDidMount() {
     this.props.checkForToken();
+    
+    // This shouldn't be here, what if no token?
+    // Needs to be in route that is only loaded if logged in.
     this.props.loadDropSites();
   }
 

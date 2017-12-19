@@ -32,6 +32,11 @@ class Admin extends Component {
   }
 
   render() {
+    // The forms should be moved into the components:
+    // <AllDropSites/> should have the logic to add a new drop site
+    // <AllUsers/> should have the logic to add a user.
+    // As you have it now, adds occur hear, but edits occur in those components.
+    // Bring together in one place.
     return(
       <div>
         <br/>

@@ -3,6 +3,8 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signout } from './actions';
 
+// is this file even used????
+
 function Nav({ user, signout }) {
   const isAdmin = user ? user.roles.includes('admin') : false;
   return (

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Header from './Header';
 import { connect } from 'react-redux';
-import { signin, signup, signout } from './actions';
 import DonorView from '../donor/DonorView';
 import Admin from '../admin/Admin';
 
@@ -24,9 +23,7 @@ class Home extends Component {
   }
 }
 
-export default connect(({ auth }) => ({
-  error: auth.error,
-  user: auth.user
-}),
-{ signin, signup, signout }
+export default connect(
+  ({ auth }) => ({ user: auth.user }),
+  null
 )(Home);

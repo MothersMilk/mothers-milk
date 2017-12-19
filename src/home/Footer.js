@@ -1,5 +1,8 @@
 import React from 'react';
+// don't reimport css files that have already been imported
 import '../style/mystyle.css';
+
+// is this file used???
 
 export default function Footer() {
   return (

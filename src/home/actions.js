@@ -2,6 +2,8 @@ import * as actions from './constants';
 import authApi from '../services/authApi';
 import { getStoredToken } from '../services/request';
 
+// suggested changes below are based on moving to letting redux promise-middleware handle errors
+
 export function checkForToken() {
   return dispatch => {
     const token = getStoredToken();
@@ -13,10 +15,10 @@ export function checkForToken() {
 
     dispatch({ type: actions.GOT_TOKEN, payload: token });
 
-    return authApi.verify()
-      .then(id => authApi.getUser(id))
-      .then(user => dispatch({ type: actions.FETCHED_USER, payload: user }))
-      .catch(error => dispatch({ type: actions.AUTH_FAILED , payload: error }));
+    dispatch({
+      type: actions.FETCHED_USER,
+      payload: authApi.verify().then(id => authApi.getUser(id))
+    });
   };
 }
 
@@ -24,23 +26,21 @@ export function signin(credentials) {
   return dispatch => {
     return authApi.signin(credentials)
       .then(({ token }) => dispatch({ type: actions.GOT_TOKEN, payload: token }))
-      .then(() => authApi.verify())
-      .then(id =>  authApi.getUser(id))
-      .then(user => dispatch({ type: actions.FETCHED_USER, payload: user }))
-      .catch(error => dispatch({ type: actions.AUTH_FAILED , payload: error }));
+      // no need for verify, token is already good! But you need the user id too, so enhance your signin method!
+      .then(() => dispatch({
+        type: actions.FETCHED_USER,
+        payload: authApi.verify().then(id => authApi.getUser(id))
+      }));
   };
 }
 
 export function signup(credentials) {
-  return dispatch => {
-    return authApi.signup(credentials)
-      .then(({ token, newUser }) => dispatch({ type: actions.USER_CREATED, payload: newUser }))
-      .catch(error => dispatch({ type: actions.AUTH_FAILED , payload: error }));
+  return {
+    type: actions.USER_CREATED,
+    payload: authApi.signup(credentials)
   };
 }
 
 export function signout(){
-  return dispatch => {
-    dispatch({ type: actions.LOGOUT });
-  };
+  return { type: actions.LOGOUT };
 }

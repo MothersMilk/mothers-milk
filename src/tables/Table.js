@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 
+// This file isn't used :(
+
 class Table extends PureComponent {
   state = {
     editing: null
