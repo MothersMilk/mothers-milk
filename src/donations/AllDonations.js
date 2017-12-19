@@ -6,7 +6,10 @@ import { loadDonations, updateDonation, deleteDonation } from './actions';
 class AllDonations extends PureComponent {
   state = { editing: null };
 
-  componentDidMount =  () => this.props.loadDonations();
+  // this syntax is for binding to this. not needed here, so don't use it.
+  componentDidMount() {
+    this.props.loadDonations();
+  }
 
   handleUpdate = _id => { 
     const update = this.state;
@@ -20,6 +23,9 @@ class AllDonations extends PureComponent {
   handleChange = ({ target: input }) => this.setState({ [input.name]: input.value });
 
   render() {
+    // This render method is hard to read, need to break into smaller pieces.
+    // If each row were own component, it could also manage the edit state independently on a per row basis
+
     const { donations } = this.props;
     const tableData = donations.length ? donations.map(item => {
       const { _id: id, donor, dropSite, quantity, status } = item;
@@ -27,6 +33,7 @@ class AllDonations extends PureComponent {
       const statusOptions = [ 'Pending','Received', 'Missing'];
       const currentStatusIndex = statusOptions.findIndex(status => status === item.status);
       const options = statusOptions.map((status, i) => i === currentStatusIndex ? <option selected value={status}>{status}</option> : <option value={status}>{status}</option>);
+      
       return (
         <tr key={id}>
           <td>

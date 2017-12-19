@@ -48,7 +48,7 @@ class Donations extends Component {
               </thead>
               <tbody>
                 {donations.map((donation) => (
-                  <ListItem key={donation._id} id={donation._id} quantity={donation.quantity} status={donation.status}/>
+                  <Row key={donation._id} id={donation._id} quantity={donation.quantity} status={donation.status}/>
                 ))}
               </tbody>
             </table>}
@@ -72,7 +72,7 @@ export default connect(
   { loadMyDonations, checkForToken }
 )(Donations);
 
-class ListItem extends Component {
+class Row extends Component {
   
   render() {
     const { quantity, status } = this.props;   

@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import Donations from '../donations/Donations';
 import SupplyRequest from '../supplyRequest/SupplyRequest';
 import { loadDropSites } from '../dropSites/actions';
-import { loadDonations } from '../donations/actions';
 import { connect } from 'react-redux';
-import '../style/mystyle.css';
 
 class DonorView extends Component {
   componentDidMount() {
@@ -36,5 +34,5 @@ class DonorView extends Component {
 
 export default connect(
   ({ auth, donations }) => ({ user: auth.user, donations }),
-  { loadDropSites, loadDonations }
+  { loadDropSites }
 )(DonorView);

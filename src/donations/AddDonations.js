@@ -27,7 +27,9 @@ class AddDonations extends Component {
     event.preventDefault();
     let { dropSite, quantity, lastDonation } = event.target.elements;
     const { user } = this.props;
-    this.state.isChecked ? dropSite = this.state.dropSite : dropSite = dropSite.value;
+    // only use conditionality around what varies
+    dropSite = this.state.isChecked ? this.state.dropSite : dropSite.value;
+
     this.props.addDonation(
       { 
         quantity: quantity.value,
@@ -47,9 +49,7 @@ class AddDonations extends Component {
     const message = 'Thank you for donating!';
     const { dropSites } = this.props;
    
-    const listOfDropSites = dropSites && dropSites.map(dropSite => (
-      <option key={dropSite._id} value={dropSite._id}>{dropSite.name}</option>
-    ));
+    // added a default to mapStateToProps, so this can be simplified.
     
     return (
       
@@ -64,13 +64,8 @@ class AddDonations extends Component {
                   <p className="subtitle is-6">-- OR --</p>
                   <p className="subtitle is-6">Drop at nearest milk drop location
                   </p>
-                  <div className="subtitle is-6 label">
-                    Select a drop site location</div>
-                  <div className="select">
-                    <select name="dropSite" className="button is-outlined is-size-6">
-                      {listOfDropSites}
-                    </select>
-                  </div>
+                  <div className="subtitle is-6 label">Select a drop site location</div>                  
+                  <DropSites dropSites={dropSites}/>
                 </div>
               )}
               <br/><br/>
@@ -90,7 +85,19 @@ class AddDonations extends Component {
   }
 }
 
+// Make this a "whole" component
+const DropSites = ({ dropSites }) => (
+  <div className="select">
+    <select name="dropSite" className="button is-outlined is-size-6">
+      {dropSites.map(dropSite => (
+        <option key={dropSite._id} value={dropSite._id}>{dropSite.name}</option>
+      ))}
+    </select>    
+  </div>
+);
+
 export default connect(
-  ({ donations, dropSites }) => ({ donations, dropSites }),
+  // add default...
+  ({ donations, dropSites = [] }) => ({ donations, dropSites }),
   { addDonation }
 )(AddDonations);
