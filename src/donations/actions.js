@@ -13,7 +13,7 @@ export function loadDonations() {
       type: actions.LOAD_DONATIONS,
       payload: donationApi.get()
     });
-    
+    console.log('adding newDonation listener...');
     socket.on('newDonation', donation => {
       dispatch({
         type: actions.ADD_DONATION,
@@ -29,7 +29,7 @@ export function loadMyDonations() {
       type: actions.LOAD_DONATIONS,
       payload: donationApi.getMy()
     });
-
+    console.log('adding updatedDonation listener...');
     socket.on('updatedDonation', donation => {
       dispatch({
         type: actions.UPDATE_DONATION,
