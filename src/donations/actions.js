@@ -13,9 +13,7 @@ export function loadDonations() {
       type: actions.LOAD_DONATIONS,
       payload: donationApi.get()
     });
-    console.log('adding newDonation listener...');
     socket.on('newDonation', donation => {
-      console.log('newDonation dispatch triggered');
       dispatch({
         type: actions.ADD_DONATION,
         payload: donation
@@ -30,7 +28,6 @@ export function loadMyDonations() {
       type: actions.LOAD_DONATIONS,
       payload: donationApi.getMy()
     });
-    console.log('adding updatedDonation listener...');
     socket.on('updatedDonation', donation => {
       dispatch({
         type: actions.UPDATE_DONATION,
@@ -68,7 +65,6 @@ export function deleteDonation(id) {
 }
 
 export function removeAllListeners() {
-  console.log('in function removeMyListeners...');
   socket.off('newDonation');
   socket.off('updatedDonation');
 }
