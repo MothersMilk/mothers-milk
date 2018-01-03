@@ -8,6 +8,8 @@ export default function (state = [], { type, payload }) {
       return state.filter(user => user._id !== payload);
     case actions.UPDATE_USER:
       return state.map(user => user._id === payload._id ? { ...user, ...payload } : user);
+    case actions.LOGOUT: 
+      return [];
     default:
       return state;
   } 
