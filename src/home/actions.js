@@ -1,6 +1,7 @@
 import * as actions from './constants';
 import authApi from '../services/authApi';
 import { getStoredToken } from '../services/request';
+import { removeAllListeners } from '../donations/actions';
 
 export function checkForToken() {
   return dispatch => {
@@ -42,5 +43,6 @@ export function signup(credentials) {
 export function signout(){
   return dispatch => {
     dispatch({ type: actions.LOGOUT });
+    removeAllListeners();
   };
 }
