@@ -71,7 +71,7 @@ class Admin extends Component {
     );
   }
 }
-
+ 
 export default connect(({ auth }) => ({
   error: auth.error,
   user: auth.user
