@@ -10,7 +10,7 @@ export default {
   signup(credentials){
     return request.post('/users', credentials);
   },
-  getUser(id){
-    return request.get(`/users/${id}`);
+  getUser(){
+    return request.get('/users/me');
   }
 };
