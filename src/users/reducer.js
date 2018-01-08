@@ -2,6 +2,11 @@ import * as actions from './constants';
 
 export default function (state = [], { type, payload }) {
   switch(type) {
+    case actions.USER_CREATED:
+      return [
+        ...state,
+        payload
+      ];
     case actions.LOAD_USERS:
       return payload;
     case actions.DELETE_USER:

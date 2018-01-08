@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { loadUsers, updateUser, deleteUser } from './actions';
+import { loadUsers, updateUser, deleteUser, addUser, } from './actions';
 
 class AllUsers extends PureComponent {
 
