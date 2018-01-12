@@ -6,6 +6,7 @@ import { loadDonations } from '../donations/actions';
 import { connect } from 'react-redux';
 import '../style/mystyle.css';
 
+
 class DonorView extends Component {
   componentDidMount() {
     this.props.loadDropSites();

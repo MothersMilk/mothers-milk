@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { loadUsers, updateUser, deleteUser } from './actions';
+import { loadUsers, updateUser, deleteUser, addUser, } from './actions';
 
 class AllUsers extends PureComponent {
 
@@ -65,7 +65,7 @@ class AllUsers extends PureComponent {
       return(
         <div className="column is-6 is-offset-3">
           <h3 className="title is-4">Users</h3>
-          <table>
+          <table className="table is-bordered">
             <thead>
               <tr>
                 <th>Email</th>
