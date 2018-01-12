@@ -15,7 +15,7 @@ class AllDonations extends PureComponent {
     this.props.updateDonation({ ...update, _id });
   };  
 
-  handleDelete = id =>  this.props.deleteDonation(id);
+  handleDelete = id => this.props.deleteDonation(id);
   
   handleChange = ({ target: input }) => this.setState({ [input.name]: input.value });
 
