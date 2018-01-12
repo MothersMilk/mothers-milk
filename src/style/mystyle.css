@@ -944,8 +944,8 @@ a.box:active {
   -webkit-touch-callout: none;
   /* Changed user-select from 'none' to 'text' */
   -webkit-user-select: text;
-  -moz-user-select: none;
-  -ms-user-select: none;
+  -moz-user-select: text;
+  -ms-user-select: text;
   user-select: none;
   background-color: white;
   border-color: #dbdbdb;
