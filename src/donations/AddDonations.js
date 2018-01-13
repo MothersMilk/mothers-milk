@@ -8,7 +8,7 @@ class AddDonations extends Component {
     super();
     this.state = {
       showMessage: false,
-      dropSite: '5a33ee322d693f852640e2ee',
+      fedExId: '5a33ee322d693f852640e2ee',
       isChecked: false,
       fedExName: ''
     };
@@ -49,6 +49,11 @@ class AddDonations extends Component {
     const listOfDropSites = dropSites && dropSites.map(dropSite => (
       <option key={dropSite._id} value={dropSite._id}>{dropSite.name}</option>
     ));
+
+    const fedEx = dropSites.filter(dropSite => dropSite.name === ' FedEx');
+    
+    console.log('fedex', fedEx);
+    console.log('dropsite', dropSites);
     
     return (
       
