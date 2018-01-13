@@ -1,84 +1,89 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { loadUsers, updateUser, deleteUser } from './actions';
+import { loadUsers, updateUser, deleteUser, addUser, } from './actions';
 
 class AllUsers extends PureComponent {
 
-  state = {
-    editing: null
-  }
-
-  componentDidMount(){
-    this.props.loadUsers();
-  }
-
-  handleUpdate = (event, item) => {
-    event.preventDefault();
-    const { elements: updates } = event.target;
-    const updatedFields = Object.values(updates).filter(field => field.value !== '');
-    updatedFields.forEach(field => { 
-      field.name === 'roles' ? item.roles = [ field.value ] : item[field.name] = field.value;
-    });
-    this.props.updateUser(item);
-  }
-
-  handleDelete = id => {
-    this.props.deleteUser(id);
-  }
-
-  fieldCheck = item => {
-    if (typeof item === 'object') {
-      return item.name;
-    } else if (typeof item === 'array') {
-      return item[0];
-    } else {
-      return item;
-    }
-  };
-
-  render() {
-    const { users } = this.props;
-    const { editing } = this.state;
-    const tableusers = users.length ? users.map(item => {
-      const rowusers = Object.values(item).filter(item => item !== null);
-      const id = rowusers.shift();
-      const row = rowusers.map((value, index) => <li style={{ display:'inline', margin:'5px' }}>{this.fieldCheck(value)}</li>);
-      return (
-        <ul>
-          {row}
-          <li style={{ display:'inline', margin:'5px' }}>{item.roles[0]}</li>
-          <li style={{ display:'inline' }}><input type="button" value="X" onClick={() => this.handleDelete(id)}/></li>
-          <li style={{ display:'inline' }}><input type="button" value="✎" onClick={() => this.setState({ editing: id, show: !this.state.show })}/></li>
-          {((editing === id) && (this.state.show)) &&
-          <li>
-            <form onSubmit={event => this.handleUpdate(event, item)}>
-              <input type="text" name="name" placeholder="Name"/>
-              <input type="text" name="email" placeholder="Email"/>
-              <select name="roles">
-                <option key="0" value="staff">Staff</option>
-                <option key="1" value="donor">Donor</option>
-                <option key="2" value="admin">Admin</option>
-                <option key="3" value="volunteer">Volunteer</option>
-              </select>
-              <input type="submit"/>
-            </form>
-          </li>}
-        </ul>
-      );
-    }): null;
+  state = { editing: null };
+  
+    componentDidMount =  () => this.props.loadUsers();
+  
+    handleUpdate = _id => { 
+      const update = this.state;
+      delete update.editing;
+      delete update.show;
+      this.props.updateUser({ ...update, _id });
+    };  
+  
+    handleDelete = id =>  this.props.deleteUser(id);
     
-    return(
-      <div>
-        <h3 className="title is-4">Users</h3>
-        <ul>
-          {tableusers}
-        </ul>
-      </div>
-    );
-  }
+    handleChange = ({ target: input }) => this.setState({ [input.name]: input.value });
+  
+    render() {
+      const { users } = this.props;
+      const tableData = users.length ? users.map(item => {
+        const { _id: id } = item;
+        const editing = this.state.editing === id ? true : false;
+        const roleOptions = ['donor', 'admin', 'volunteer'];
+        const currentRoleIndex = roleOptions.findIndex(status => status === item.roles[0]);
+        const options = roleOptions.map((role, i) => i === currentRoleIndex ? <option selected value={[role]}>{role}</option> : <option value={[role]}>{role}</option>);
+        return (
+          <tr key={id}>
+            <td>
+              { editing ?
+                <input type="text" placeholder={item.email} name="email" onChange={event => this.handleChange(event)}/> :
+                item.email
+              }
+            </td>
+            <td>
+              { editing ?
+                <input type="Name" placeholder={item.name} name="name" onChange={event => this.handleChange(event)}/> :
+                item.name
+              }
+            </td>
+            <td>
+              { editing ?
+                <select type="roles" placeholder={item.roles[0]} name="roles" onChange={event => this.handleChange(event)}>
+                  {options}
+                </select> :
+                item.roles[0]
+              }
+            </td>
+            <td>
+              <input type="button" value="X" onClick={() => this.handleDelete(id)}/>
+            </td>
+            <td>
+              { editing ? 
+                <input type="submit" value="Apply Changes" onClick={() => this.handleUpdate(id)}/> :
+                <input type="button" value="✎" onClick={() => this.setState({ editing: id, show: !this.state.show })}/> 
+              }
+            </td>
+          </tr>
+        );
+      }): null;
+  
+      return(
+        <div className="column is-6 is-offset-3">
+          <h3 className="title is-4">Users</h3>
+          <table className="table is-bordered">
+            <thead>
+              <tr>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Roles</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableData}
+            </tbody>
+          </table>
+        </div>
+      );
+    }
 }
-
+  
 export default connect(
   ({ auth, users }) => ({ user: auth.user, users }),
   { loadUsers, updateUser, deleteUser }
 )(AllUsers);
+  

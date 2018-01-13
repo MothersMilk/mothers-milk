@@ -5,6 +5,7 @@ import AllDropSites from '../dropSites/AllDropSites';
 import AllUsers from '../users/AllUsers';
 import { signup } from '../home/actions';
 import { addDropSite } from '../dropSites/actions';
+//import { addUser } from '../users/actions';
 
 class Admin extends Component {
 
@@ -31,7 +32,7 @@ class Admin extends Component {
       });
   }
 
-  render(){
+  render() {
     return(
       <div>
         <br/>
@@ -71,7 +72,7 @@ class Admin extends Component {
     );
   }
 }
-
+ 
 export default connect(({ auth }) => ({
   error: auth.error,
   user: auth.user

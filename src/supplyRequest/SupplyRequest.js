@@ -29,7 +29,6 @@ class SupplyRequest extends Component {
     this.setState({ display: !this.state.display });
   }
   render() {
-    const { bags, boxes } = this.props;
    
     return (
       <div className="tile is-parent">

@@ -6,6 +6,7 @@ import { loadDonations } from '../donations/actions';
 import { connect } from 'react-redux';
 import '../style/mystyle.css';
 
+
 class DonorView extends Component {
   componentDidMount() {
     this.props.loadDropSites();
@@ -18,7 +19,7 @@ class DonorView extends Component {
     return (
       <div className="column is-8 is-offset-2">
         <div className="tile is-parent">
-          <div className="tile is-child box hero is-warning">            
+          <div className="tile is-child box hero is-warning">
             <h1 className="title">Welcome { user ? user.name : '' }</h1>
             <h2 className="subtitle">Thank you for participating in the milk drop program.</h2>
           </div>

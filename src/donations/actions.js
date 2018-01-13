@@ -13,7 +13,6 @@ export function loadDonations() {
       type: actions.LOAD_DONATIONS,
       payload: donationApi.get()
     });
-    
     socket.on('newDonation', donation => {
       dispatch({
         type: actions.ADD_DONATION,
@@ -29,7 +28,6 @@ export function loadMyDonations() {
       type: actions.LOAD_DONATIONS,
       payload: donationApi.getMy()
     });
-
     socket.on('updatedDonation', donation => {
       dispatch({
         type: actions.UPDATE_DONATION,
@@ -64,4 +62,9 @@ export function deleteDonation(id) {
       payload: donationApi.remove(id).then(() => id)
     });
   };
+}
+
+export function removeAllListeners() {
+  socket.off('newDonation');
+  socket.off('updatedDonation');
 }
