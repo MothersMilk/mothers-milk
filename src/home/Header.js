@@ -26,12 +26,17 @@ class Header extends Component {
           <form className="field signInForm" onSubmit={event => this.handleSignIn(event)}>
             {!user && <div>
               <div className="control">
-                <input className="input"  placeholder="email" name="email"/>
+                <label className="clip">Email:
+                  <input className="input"  placeholder="email" name="email"/>
+                </label>
               </div>
               <div className="control">
-                <input className="input" type="password" placeholder="password" name="password"/>
+                <label className="clip">Password:
+                  <input className="input" type="password" placeholder="password" name="password"/>
+                </label>
               </div>
               <div className="control">
+                <br/>
                 <input className="button" type="submit"/>
               </div>
             </div>}

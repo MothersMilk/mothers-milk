@@ -47,7 +47,7 @@ class AddDonations extends Component {
     const message = 'Thank you for donating!';
     const { dropSites } = this.props;
    
-    const listOfDropSites = dropSites && dropSites.map(dropSite => (
+    const listOfDropSites = dropSites && dropSites.filter(dropSite => dropSite.name !== ' FedEx').map(dropSite => (
       <option key={dropSite._id} value={dropSite._id}>{dropSite.name}</option>
     ));
 
@@ -55,6 +55,7 @@ class AddDonations extends Component {
     
     console.log('fedex', fedEx);
     console.log('dropsite', dropSites);
+    console.log('list of dropSites', listOfDropSites);
     
     return (
       

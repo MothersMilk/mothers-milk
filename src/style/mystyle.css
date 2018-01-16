@@ -6518,3 +6518,10 @@ label.panel-block {
 .home {
   background-image: url("/images/baby.jpeg");
   width: 100%; }
+
+.clip {
+  /* position: absolute !important;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px); */
+  color: #222;
+}
