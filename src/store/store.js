@@ -6,6 +6,7 @@ import rootReducer from './rootReducer';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const logger = store => next => action => {
+  console.log('action before reducer', action);
   return next(action);
 };
 

@@ -24,7 +24,7 @@ class AllUsers extends PureComponent {
       const tableData = users.length ? users.map(item => {
         const { _id: id } = item;
         const editing = this.state.editing === id ? true : false;
-        const roleOptions = ['donor', 'admin', 'volunteer'];
+        const roleOptions = ['donor', 'admin', 'volunteer', 'staff'];
         const currentRoleIndex = roleOptions.findIndex(status => status === item.roles[0]);
         const options = roleOptions.map((role, i) => i === currentRoleIndex ? <option selected value={[role]}>{role}</option> : <option value={[role]}>{role}</option>);
         return (

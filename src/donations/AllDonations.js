@@ -20,7 +20,7 @@ class AllDonations extends PureComponent {
   handleChange = ({ target: input }) => this.setState({ [input.name]: input.value });
 
   render() {
-    const { donations } = this.props;
+    const { donations, staffView } = this.props;
     const tableData = donations.length ? donations.map(item => {
       const { _id: id, donor, dropSite, quantity, status } = item;
       const editing = this.state.editing === id ? true : false;
@@ -49,9 +49,7 @@ class AllDonations extends PureComponent {
               status
             }
           </td>
-          <td>
-            <input type="button" value="X" onClick={() => this.handleDelete(id)}/>
-          </td>
+            { !staffView ? <td><input type="button" value="X" onClick={() => this.handleDelete(id)}/></td> : null }
           <td>
             { editing ? 
               <input type="submit" value="Apply Changes" onClick={() => this.handleUpdate(id)}/> :
