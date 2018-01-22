@@ -16,7 +16,7 @@ class Header extends Component {
   }
 
   render(){
-    const { user , signout } = this.props;    
+    const { user, signout, loading, error } = this.props;    
     return (
       <header className="columns header">
         <div className="column is-3 is-offset-1">
@@ -32,9 +32,10 @@ class Header extends Component {
                 <input className="input" type="password" placeholder="password" name="password"/>
               </div>
               <div className="control">
-                <input className="button" type="submit"/>
+                <button class={loading ? 'button is-loading' : 'button'} type="submit">Sign In</button>
               </div>
             </div>}
+            {error ? <div class="button is-danger">Authentication Failed</div> : null}
             {user  && <NavLink className="button" to="/" onClick={signout}>Logout</NavLink>}
           </form>
         </div>
@@ -43,9 +44,10 @@ class Header extends Component {
   }
 }
 
-export default connect(({ auth }) => ({
-  error: auth.error,
-  user: auth.user
+export default connect(({ auth, loading, error }) => ({
+  error,
+  user: auth.user,
+  loading
 }),
 { signin, signup, signout }
 )(Header);

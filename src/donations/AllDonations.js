@@ -49,7 +49,7 @@ class AllDonations extends PureComponent {
               status
             }
           </td>
-            { !staffView ? <td><input type="button" value="X" onClick={() => this.handleDelete(id)}/></td> : null }
+          { !staffView ? <td><input type="button" value="X" onClick={() => this.handleDelete(id)}/></td> : null }
           <td>
             { editing ? 
               <input type="submit" value="Apply Changes" onClick={() => this.handleUpdate(id)}/> :
