@@ -37,9 +37,9 @@ class Donations extends Component {
             <hr/>
             <AddDonation user={user}/>
             <hr/>
-            <button className="button is-light" onClick={() =>  this.setState({ display: true  })}>My Donations</button>
+            <button className="button is-light" onClick={() =>  this.setState({ display: !this.state.display  })}>My Donations</button>
             
-            <TotalDisplay donations={donations} />
+            {display && <TotalDisplay donations={donations}/>}
 
             {display && 
             <table className="table is-fullwidth is-striped">
