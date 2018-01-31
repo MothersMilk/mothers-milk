@@ -96,13 +96,13 @@ class TotalDisplay extends Component {
     const total = donations.reduce((acc = 0, e) => {
       return acc + e.quantity;
     }, 0);
-    function convertToGal(num) {
-      if (num < 128) return `${total} Oz.`;
 
+    function convertToGal(num) {
+      return (num < 128) ? `${num} Oz.` : `${Math.floor(num/128)} Gal. , ${num%128} Oz.`;
     }
 
     return(
-      <h1> {convertToGal(total)} </h1>
+      <h1>Estimated Total: {convertToGal(total)}</h1>
     );
   }
 }
