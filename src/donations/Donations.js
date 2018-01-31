@@ -37,7 +37,10 @@ class Donations extends Component {
             <hr/>
             <AddDonation user={user}/>
             <hr/>
-            <button className="button is-light" onClick={() =>  this.setState({ display: true  })}>Total amount donated</button>
+            <button className="button is-light" onClick={() => this.setState({ display: !this.state.display })}>My Donations</button>
+            
+            {display && <TotalDisplay donations={donations}/>}
+
             {display && 
             <table className="table is-fullwidth is-striped">
               <thead>
@@ -81,6 +84,25 @@ class ListItem extends Component {
         <td>{ quantity } oz.</td>
         <td>{ status }</td>
       </tr>
+    );
+  }
+}
+
+class TotalDisplay extends Component {
+  
+  render() {
+    const { donations } = this.props;
+    
+    const total = donations.reduce((acc = 0, e) => {
+      return acc + e.quantity;
+    }, 0);
+
+    function convertToGal(num) {
+      return (num < 128) ? `${num} Oz.` : `${Math.floor(num/128)} gal. , ${num%128} oz.`;
+    }
+
+    return(
+      <h1>Estimated Total: {convertToGal(total)}</h1>
     );
   }
 }
