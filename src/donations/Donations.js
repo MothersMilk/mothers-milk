@@ -37,7 +37,7 @@ class Donations extends Component {
             <hr/>
             <AddDonation user={user}/>
             <hr/>
-            <button className="button is-light" onClick={() =>  this.setState({ display: !this.state.display  })}>My Donations</button>
+            <button className="button is-light" onClick={() => this.setState({ display: !this.state.display })}>My Donations</button>
             
             {display && <TotalDisplay donations={donations}/>}
 
@@ -98,7 +98,7 @@ class TotalDisplay extends Component {
     }, 0);
 
     function convertToGal(num) {
-      return (num < 128) ? `${num} Oz.` : `${Math.floor(num/128)} Gal. , ${num%128} Oz.`;
+      return (num < 128) ? `${num} Oz.` : `${Math.floor(num/128)} gal. , ${num%128} oz.`;
     }
 
     return(
