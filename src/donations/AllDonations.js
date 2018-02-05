@@ -6,7 +6,9 @@ import { loadDonations, updateDonation, deleteDonation } from './actions';
 class AllDonations extends PureComponent {
   state = { editing: null };
 
-  componentDidMount =  () => this.props.loadDonations();
+  componentDidMount() {
+    this.props.loadDonations();
+  }
 
   handleUpdate = _id => { 
     const update = this.state;
