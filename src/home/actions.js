@@ -7,7 +7,7 @@ export function checkForToken() {
   return dispatch => {
     const token = getStoredToken();
 
-    if(!token) {
+    if (!token) {
       dispatch({ type: actions.CHECKED_TOKEN });
       return;
     }

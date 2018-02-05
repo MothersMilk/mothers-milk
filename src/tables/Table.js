@@ -30,7 +30,7 @@ class Table extends PureComponent {
     const { data, dataType } = this.props;
     const { editing } = this.state;
     let fields = null;
-    if(data) fields = data.length && Object.keys(data[0]);
+    if (data) fields = data.length && Object.keys(data[0]);
     fields && fields.shift();
 
     const updateInputs = fields ? fields.map(item => <input type="text" name={typeof item !== 'object' ? item : null} placeholder={this.fieldCheck(item)}/>) : null;
