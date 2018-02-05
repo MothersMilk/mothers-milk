@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import '../style/mystyle.css';
 import { connect } from 'react-redux';
 import { checkForToken } from '../home/actions';
 import { BrowserRouter as Router } from 'react-router-dom';
