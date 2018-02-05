@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import { connect } from 'react-redux';
 import { checkForToken } from '../home/actions';
-import { loadDropSites } from '../dropSites/actions';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from './Routes';
 
@@ -10,7 +9,6 @@ class App extends Component {
   
   componentDidMount() {
     this.props.checkForToken();
-    this.props.loadDropSites();
   }
 
   render() {
@@ -36,5 +34,5 @@ export default connect(
     user: auth.user,
     checkedToken: auth.checkedToken
   }),
-  { checkForToken, loadDropSites }
+  { checkForToken }
 )(App);
