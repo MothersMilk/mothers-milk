@@ -27,19 +27,19 @@ class AllDropSites extends PureComponent {
           <tr key={id}>
             <td>
               { editing ?
-                <input type="text" placeholder={item.name} name="name" onChange={event => this.handleChange(event)}/> :
+                <input type="text" defaultValue={item.name} name="name" onChange={event => this.handleChange(event)}/> :
                 item.name
               }
             </td>
             <td>
               { editing ? 
-                <input type="text" placeholder={item.address} name="address" onChange={event => this.handleChange(event)}/> :
+                <input type="text" defaultValue={item.address} name="address" onChange={event => this.handleChange(event)}/> :
                 item.address
               }
             </td>
             <td>
               { editing ? 
-                <input type="text" placeholder={item.hours} name="hours" onChange={event => this.handleChange(event)}/> :
+                <input type="text" defaultValue={item.hours} name="hours" onChange={event => this.handleChange(event)}/> :
                 item.hours
               }
             </td>
