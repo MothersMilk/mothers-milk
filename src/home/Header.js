@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { signin, signup, signout } from './actions';
+import { signin, signout } from './actions';
 import { NavLink, Link } from 'react-router-dom';
 
 class Header extends Component {
@@ -47,5 +47,5 @@ export default connect(({ auth }) => ({
   error: auth.error,
   user: auth.user
 }),
-{ signin, signup, signout }
+{ signin, signout }
 )(Header);
