@@ -30,14 +30,15 @@ class Donations extends Component {
     const { displayMain, display } = this.state;
     return (
       <div className="tile is-parent">
-        <div className="tile is-child box">
-          <a className="subtitle has-text-primary link-hover" onClick={this.handleClick}>Donations</a>
+        <div className="tile is-child box hero is-info">
+          <div className="sub-title">
+            <a className="subtitle has-text-success link-hover" onClick={this.handleClick}><strong>Donations</strong></a></div>
           {displayMain &&
           <div>
             <hr/>
             <AddDonation user={user}/>
             <hr/>
-            <button className="button is-light" onClick={() =>  this.setState({ display: true  })}>Total amount donated</button>
+            <button className="button is-light" onClick={() =>  this.setState({ display: true  })}>My Donation Total</button>
             {display && 
             <table className="table is-fullwidth is-striped">
               <thead>

@@ -59,31 +59,55 @@ class AddDonations extends Component {
     
     return (
       
-      <div className="tile is-parent hero is-light">        
+      <div className="tile is-parent hero is-medium field">        
         {(this.state.showMessage) ? <p>{message}</p> : 
           (<div>
             <form onSubmit={event => this.handleDonate(event)}>
-              <p className="subtitle is-6">Ship milk by FedEx   &nbsp;<input type="checkbox" value="FedEx" onChange={this.handleChange}/>
-              </p>
+              {/* <p className="subtitle is-6">Ship milk by FedEx&nbsp;<input type="checkbox" value="FedEx" onChange={this.handleChange}/>
+              </p> */}
+              <label for="FedEx-checkbox" className="subtitle is-6 checkbox"><input type="checkbox" value="FedEx" onChange={this.handleChange}/>&nbsp;Ship milk by FedEx&nbsp;
+              </label>
+              {/* <div className="field">
+                <div className="control">
+                  <label for="FedEx-checkbox" className="subtitle is-6 checkbox">Ship milk by FedEx&nbsp;
+                  </label>
+                  <input type="checkbox" value="FedEx" onChange={this.handleChange}/>
+                </div>
+              </div> */}
               {(this.state.fedExName !== 'FedEx') && (
                 <div>
                   <p className="subtitle is-6">-- OR --</p>
                   <p className="subtitle is-6">Drop at nearest milk drop location
                   </p>
-                  <div className="subtitle is-6 label">
-                    Select a drop site location</div>
-                  <div className="select">
-                    <select name="dropSite" className="button is-outlined is-size-6">
-                      {listOfDropSites}
-                    </select>
+                  <div className="field">
+                    <label for="dropSite-location" className="subtitle is-6 label">
+                    Select a drop site location</label>
+                    <div className="control">
+                      <div className="select">
+                        <select name="dropSite" className="button is-outlined is-size-6">
+                          {listOfDropSites}
+                        </select>
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}
               <br/><br/>
-              <div className="subtitle is-6 label">Quantity(in ounces):</div>
-              <input className="button is-outlined" name="quantity" placeholder="quantity"/>
+              {/* <div className="subtitle is-6 label">Quantity(in ounces):</div> */}
+              <div className="field">
+                <label for="quantity" className="subtitle is-6 label">Quantity(in ounces):</label>
+                <div className="control">
+                  <input className="input" type="text" name="quantity" placeholder="quantity"/>
+                </div>
+              </div>
               <br/><br/>
-              <div className="subtitle is-6 label">Is this your last donation?&nbsp;<input name="lastDonation" type="checkbox"/></div>
+              <div className="field">
+                <div className="control">
+                  <label className="subtitle is-6 label">Is this your last donation?&nbsp;
+                    <input name="lastDonation" type="checkbox"/>
+                  </label>
+                </div>
+              </div>
               <br/><br/>
               <button className="button is-primary" type="submit">Submit</button>
               <br/><br/>

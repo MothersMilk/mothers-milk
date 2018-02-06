@@ -2,10 +2,14 @@
 @import "../../node_modules/bulma/sass/utilities/functions";
 
 $primary: #B163A3;
+// $primary: #9E2360;
 $danger:  rgba(177, 99, 163, 0.4);
-$info: rgba(177, 99, 164, 0.7);
-$warning:rgba(99, 168, 177, 0.66);
+// $info: rgba(177, 99, 164, 0.7);
+$info: #9E2360;
+// $warning:rgba(0, 168, 177, 0.66);
+$warning: #DB91BD;
 $success : #A4A4A4;
+
 
 $space: 20px;
 $height: 11rem;
@@ -76,4 +80,8 @@ span {
 .home {
     background-image: url('/images/baby.jpeg');
     width:100%;
+}
+
+.mmb {
+    background-color: green;
 }
