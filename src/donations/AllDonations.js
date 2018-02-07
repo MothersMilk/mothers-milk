@@ -28,7 +28,7 @@ class AllDonations extends PureComponent {
       const currentStatusIndex = statusOptions.findIndex(status => status === item.status);
       const options = statusOptions.map((status, i) => i === currentStatusIndex ? <option selected value={status}>{status}</option> : <option value={status}>{status}</option>);
       return (
-        <tr key={id}>
+        <tr class={ editing ? 'animated fadeIn' : null } key={id}>
           <td>
             {donor ? donor.name : null}
           </td>

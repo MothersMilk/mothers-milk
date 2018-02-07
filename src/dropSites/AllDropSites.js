@@ -24,7 +24,7 @@ class AllDropSites extends PureComponent {
         const { _id: id } = item;
         const editing = this.state.editing === id ? true : false;
         return (
-          <tr key={id}>
+          <tr class={ editing ? 'animated fadeIn' : null } key={id}>
             <td>
               { editing ?
                 <input class="input is-small" type="text" placeholder={item.name} name="name" onChange={event => this.handleChange(event)}/> :
