@@ -10,7 +10,7 @@ export default function supplies(state = [], { type, payload }) {
         payload
       ];
     case actions.DELETE_SUPPLY:
-      return state.flter(supply => supply._id !== payload);
+      return state.filter(supply => supply._id !== payload);
     case actions.UPDATE_SUPPLY:
       return state.map(supply => supply._id === payload._id ? { ...supply, ...payload } : supply);
     default:
