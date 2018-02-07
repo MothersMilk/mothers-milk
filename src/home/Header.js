@@ -32,10 +32,11 @@ class Header extends Component {
                 <input className="input" type="password" placeholder="password" name="password"/>
               </div>
               <div className="control">
+                {error ? <div class="button is-danger is-small">Authentication Failed</div> : null}
                 <button class={loading ? 'button is-loading' : 'button'} type="submit">Sign In</button>
               </div>
             </div>}
-            {error ? <div class="button is-danger">Authentication Failed</div> : null}
+            
             {user  && <NavLink className="button" to="/" onClick={signout}>Logout</NavLink>}
           </form>
         </div>
