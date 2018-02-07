@@ -26,7 +26,7 @@ class AllUsers extends PureComponent {
         const editing = this.state.editing === id ? true : false;
         const roleOptions = ['donor', 'admin', 'volunteer', 'staff'];
         const currentRoleIndex = roleOptions.findIndex(status => status === item.roles[0]);
-        const options = roleOptions.map((role, i) => i === currentRoleIndex ? <option selected value={[role]}>{role}</option> : <option value={[role]}>{role}</option>);
+        const options = roleOptions.map((role, i) => i === currentRoleIndex ? <option value={[role]} key={i}>{role}</option> : <option value={[role]} key={i}>{role}</option>);
         return (
           <tr className={editing ? 'animated fadeIn' : null} key={id}>
             <td>
