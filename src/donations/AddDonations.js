@@ -65,7 +65,7 @@ class AddDonations extends Component {
               )}
               <br/><br/>
               <div className="subtitle is-6 label">Quantity(in ounces):</div>
-              <input className="button is-outlined" name="quantity" defaultValue="quantity"/>
+              <input className="button is-outlined" name="quantity" placeholder="quantity"/>
               <br/><br/>
               <div className="subtitle is-6 label">Is this your last donation?&nbsp;<input name="lastDonation" type="checkbox"/></div>
               <br/><br/>
