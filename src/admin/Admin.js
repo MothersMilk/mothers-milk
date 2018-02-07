@@ -61,7 +61,8 @@ class Admin extends Component {
           </label>
           <label>email: <input name="email"/></label>
           <label>password: <input type="password" name="password"/></label>
-          <input type="submit" ></input>
+          <button className={this.props.loading ? 'button is-loading' : 'button'} type="submit" >Submit</button>
+          {this.props.error ? <div className="button is-danger">Failed to create user. Check required fields</div> : null }
           <div className="need-space"></div>
           <div className="need-space"></div>
           <div className="need-space"></div>
@@ -72,9 +73,10 @@ class Admin extends Component {
   }
 }
  
-export default connect(({ auth }) => ({
-  error: auth.error,
-  user: auth.user
+export default connect(({ auth, loading, error }) => ({
+  error,
+  user: auth.user,
+  loading
 }),
 { signup, addDropSite }
 )(Admin);

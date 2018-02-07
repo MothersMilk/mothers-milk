@@ -16,6 +16,9 @@ class App extends Component {
     const { checkedToken } = this.props;
     return (
       <div>
+        <head>
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"/>
+        </head>
         <Router>
           { checkedToken &&
             <div className="App">
