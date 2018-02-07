@@ -5,20 +5,16 @@ import donationApi from '../services/donation-api';
 
 
 export function loadUsers() {
-  return dispatch => {
-    dispatch({
-      type: actions.LOAD_USERS,
-      payload: usersApi.get()
-    });
+  return {
+    type: actions.LOAD_USERS,
+    payload: usersApi.get()
   };
 }
 
 export function updateUser(dropSite) {
-  return dispatch => {
-    dispatch({
-      type: actions.UPDATE_USER,
-      payload: usersApi.update(dropSite)
-    });
+  return {
+    type: actions.UPDATE_USER,
+    payload: usersApi.update(dropSite)
   };
 }
 
