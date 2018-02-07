@@ -4,3 +4,6 @@ export const AUTH_FAILED = 'AUTH_FAILED';
 export const FETCHED_USER = 'FETCHED_USER';
 export const USER_CREATED = 'USER_CREATED';
 export const LOGOUT = 'LOGOUT';
+export const LOADING = 'LOADING';
+export const DONE_LOADING = 'DONE_LOADING';
+export const ERROR = 'ERROR';

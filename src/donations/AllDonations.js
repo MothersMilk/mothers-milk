@@ -20,7 +20,7 @@ class AllDonations extends PureComponent {
   handleChange = ({ target: input }) => this.setState({ [input.name]: input.value });
 
   render() {
-    const { donations } = this.props;
+    const { donations, staffView } = this.props;
     const tableData = donations.length ? donations.map(item => {
       const { _id: id, donor, dropSite, quantity, status } = item;
       const editing = this.state.editing === id ? true : false;
@@ -37,25 +37,31 @@ class AllDonations extends PureComponent {
           </td>
           <td>
             { editing ?
-              <input type="text" placeholder={quantity} name="quantity" onChange={event => this.handleChange(event)}/> :
+              <input class="input is-small" type="text" placeholder={quantity} name="quantity" onChange={event => this.handleChange(event)}/> :
               quantity
             }
           </td>
           <td>
             { editing ? 
-              <select type="text" name="status" onChange={event => this.handleChange(event)}>
-                {options}
-              </select> :
+              <div class="select is-small is-primary">
+                <select type="text" name="status" onChange={event => this.handleChange(event)}>
+                  {options}
+                </select>
+              </div> :
               status
             }
           </td>
+          { !staffView && editing ? <td><button class="button is-small" type="button" value="X" onClick={() => this.handleDelete(id)}>Remove donation</button></td> : null }
           <td>
-            <input type="button" value="X" onClick={() => this.handleDelete(id)}/>
+            { editing ? 
+              <button class="button is-small" type="submit" value="Apply Changes" onClick={() => this.handleUpdate(id)}>Apply Changes</button> :
+              <button class="button is-small" type="button" value="✎" onClick={() => this.setState({ editing: id, show: !this.state.show })}>Edit</button> 
+            }
           </td>
           <td>
             { editing ? 
-              <input type="submit" value="Apply Changes" onClick={() => this.handleUpdate(id)}/> :
-              <input type="button" value="✎" onClick={() => this.setState({ editing: id, show: !this.state.show })}/> 
+              <div class="delete is-medium" type="submit" value="Apply Changes" onClick={() => this.setState({ editing: null })}></div> :
+              null
             }
           </td>
         </tr>
@@ -65,7 +71,7 @@ class AllDonations extends PureComponent {
     return(
       <div className="column is-6 is-offset-3">
         <h3 className="title is-4">Donations</h3>
-        <table className="table is-bordered">
+        <table className="table is-striped is-hoverable">
           <thead>
             <tr>
               <th>Donor</th>
