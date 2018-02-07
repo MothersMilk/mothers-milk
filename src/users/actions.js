@@ -1,5 +1,8 @@
 import * as actions from './constants';
+import { LOAD_DONATIONS } from '../donations/constants';
 import usersApi from '../services/users-api';
+import donationApi from '../services/donation-api';
+
 
 export function loadUsers() {
   return dispatch => {
@@ -9,7 +12,6 @@ export function loadUsers() {
     });
   };
 }
-
 
 export function updateUser(dropSite) {
   return dispatch => {
@@ -25,6 +27,12 @@ export function deleteUser(id) {
     dispatch({
       type: actions.DELETE_USER,
       payload: usersApi.remove(id).then(() => id) 
-    });
+    })
+      .then(() => {
+        return dispatch({
+          type: LOAD_DONATIONS,
+          payload: donationApi.get()
+        });
+      });
   };
 }
