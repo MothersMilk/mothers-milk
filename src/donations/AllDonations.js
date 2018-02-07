@@ -63,7 +63,7 @@ class AllDonations extends PureComponent {
     return(
       <div className="column is-6 is-offset-3">
         <h3 className="title is-4">Donations</h3>
-        <table className="table is-bordered">
+        <table className="table is-striped is-hoverable">
           <thead>
             <tr>
               <th>Donor</th>

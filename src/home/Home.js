@@ -13,10 +13,7 @@ class Home extends Component {
     const isAdmin = user ? user.roles.includes('admin') : false;
     const isStaff = user ? user.roles.includes('staff') : false;
     let view = isAdmin ? <Admin/> : <DonorView/> ;
-    view = isStaff ? <Staff/> : <Admin/>;
-
-
-    
+    view = isStaff ? <Staff/> : view;
 
     return(
       <div>
