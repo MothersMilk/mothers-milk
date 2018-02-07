@@ -40,10 +40,10 @@ class SignIn extends Component {
       <form className="field signInForm" onSubmit={this.handleSignIn}>
         {!user && <div>
           <div className="control">
-            <input className="input"  defaultValue="email" name="email"/>
+            <input className="input"  placeholder="email" name="email"/>
           </div>
           <div className="control">
-            <input className="input" type="password" defaultValue="password" name="password"/>
+            <input className="input" type="password" placeholder="password" name="password"/>
           </div>
           <div className="control">
             {error ? <div className="button is-danger is-small">Authentication Failed</div> : null}
