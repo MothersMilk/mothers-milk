@@ -47,7 +47,7 @@ class AllDonations extends PureComponent {
           <td>
             { editing ? 
               <div className="select is-small is-primary">
-                <select value={item.status} type="text" name="status" onChange={event => this.handleChange(event)}>
+                <select type="text" name="status" onChange={event => this.handleChange(event)}>
                   {options}
                 </select>
               </div> :
