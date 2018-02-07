@@ -38,11 +38,9 @@ class AllDonations extends PureComponent {
 
       return (
         <tr className={editing ? 'animated fadeIn' : null} key={id}>
-          
           <td>
             {date ? convertDate(date) : null}
           </td>
-
           <td>
             {donor ? donor.name : null}
           </td>
