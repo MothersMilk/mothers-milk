@@ -1,3 +1,4 @@
+@import url(../../node_modules/animate.css/animate.min.css);
 .need-space {
   height: 20px; }
 
@@ -942,10 +943,9 @@ a.box:active {
   position: relative;
   vertical-align: top;
   -webkit-touch-callout: none;
-  /* Changed user-select from 'none' to 'text' */
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
   background-color: white;
   border-color: #dbdbdb;

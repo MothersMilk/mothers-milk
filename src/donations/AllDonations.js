@@ -40,7 +40,7 @@ class AllDonations extends PureComponent {
           </td>
           <td>
             { editing ?
-              <input className="input is-small" type="text" placeholder={quantity} name="quantity" onChange={event => this.handleChange(event)}/> :
+              <input className="input is-small" type="text" defaultValue={quantity} name="quantity" onChange={event => this.handleChange(event)}/> :
               quantity
             }
           </td>
