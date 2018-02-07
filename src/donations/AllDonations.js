@@ -28,10 +28,10 @@ class AllDonations extends PureComponent {
       const editing = this.state.editing === id ? true : false;
       const statusOptions = [ 'Pending','Received', 'Missing'];
       const currentStatusIndex = statusOptions.findIndex(status => status === item.status);
-      const options = statusOptions.map((status, i) => i === currentStatusIndex ? <option selected value={status}>{status}</option> : <option value={status}>{status}</option>);
+      const options = statusOptions.map((status, i) => i === currentStatusIndex ? <option key={i} value={status}>{status}</option> : <option key={i} value={status}>{status}</option>);
       
       return (
-        <tr className={ editing ? 'animated fadeIn' : null } key={id}>
+        <tr className={editing ? 'animated fadeIn' : null} key={id}>
           <td>
             {donor ? donor.name : null}
           </td>
@@ -40,14 +40,14 @@ class AllDonations extends PureComponent {
           </td>
           <td>
             { editing ?
-              <input className="input is-small" type="text" placeholder={quantity} name="quantity" onChange={event => this.handleChange(event)}/> :
+              <input className="input is-small" type="text" defaultValue={quantity} name="quantity" onChange={event => this.handleChange(event)}/> :
               quantity
             }
           </td>
           <td>
             { editing ? 
               <div className="select is-small is-primary">
-                <select type="text" name="status" onChange={event => this.handleChange(event)}>
+                <select value={item.status} type="text" name="status" onChange={event => this.handleChange(event)}>
                   {options}
                 </select>
               </div> :
