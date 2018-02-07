@@ -28,7 +28,7 @@ class AllUsers extends PureComponent {
         const currentRoleIndex = roleOptions.findIndex(status => status === item.roles[0]);
         const options = roleOptions.map((role, i) => i === currentRoleIndex ? <option selected value={[role]}>{role}</option> : <option value={[role]}>{role}</option>);
         return (
-          <tr key={id}>
+          <tr class={ editing ? 'animated fadeIn' : null } key={id}>
             <td>
               { editing ?
                 <input class="input is-small" type="text" placeholder={item.email} name="email" onChange={event => this.handleChange(event)}/> :
