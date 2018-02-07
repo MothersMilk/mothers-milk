@@ -31,19 +31,19 @@ class AllUsers extends PureComponent {
           <tr key={id}>
             <td>
               { editing ?
-                <input type="text" placeholder={item.email} name="email" onChange={event => this.handleChange(event)}/> :
+                <input type="text" defaultValue={item.email} name="email" onChange={event => this.handleChange(event)}/> :
                 item.email
               }
             </td>
             <td>
               { editing ?
-                <input type="Name" placeholder={item.name} name="name" onChange={event => this.handleChange(event)}/> :
+                <input type="Name" defaultValue={item.name} name="name" onChange={event => this.handleChange(event)}/> :
                 item.name
               }
             </td>
             <td>
               { editing ?
-                <select type="roles" placeholder={item.roles[0]} name="roles" onChange={event => this.handleChange(event)}>
+                <select type="roles" defaultValue={item.roles[0]} name="roles" onChange={event => this.handleChange(event)}>
                   {options}
                 </select> :
                 item.roles[0]
