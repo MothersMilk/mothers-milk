@@ -2,37 +2,29 @@ import { DROPSITE_ADD, DROPSITE_DELETE, DROPSITES_LOAD, DROPSITE_UPDATE } from '
 import dropSitesApi from '../services/dropSites-api';
 
 export function loadDropSites() {
-  return dispatch => {
-    dispatch({
-      type: DROPSITES_LOAD,
-      payload: dropSitesApi.get()
-    });
+  return {
+    type: DROPSITES_LOAD,
+    payload: dropSitesApi.get()
   };
 }
 
 export function addDropSite(dropSite) {
-  return dispatch => {
-    dispatch({
-      type: DROPSITE_ADD,
-      payload: dropSitesApi.add(dropSite)
-    });
+  return {
+    type: DROPSITE_ADD,
+    payload: dropSitesApi.add(dropSite)
   };
 }
 
 export function updateDropSite(dropSite) {
-  return dispatch => {
-    dispatch({
-      type: DROPSITE_UPDATE,
-      payload: dropSitesApi.update(dropSite)
-    });
+  return {
+    type: DROPSITE_UPDATE,
+    payload: dropSitesApi.update(dropSite)
   };
 }
 
 export function deleteDropSite(id) {
-  return dispatch => {
-    dispatch({
-      type: DROPSITE_DELETE,
-      payload: dropSitesApi.remove(id).then(() => id) 
-    });
+  return {
+    type: DROPSITE_DELETE,
+    payload: dropSitesApi.remove(id).then(() => id) 
   };
 }

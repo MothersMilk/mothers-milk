@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { loadDropSites } from '../dropSites/actions';
 import { connect } from 'react-redux';
 
 class DropSites extends Component {
@@ -29,5 +28,5 @@ class DropSites extends Component {
 
 export default connect(
   ({ dropSites }) => ({ dropSites }),
-  { loadDropSites }
+  null
 )(DropSites);

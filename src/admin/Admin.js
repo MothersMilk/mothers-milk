@@ -6,7 +6,6 @@ import AllUsers from '../users/AllUsers';
 import { signup } from '../home/actions';
 import { addDropSite } from '../dropSites/actions';
 
-
 class Admin extends Component {
 
   handleSignUp = event => {
@@ -62,8 +61,8 @@ class Admin extends Component {
           </label>
           <label>email: <input name="email"/></label>
           <label>password: <input type="password" name="password"/></label>
-          <button class={this.props.loading ? 'button is-loading' : 'button'} type="submit" >Submit</button>
-          {this.props.error ? <div class="button is-danger">Failed to create user. Check required fields</div> : null }
+          <button className={this.props.loading ? 'button is-loading' : 'button'} type="submit" >Submit</button>
+          {this.props.error ? <div className="button is-danger">Failed to create user. Check required fields</div> : null }
           <div className="need-space"></div>
           <div className="need-space"></div>
           <div className="need-space"></div>

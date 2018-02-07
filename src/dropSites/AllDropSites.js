@@ -24,39 +24,39 @@ class AllDropSites extends PureComponent {
         const { _id: id } = item;
         const editing = this.state.editing === id ? true : false;
         return (
-          <tr class={ editing ? 'animated fadeIn' : null } key={id}>
+          <tr className= {editing ? 'animated fadeIn' : null} key={id}>
             <td>
               { editing ?
-                <input class="input is-small" type="text" placeholder={item.name} name="name" onChange={event => this.handleChange(event)}/> :
+                <input type="text" defaultValue={item.name} name="name" onChange={event => this.handleChange(event)}/> :
                 item.name
               }
             </td>
             <td>
               { editing ? 
-                <input class="input is-small" type="text" placeholder={item.address} name="address" onChange={event => this.handleChange(event)}/> :
+                <input type="text" defaultValue={item.address} name="address" onChange={event => this.handleChange(event)}/> :
                 item.address
               }
             </td>
             <td>
               { editing ? 
-                <input class="input is-small" type="text" placeholder={item.hours} name="hours" onChange={event => this.handleChange(event)}/> :
+                <input type="text" defaultValue={item.hours} name="hours" onChange={event => this.handleChange(event)}/> :
                 item.hours
               }
             </td>
             { editing ? 
               <td>
-                <button class="button is-small" type="button" value="X" onClick={() => this.handleDelete(id)}>Remove dropsite</button>
+                <button className="button is-small" type="button" value="X" onClick={() => this.handleDelete(id)}>Remove dropsite</button>
               </td> : null
             }
             <td>
               { editing ? 
-                <button class="button is-small" type="submit" value="Apply Changes" onClick={() => this.handleUpdate(id)}>Apply Changes</button> :
-                <button class="button is-small" type="button" value="✎" onClick={() => this.setState({ editing: id, show: !this.state.show })}>Edit</button>
+                <button className="button is-small" type="submit" value="Apply Changes" onClick={() => this.handleUpdate(id)}>Apply Changes</button> :
+                <button className="button is-small" type="button" value="✎" onClick={() => this.setState({ editing: id, show: !this.state.show })}>Edit</button>
               }
             </td>
             <td>
               { editing ? 
-                <div class="delete is-medium" type="submit" value="Apply Changes" onClick={() => this.setState({ editing: null })}></div> :
+                <div className="delete is-medium" type="submit" value="Apply Changes" onClick={() => this.setState({ editing: null })}></div> :
                 null
               }
             </td>

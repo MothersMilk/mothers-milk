@@ -9,7 +9,6 @@ class SupplyRequest extends Component {
       display: false,
       ordering: false
     };
-    this.handleClick = this.handleClick.bind(this);
   }
   
   handleSupplyRequest = event => {
@@ -17,25 +16,23 @@ class SupplyRequest extends Component {
     const { bags, boxes } = event.target.elements;
     const { user } = this.props;
     this.setState({ ordering: true });
-    this.props.requestSupply(
-      { 
-        bags: bags.value,
-        boxes: boxes.value,
-        donor: user._id
-      });
+    this.props.requestSupply({ 
+      bags: bags.value,
+      boxes: boxes.value,
+      donor: user._id
+    });
   }
 
-  handleClick() {
+  handleClick = () => {
     this.setState({ display: !this.state.display });
   }
   render() {
-   
     return (
       <div className="tile is-parent">
         <div className="tile is-child box hero is-info">
           <div className="sub-title"><a className="subtitle has-text-success link-hover" onClick={this.handleClick}><strong>Request Supplies</strong></a></div>
           <div>
-            {this.state.display && <form onSubmit={event => this.handleSupplyRequest(event)}>
+            {this.state.display && <form onSubmit={this.handleSupplyRequest}>
               <div className="field"> 
                 <div className="control">
                   <hr/>
