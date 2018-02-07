@@ -7,7 +7,7 @@ export function checkForToken() {
   return dispatch => {
     const token = getStoredToken();
 
-    if(!token) {
+    if (!token) {
       dispatch({ type: actions.CHECKED_TOKEN });
       return;
     }
@@ -23,20 +23,24 @@ export function checkForToken() {
 
 export function signin(credentials) {
   return dispatch => {
+    dispatch({ type: actions.LOADING });
     return authApi.signin(credentials)
       .then(({ token }) => dispatch({ type: actions.GOT_TOKEN, payload: token }))
       .then(() => authApi.verify())
       .then(id =>  authApi.getUser())
       .then(user => dispatch({ type: actions.FETCHED_USER, payload: user }))
-      .catch(error => dispatch({ type: actions.AUTH_FAILED , payload: error }));
+      .then(() => dispatch({ type: actions.DONE_LOADING }))
+      .catch(error => dispatch({ type: actions.ERROR , payload: error }));
   };
 }
 
 export function signup(credentials) {
   return dispatch => {
+    dispatch({ type: actions.LOADING });
     return authApi.signup(credentials)
       .then(({ token, newUser }) => dispatch({ type: actions.USER_CREATED, payload: newUser }))
-      .catch(error => dispatch({ type: actions.AUTH_FAILED , payload: error }));
+      .then(() => dispatch({ type: actions.DONE_LOADING }))
+      .catch(error => dispatch({ type: actions.ERROR , payload: error }));
   };
 }
 

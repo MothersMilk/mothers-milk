@@ -49,7 +49,7 @@ class Donations extends Component {
               </thead>
               <tbody>
                 {donations.map((donation) => (
-                  <ListItem key={donation._id} id={donation._id} quantity={donation.quantity} status={donation.status}/>
+                  <Row key={donation._id} id={donation._id} quantity={donation.quantity} status={donation.status}/>
                 ))}
               </tbody>
             </table>}
@@ -73,7 +73,7 @@ export default connect(
   { loadMyDonations, checkForToken }
 )(Donations);
 
-class ListItem extends Component {
+class Row extends Component {
   
   render() {
     const { quantity, status } = this.props;   
@@ -82,6 +82,25 @@ class ListItem extends Component {
         <td>{ quantity } oz.</td>
         <td>{ status }</td>
       </tr>
+    );
+  }
+}
+
+class TotalDisplay extends Component {
+  
+  render() {
+    const { donations } = this.props;
+    
+    const total = donations.reduce((acc = 0, e) => {
+      return acc + e.quantity;
+    }, 0);
+
+    function convertToGal(num) {
+      return (num < 128) ? `${num} Oz.` : `${Math.floor(num/128)} gal. , ${num%128} oz.`;
+    }
+
+    return(
+      <h1>Estimated Total: {convertToGal(total)}</h1>
     );
   }
 }

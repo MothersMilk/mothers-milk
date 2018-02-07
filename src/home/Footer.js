@@ -1,6 +1,7 @@
 import React from 'react';
-import '../style/mystyle.css';
 
+
+//TODO: Either integrate the Footer component or get rid of it. All of now, it's unused
 export default function Footer() {
   return (
     <footer className="footer hero is-info">
