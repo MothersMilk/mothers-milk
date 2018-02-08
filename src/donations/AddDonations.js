@@ -24,16 +24,13 @@ class AddDonations extends Component {
     });
   }
 
-  componentWillUnmount() {
-    this.props.checkForToken();
-  }
-
   handleDonate = event => {
     event.preventDefault();
     let { dropSite, quantity, lastDonation } = event.target.elements;
     const { user } = this.props;
     dropSite = this.state.isChecked ? this.state.dropSite : dropSite.value;
     this.setState({ myDropSite: dropSite._id });
+    this.props.checkForToken();
     this.props.addDonation(
       { 
         quantity: quantity.value,
