@@ -59,8 +59,7 @@ class AddDonations extends Component {
               {(this.state.fedExName !== 'FedEx') && (
                 <div>
                   <p className="subtitle is-6">-- OR --</p>
-                  <p className="subtitle is-6">Drop at nearest milk drop location
-                  </p>
+                  <p className="subtitle is-6">Drop at nearest milk drop location</p>
                   <div className="subtitle is-6 label">Select a drop site location</div>
                   <DropSites myDropSite={myDropSite} dropSites={dropSites}/>
                 </div>

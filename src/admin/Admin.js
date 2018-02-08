@@ -10,9 +10,10 @@ class Admin extends Component {
 
   handleSignUp = event => {
     event.preventDefault();
-    const { email, password, name, roles } = event.target.elements;
+    const { email, password, name, roles, mmbId } = event.target.elements;
     this.props.signup(
       { 
+        mmbId: mmbId.value,
         name: name.value,
         email: email.value,
         password: password.value, 
@@ -50,6 +51,7 @@ class Admin extends Component {
         <div className="need-space"></div>
         <h3><strong>Create New User:</strong></h3>
         <form onSubmit={event => this.handleSignUp(event)}>
+          <label>MMB ID#: <input name="mmbId"/></label>
           <label>name: <input name="name"/></label>
           <label>role: 
             <select name="roles">
