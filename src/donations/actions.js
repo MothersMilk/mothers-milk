@@ -1,5 +1,7 @@
 import * as actions from './constants';
+import UPDATE_USER from '../users/constants';
 import donationApi from '../services/donation-api';
+import usersApi from '../services/users-api';
 import io from 'socket.io-client';
 
 const socket = io({ path: '/socket' });
@@ -35,9 +37,16 @@ export function loadMyDonations() {
 }
 
 export function addDonation(donation) {
-  return {
-    type: actions.ADD_DONATION,
-    payload: donationApi.add(donation)
+  return dispatch => {
+    dispatch({
+      type: actions.ADD_DONATION,
+      payload: donationApi.add(donation)
+    });
+    dispatch({
+      type: 'UPDATE_USER',
+      payload: usersApi.updateMe({ myDropSite: donation.dropSite })
+    });
+
   };
 }
 

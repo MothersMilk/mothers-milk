@@ -11,10 +11,10 @@ export function loadUsers() {
   };
 }
 
-export function updateUser(dropSite) {
+export function updateUser(user) {
   return {
     type: actions.UPDATE_USER,
-    payload: usersApi.update(dropSite)
+    payload: usersApi.update(user)
   };
 }
 
@@ -23,12 +23,10 @@ export function deleteUser(id) {
     dispatch({
       type: actions.DELETE_USER,
       payload: usersApi.remove(id).then(() => id) 
-    })
-      .then(() => {
-        return dispatch({
-          type: LOAD_DONATIONS,
-          payload: donationApi.get()
-        });
-      });
+    });
+    dispatch({
+      type: LOAD_DONATIONS,
+      payload: donationApi.get()
+    });
   };
 }
