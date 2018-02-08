@@ -16,7 +16,6 @@ class AddDonations extends Component {
     };
   }
 
-
   handleChange = (event) => {
     const fedExName = event.target.checked ? 'FedEx' : '';
     this.setState({
@@ -86,17 +85,13 @@ class AddDonations extends Component {
 }
 
 const DropSites = function ({ dropSites, myDropSite = null, onSubmit }){
-
   const selected = myDropSite ? dropSites.find(dropSite => dropSite._id === myDropSite) : dropSites[0]._id;
-
   return (
     <div className="select">
       <select defaultValue={selected._id} name="dropSite" className="button is-outlined is-size-6">
-
         {dropSites.map(dropSite => {
           return (<option key={dropSite._id} value={dropSite._id}> {dropSite.name} </option>);
         })}
-
       </select>
     </div>
   );
