@@ -31,7 +31,7 @@ class AllUsers extends PureComponent {
           <tr className={editing ? 'animated fadeIn' : null} key={id}>
             <td>
               { editing ?
-                <input className="input is-small" type="text" defaultValue={item.email} name="mmbId" onChange={event => this.handleChange(event)}/> :
+                <input className="input is-small" type="text" defaultValue={item.mmbId} name="mmbId" onChange={event => this.handleChange(event)}/> :
                 item.mmbId
               }
             </td>
