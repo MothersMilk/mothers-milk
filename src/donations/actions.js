@@ -1,5 +1,5 @@
 import * as actions from './constants';
-import UPDATE_USER from '../users/constants';
+import { UPDATE_USER } from '../users/constants';
 import donationApi from '../services/donation-api';
 import usersApi from '../services/users-api';
 import io from 'socket.io-client';
@@ -43,7 +43,7 @@ export function addDonation(donation) {
       payload: donationApi.add(donation)
     });
     dispatch({
-      type: 'UPDATE_USER',
+      type: UPDATE_USER,
       payload: usersApi.updateMe({ myDropSite: donation.dropSite })
     });
   };

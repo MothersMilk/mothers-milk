@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addDonation } from './actions';
+import { checkForToken } from '../home/actions';
 
 class AddDonations extends Component {
 
@@ -15,6 +16,7 @@ class AddDonations extends Component {
     };
   }
 
+
   handleChange = (event) => {
     const fedExName = event.target.checked ? 'FedEx' : '';
     this.setState({
@@ -23,11 +25,20 @@ class AddDonations extends Component {
     });
   }
 
+  componentWillUpdate() {
+    this.props.checkForToken();
+  }
+  componentDidMount() {
+    console.log('myDropSite is', this.props.myDropSite);
+    this.setState({ myDropSite: this.props.myDropSite });
+  }
+
   handleDonate = event => {
     event.preventDefault();
     let { dropSite, quantity, lastDonation } = event.target.elements;
     const { user } = this.props;
     dropSite = this.state.isChecked ? this.state.dropSite : dropSite.value;
+    this.setState({ myDropSite: dropSite._id });
     this.props.addDonation(
       { 
         quantity: quantity.value,
@@ -37,16 +48,15 @@ class AddDonations extends Component {
         status: 'Awaiting Pickup',
         quantityReceived: 0
       });
-    this.setState({ showMessage: true });
-    window.setTimeout(() => {
-      this.setState({ showMessage: false });
-    }, 4000);
+    // this.setState({ showMessage: true });
+    // window.setTimeout(() => {
+    //   this.setState({ showMessage: false });
+    // }, 10);
   }
 
   render() {
     const message = 'Thank you for donating!';
-    const { dropSites } = this.props;
-    
+    const { dropSites, myDropSite } = this.props;
     return (
       <div className="tile is-parent hero is-light">        
         {(this.state.showMessage) ? <p>{message}</p> : 
@@ -60,7 +70,7 @@ class AddDonations extends Component {
                   <p className="subtitle is-6">Drop at nearest milk drop location
                   </p>
                   <div className="subtitle is-6 label">Select a drop site location</div>
-                  <DropSites myDropSite={this.props.myDropSite} dropSites={dropSites}/>
+                  <DropSites myDropSite={myDropSite} dropSites={dropSites}/>
                 </div>
               )}
               <br/><br/>
@@ -79,7 +89,7 @@ class AddDonations extends Component {
   }
 }
 
-const DropSites = function ({ dropSites, myDropSite = null }){
+const DropSites = function ({ dropSites, myDropSite = null, onSubmit }){
 
   const selected = myDropSite ? dropSites.find(dropSite => dropSite._id === myDropSite) : dropSites[0]._id;
 
@@ -98,5 +108,5 @@ const DropSites = function ({ dropSites, myDropSite = null }){
 
 export default connect(
   ({ donations, auth, dropSites = [] }) => ({ donations, dropSites, myDropSite: auth.user.myDropSite }),
-  { addDonation }
+  { addDonation, checkForToken }
 )(AddDonations);
