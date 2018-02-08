@@ -25,9 +25,10 @@ class AddDonations extends Component {
     });
   }
 
-  componentWillUpdate() {
+  componentWillUnmount() {
     this.props.checkForToken();
   }
+
   componentDidMount() {
     console.log('myDropSite is', this.props.myDropSite);
     this.setState({ myDropSite: this.props.myDropSite });
