@@ -29,10 +29,6 @@ class AddDonations extends Component {
     this.props.checkForToken();
   }
 
-  // componentDidMount() {
-  //   this.setState({ myDropSite: this.props.myDropSite });
-  // }
-
   handleDonate = event => {
     event.preventDefault();
     let { dropSite, quantity, lastDonation } = event.target.elements;
@@ -48,10 +44,10 @@ class AddDonations extends Component {
         status: 'Awaiting Pickup',
         quantityReceived: 0
       });
-    // this.setState({ showMessage: true });
-    // window.setTimeout(() => {
-    //   this.setState({ showMessage: false });
-    // }, 10);
+    this.setState({ showMessage: true });
+    window.setTimeout(() => {
+      this.setState({ showMessage: false });
+    }, 4000);
   }
 
   render() {
