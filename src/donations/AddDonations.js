@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addDonation } from './actions';
+import { checkForToken } from '../home/actions';
 
 class AddDonations extends Component {
 
@@ -23,11 +24,16 @@ class AddDonations extends Component {
     });
   }
 
+  componentWillUnmount() {
+    this.props.checkForToken();
+  }
+
   handleDonate = event => {
     event.preventDefault();
     let { dropSite, quantity, lastDonation } = event.target.elements;
     const { user } = this.props;
     dropSite = this.state.isChecked ? this.state.dropSite : dropSite.value;
+    this.setState({ myDropSite: dropSite._id });
     this.props.addDonation(
       { 
         quantity: quantity.value,
@@ -45,8 +51,7 @@ class AddDonations extends Component {
 
   render() {
     const message = 'Thank you for donating!';
-    const { dropSites } = this.props;
-    
+    const { dropSites, myDropSite } = this.props;
     return (
       <div className="tile is-parent hero is-light">        
         {(this.state.showMessage) ? <p>{message}</p> : 
@@ -60,7 +65,7 @@ class AddDonations extends Component {
                   <p className="subtitle is-6">Drop at nearest milk drop location
                   </p>
                   <div className="subtitle is-6 label">Select a drop site location</div>
-                  <DropSites dropSites={dropSites}/>
+                  <DropSites myDropSite={myDropSite} dropSites={dropSites}/>
                 </div>
               )}
               <br/><br/>
@@ -72,25 +77,27 @@ class AddDonations extends Component {
               <button className="button is-primary" type="submit">Submit</button>
               <br/><br/>
             </form>             
-          </div>
-          )
+          </div>)
         }
       </div>
     );
   }
 }
 
-const DropSites = ({ dropSites }) => (
-  <div className="select">
-    <select name="dropSite" className="button is-outlined is-size-6">
-      {dropSites.map(dropSite => (
-        <option key={dropSite._id} value={dropSite._id}>{dropSite.name}</option>
-      ))}
-    </select>
-  </div>
-);
+const DropSites = function ({ dropSites, myDropSite = null, onSubmit }){
+  const selected = myDropSite ? dropSites.find(dropSite => dropSite._id === myDropSite) : dropSites[0]._id;
+  return (
+    <div className="select">
+      <select defaultValue={selected._id} name="dropSite" className="button is-outlined is-size-6">
+        {dropSites.map(dropSite => {
+          return (<option key={dropSite._id} value={dropSite._id}> {dropSite.name} </option>);
+        })}
+      </select>
+    </div>
+  );
+};
 
 export default connect(
-  ({ donations, dropSites = [] }) => ({ donations, dropSites }),
-  { addDonation }
+  ({ donations, auth, dropSites = [] }) => ({ donations, dropSites, myDropSite: auth.user.myDropSite }),
+  { addDonation, checkForToken }
 )(AddDonations);

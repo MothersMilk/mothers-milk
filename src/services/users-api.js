@@ -14,6 +14,10 @@ export default {
     return request.update(`/users/${user._id}`, user);
   },
 
+  updateMe(user) {
+    return request.update('/users/me', user);
+  },
+
   remove(id) {
     return request.delete(`/users/${id}`);
   }
