@@ -60,7 +60,7 @@ class AddDonations extends Component {
                   <p className="subtitle is-6">Drop at nearest milk drop location
                   </p>
                   <div className="subtitle is-6 label">Select a drop site location</div>
-                  <DropSites dropSites={dropSites}/>
+                  <DropSites myDropSite={this.props.myDropSite} dropSites={dropSites}/>
                 </div>
               )}
               <br/><br/>
@@ -72,25 +72,31 @@ class AddDonations extends Component {
               <button className="button is-primary" type="submit">Submit</button>
               <br/><br/>
             </form>             
-          </div>
-          )
+          </div>)
         }
       </div>
     );
   }
 }
 
-const DropSites = ({ dropSites }) => (
-  <div className="select">
-    <select name="dropSite" className="button is-outlined is-size-6">
-      {dropSites.map(dropSite => (
-        <option key={dropSite._id} value={dropSite._id}>{dropSite.name}</option>
-      ))}
-    </select>
-  </div>
-);
+const DropSites = function ({ dropSites, myDropSite = null }){
+
+  const selected = myDropSite ? dropSites.find(dropSite => dropSite._id === myDropSite) : dropSites[0]._id;
+
+  return (
+    <div className="select">
+      <select defaultValue={selected._id} name="dropSite" className="button is-outlined is-size-6">
+
+        {dropSites.map(dropSite => {
+          return (<option key={dropSite._id} value={dropSite._id}> {dropSite.name} </option>);
+        })}
+
+      </select>
+    </div>
+  );
+};
 
 export default connect(
-  ({ donations, dropSites = [] }) => ({ donations, dropSites }),
+  ({ donations, auth, dropSites = [] }) => ({ donations, dropSites, myDropSite: auth.user.myDropSite }),
   { addDonation }
 )(AddDonations);

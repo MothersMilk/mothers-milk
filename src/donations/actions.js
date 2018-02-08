@@ -46,7 +46,6 @@ export function addDonation(donation) {
       type: 'UPDATE_USER',
       payload: usersApi.updateMe({ myDropSite: donation.dropSite })
     });
-
   };
 }
 
