@@ -11,14 +11,21 @@ class Admin extends Component {
   handleSignUp = event => {
     event.preventDefault();
     const { email, password, name, roles, mmbId } = event.target.elements;
-    this.props.signup(
-      { 
-        mmbId: mmbId.value,
-        name: name.value,
-        email: email.value,
-        password: password.value, 
-        roles: roles.value
-      });
+    event.persist();
+    try {
+      this.props.signup(
+        { 
+          mmbId: mmbId.value,
+          name: name.value,
+          email: email.value,
+          password: password.value, 
+          roles: roles.value
+        })
+        .then(() => event.target.reset(), null);
+    }
+    catch(err) {
+      throw err;
+    }
   }
 
   handleAddDropSite = event => {

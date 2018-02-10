@@ -23,26 +23,38 @@ export function checkForToken() {
 
 export function signin(credentials) {
   return dispatch => {
-    dispatch({ type: actions.LOADING });
     return authApi.signin(credentials)
       .then(({ token }) => dispatch({ type: actions.GOT_TOKEN, payload: token }))
-      .then(() => authApi.verify())
-      .then(id =>  authApi.getUser())
-      .then(user => dispatch({ type: actions.FETCHED_USER, payload: user }))
-      .then(() => dispatch({ type: actions.DONE_LOADING }))
-      .catch(error => dispatch({ type: actions.ERROR , payload: error }));
+      .then(user => dispatch({ 
+        type: actions.FETCHED_USER, 
+        payload: authApi.verify().then(id => authApi.getUser(id)) 
+      }));
   };
 }
 
+// export function signup(credentials) {
+//   return {
+//     type: actions.USER_CREATED,
+//     payload: authApi.signup(credentials)
+//   };
+// }
+
 export function signup(credentials) {
   return dispatch => {
-    dispatch({ type: actions.LOADING });
     return authApi.signup(credentials)
-      .then(({ token, newUser }) => dispatch({ type: actions.USER_CREATED, payload: newUser }))
-      .then(() => dispatch({ type: actions.DONE_LOADING }))
-      .catch(error => dispatch({ type: actions.ERROR , payload: error }));
+      .then(({ token, newUser }) => dispatch({ type: actions.USER_CREATED, payload: newUser }));
   };
 }
+
+// export function signup(credentials) {
+//   return dispatch => {
+//     dispatch({ type: actions.LOADING });
+//     return authApi.signup(credentials)
+//       .then(({ token, newUser }) => dispatch({ type: actions.USER_CREATED, payload: newUser }))
+//       .then(() => dispatch({ type: actions.DONE_LOADING }))
+//       .catch(error => dispatch({ type: actions.ERROR , payload: error }));
+//   };
+// }
 
 export function signout(){
   return dispatch => {
