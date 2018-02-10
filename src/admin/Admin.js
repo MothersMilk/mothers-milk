@@ -21,7 +21,7 @@ class Admin extends Component {
           password: password.value, 
           roles: roles.value
         })
-        .then(() => event.target.reset(), null);
+        .then(() => event.target.reset());
     }
     catch(err) {
       throw err;
@@ -31,12 +31,19 @@ class Admin extends Component {
   handleAddDropSite = event => {
     event.preventDefault();
     const { address, name, hours } = event.target.elements;
-    this.props.addDropSite(
-      { 
-        name: name.value,
-        hours: hours.value,
-        address: address.value
-      });
+    event.persist();
+    try{
+      this.props.addDropSite(
+        { 
+          name: name.value,
+          hours: hours.value,
+          address: address.value
+        })
+        .then(() => event.target.reset());
+    }
+    catch(err) {
+      throw err;
+    }
   }
 
   render() {
