@@ -35,26 +35,9 @@ export function signin(credentials) {
   };
 }
 
-// export function signup(credentials) {
-//   return {
-//     type: actions.USER_CREATED,
-//     payload: authApi.signup(credentials)
-//   };
-// }
-
 export function signup(credentials) {
   return { type: actions.USER_CREATED, payload: authApi.signup(credentials).then(({ newUser }) => newUser) };
 }
-
-// export function signup(credentials) {
-//   return dispatch => {
-//     dispatch({ type: actions.LOADING });
-//     return authApi.signup(credentials)
-//       .then(({ token, newUser }) => dispatch({ type: actions.USER_CREATED, payload: newUser }))
-//       .then(() => dispatch({ type: actions.DONE_LOADING }))
-//       .catch(error => dispatch({ type: actions.ERROR , payload: error }));
-//   };
-// }
 
 export function signout(){
   return dispatch => {
