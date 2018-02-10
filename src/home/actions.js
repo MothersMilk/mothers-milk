@@ -7,17 +7,17 @@ export function checkForToken() {
   return dispatch => {
     const token = getStoredToken();
 
-    if (!token) {
+    if(!token) {
       dispatch({ type: actions.CHECKED_TOKEN });
       return;
     }
 
     dispatch({ type: actions.GOT_TOKEN, payload: token });
 
-    return authApi.verify()
-      .then(id => authApi.getUser())
-      .then(user => dispatch({ type: actions.FETCHED_USER, payload: user }))
-      .catch(error => dispatch({ type: actions.AUTH_FAILED , payload: error }));
+    dispatch({
+      type: actions.FETCHED_USER,
+      payload: authApi.verify().then(id => authApi.getUser(id))
+    });
   };
 }
 
@@ -28,7 +28,10 @@ export function signin(credentials) {
       .then(user => dispatch({ 
         type: actions.FETCHED_USER, 
         payload: authApi.verify().then(id => authApi.getUser(id)) 
-      }));
+      }))
+      .catch(error => {
+        dispatch({ type: actions.ERROR , payload: error });
+      });
   };
 }
 
@@ -40,10 +43,7 @@ export function signin(credentials) {
 // }
 
 export function signup(credentials) {
-  return dispatch => {
-    return authApi.signup(credentials)
-      .then(({ token, newUser }) => dispatch({ type: actions.USER_CREATED, payload: newUser }));
-  };
+  return { type: actions.USER_CREATED, payload: authApi.signup(credentials).then(({ newUser }) => newUser) };
 }
 
 // export function signup(credentials) {
