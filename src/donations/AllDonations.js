@@ -23,23 +23,28 @@ class AllDonations extends PureComponent {
 
   render() {
     const { donations, staffView } = this.props;
+
+    function convertDate(inputFormat) {
+      function pad(s) { return (s < 10) ? '0' + s : s; }
+      const d = new Date(inputFormat);
+      return [pad(d.getMonth()+1), pad(d.getDate()), d.getFullYear()].join('/');
+    }
+
     const tableData = donations.length ? donations.map(item => {
-      const { _id: id, donor, dropSite, quantity, status, date } = item;
+      const { _id: id, donor, dropSite, quantity, status, date, mmbId } = item;
       const editing = this.state.editing === id ? true : false;
       const statusOptions = [ 'Pending','Received', 'Missing'];
       const currentStatusIndex = statusOptions.findIndex(status => status === item.status);
       const options = statusOptions.map((status, i) => i === currentStatusIndex ? <option key={i} value={status}>{status}</option> : <option key={i} value={status}>{status}</option>);
       
-      function convertDate(inputFormat) {
-        function pad(s) { return (s < 10) ? '0' + s : s; }
-        const d = new Date(inputFormat);
-        return [pad(d.getMonth()+1), pad(d.getDate()), d.getFullYear()].join('/');
-      }
 
       return (
         <tr className={editing ? 'animated fadeIn' : null} key={id}>
           <td>
             {date ? convertDate(date) : null}
+          </td>
+          <td>
+            {mmbId ? mmbId : null}
           </td>
           <td>
             {donor ? donor.name : null}
@@ -87,6 +92,7 @@ class AllDonations extends PureComponent {
           <thead>
             <tr>
               <th>Date</th>
+              <th>MMB ID#</th>
               <th>Donor</th>
               <th>Drop Site</th>
               <th>Quantity</th>
