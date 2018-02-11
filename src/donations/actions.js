@@ -1,7 +1,7 @@
 import * as actions from './constants';
 import { UPDATE_USER } from '../users/constants';
-import donationApi from '../services/donation-api';
-import usersApi from '../services/users-api';
+import donationApi from '../services/donationApi';
+import usersApi from '../services/usersApi';
 import io from 'socket.io-client';
 
 const socket = io({ path: '/socket' });

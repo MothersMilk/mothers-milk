@@ -70,7 +70,7 @@ class AllUsers extends PureComponent {
             </td>
             <td>
               { editing ? 
-                <div className="delete is-medium" type="submit" value="Apply Changes" onClick={() => this.setState({ editing: null })}></div> :
+                <div className="delete is-medium" type="submit" onClick={() => this.setState({ editing: null })}></div> :
                 null
               }
             </td>
