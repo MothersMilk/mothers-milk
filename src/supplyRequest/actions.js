@@ -1,5 +1,5 @@
 import * as actions from './constants';
-import supplyRequestApi from '../services/supplyRequest-api';
+import supplyRequestApi from '../services/supplyRequestApi';
 
 export function loadSupplyRequest() {
   return { 
