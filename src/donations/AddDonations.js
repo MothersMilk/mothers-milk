@@ -15,7 +15,15 @@ class AddDonations extends Component {
     };
   }
 
-  handleChange = (event) => {
+  handleMilkDropChange = (event) => {
+    const milkDrop = event.target.checked ? 'milkDrop' : '';
+    this.setState({
+      isChecked: true,
+      milkDrop: milkDrop
+    });
+  }
+
+  handleFedExChange = (event) => {
     const fedExName = event.target.checked ? 'FedEx' : '';
     this.setState({
       isChecked: true,
@@ -46,23 +54,49 @@ class AddDonations extends Component {
   render() {
     const message = 'Thank you for donating!';
     const { dropSites } = this.props;
-    
+
+    return (
+      <div className="tile is-parent hero is-light">
+
+        {(this.state.showMessage) ? <p>{message}</p>
+          : 
+          (<div>
+            <form onSubmit={event => this.handleDonate(event)}>
+              {(this.state.fedExName !== 'FedEx') && (
+                <label for="milk-drop-checkbox" className="subtitle is-6 checkbox is-black"><input type="checkbox" value="milkDrop" onChange={this.handleMilkDropChange}/>&nbsp;Drop off at nearest milk drop</label>)}       {(this.state.milkDrop !== 'milkDrop') && (this.state.fedExName !== 'FedEx') &&  
+              <p className="subtitle is-6">--OR--</p>}
+              {(this.state.milkDrop !== 'milkDrop') && (
+                <label for="FedEx-checkbox" className="subtitle is-6 checkbox is-black"><input type="checkbox" value="FedEx" onChange={this.handleFedExChange}/>&nbsp;Ship milk via FedEx</label>)}
+              {(this.state.milkDrop === 'milkDrop') && (<div className="subtitle is-6 label">Select a drop site location&nbsp;
+                <DropSites dropSites={dropSites}/>
+                <Quantity/>
+                <LastDonation/>
+                <IllnessForm/>
+                <SubmitDonation/>
+              </div>)}
+              {(this.state.fedExName === 'FedEx') && (<div className="subtitle is-6"><Quantity/>
+                <LastDonation/>
+                <IllnessForm/>
+                <SubmitDonation/>
+              </div>)}
+            </form>
+          </div> 
+          
+          )}
+      </div>
+    );
+  }
+}
+{/* start of original code 
     return (
       <div className="tile is-parent hero is-light">        
         {(this.state.showMessage) ? <p>{message}</p> : 
           (<div>
             <form onSubmit={event => this.handleDonate(event)}>
-              {/* <p className="subtitle is-6">Ship milk by FedEx&nbsp;<input type="checkbox" value="FedEx" onChange={this.handleChange}/>
-              </p> */}
-              <label for="FedEx-checkbox" className="subtitle is-6 checkbox"><input type="checkbox" value="FedEx" onChange={this.handleChange}/>&nbsp;Ship milk by FedEx&nbsp;
+              
+              <label for="FedEx-checkbox" className="subtitle is-6 checkbox is-black"><input type="checkbox" value="FedEx" onChange={this.handleChange}/>&nbsp;Ship milk by FedEx&nbsp;
               </label>
-              {/* <div className="field">
-                <div className="control">
-                  <label for="FedEx-checkbox" className="subtitle is-6 checkbox">Ship milk by FedEx&nbsp;
-                  </label>
-                  <input type="checkbox" value="FedEx" onChange={this.handleChange}/>
-                </div>
-              </div> */}
+              
               {(this.state.fedExName !== 'FedEx') && (
                 <div>
                   <p className="subtitle is-6">-- OR --</p>
@@ -73,7 +107,6 @@ class AddDonations extends Component {
                 </div>
               )}
               <br/><br/>
-              {/* <div className="subtitle is-6 label">Quantity(in ounces):</div> */}
               <div className="field">
                 <label for="quantity" className="subtitle is-6 label">Quantity(in ounces):</label>
                 <div className="control">
@@ -99,6 +132,8 @@ class AddDonations extends Component {
     );
   }
 }
+*/}
+
 
 const DropSites = ({ dropSites }) => (
   <div className="select">
@@ -110,7 +145,39 @@ const DropSites = ({ dropSites }) => (
   </div>
 );
 
+const Quantity = () => ( 
+  <div className="field">
+    <div className="subtitle is-6 label">Quantity(in ounces):
+      <input className="input" type="text" name="quantity" placeholder="quantity"/>
+    </div>
+  </div>
+);
+
+const LastDonation = () => (
+  <div className="field">
+    <input name="lastDonation" type="checkbox"/>
+    <div className="subtitle is-6 checkbox is-black">&nbsp;
+    Is this your last donation?
+    </div>
+  </div>
+);
+
+const SubmitDonation = () => (
+  <div>
+    <br/>
+    <button className="button is-primary" type="submit">Submit</button>
+  </div>
+);
+
+const IllnessForm = () => (
+  <div>
+    <input name="illnessForm" type="checkbox"/>
+    <div className="subtitle is-6 checkbox is-black">&nbsp;I have included an illness and travel update with my milk donation
+    </div>
+  </div>
+);
+
 export default connect(
   ({ donations, dropSites = [] }) => ({ donations, dropSites }),
   { addDonation }
-)(AddDonations);
+)(AddDonations);  

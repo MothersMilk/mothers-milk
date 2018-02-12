@@ -37,30 +37,21 @@ class SignIn extends Component {
   render(){
     const { user, signout, loading, error } = this.props;    
     return (
-      <header className="columns header">
-        <div className="column is-3 is-offset-1">
-          <Link to="/"><img alt="logo" src="/images/logo.jpg"/></Link>
-        </div>       
-        <div className="column is-2 is-offset-5">
-          <form className="field signInForm" onSubmit={event => this.handleSignIn(event)}>
-            {!user && <div>
-              <div className="control">
-                <label for="email" className="clip">Email:</label>
-                <input id="email" className="input"  placeholder="email" name="email"/>
-              </div>
-              <div className="control">
-                <label for="password" className="clip">Password:</label>
-                <input id="password" className="input" type="password" placeholder="password" name="password"/>
-              </div>
-              <div className="control">
-                <br/>
-                <input className="button" type="submit"/>
-              </div>
-            </div>}
-            {user  && <NavLink className="button" to="/" onClick={signout}>Logout</NavLink>}
-          </form>
-        </div>
-      </header>
+      <form className="field signInForm" onSubmit={this.handleSignIn}>
+        {!user && <div>
+          <div className="control">
+            <input className="input"  placeholder="email" name="email"/>
+          </div>
+          <div className="control">
+            <input className="input" type="password" placeholder="password" name="password"/>
+          </div>
+          <div className="control">
+            {error ? <div className="button is-danger is-small">Authentication Failed</div> : null}
+            <button className={loading ? 'button is-loading' : 'button'} type="submit">Sign In</button>
+          </div>
+        </div>}
+        {user  && <NavLink className="button" to="/" onClick={signout}>Logout</NavLink>}
+      </form>     
     );
   }
 }

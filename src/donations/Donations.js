@@ -30,9 +30,10 @@ class Donations extends Component {
     const { displayMain, display } = this.state;
     return (
       <div className="tile is-parent">
-        <div className="tile is-child box hero is-info">
+        {/* <div className="tile is-child box hero is-info"> */}
+        <div className="tile is-child box hero">
           <div className="sub-title">
-            <a className="subtitle has-text-success link-hover" onClick={this.handleClick}><strong>Donations</strong></a></div>
+            <a className="subtitle has-text-success link-hover" onClick={this.handleClick}><strong>Make a Donation</strong></a></div>
           {displayMain &&
           <div>
             <hr/>
