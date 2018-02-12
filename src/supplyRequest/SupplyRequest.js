@@ -18,6 +18,14 @@ class SupplyRequest extends Component {
       bags: bags
     });
   }
+
+  handleOrderBoxesChange = (event) => {
+    const boxes = event.target.checked ? 'boxes' : '';
+    this.setState({
+      isChecked: true,
+      boxes: boxes
+    });
+  }
   
   handleSupplyRequest = event => {
     event.preventDefault();
@@ -45,7 +53,8 @@ class SupplyRequest extends Component {
             {this.state.display && (<form onSubmit={this.handleSupplyRequest}>
               <div>
                 <hr/>
-                <label className="subtitle is-6 checkbox is-black"><input type="checkbox" value="bags" onChange={this.handleOrderBagsChange}/>&nbsp;Order MilkCollection Bags</label>
+                <label className="subtitle is-6 checkbox is-black"><input type="checkbox" value="bags" onChange={this.handleOrderBagsChange}/>&nbsp;Order MilkCollection Bags</label><br/>
+                <label className="subtitle is-6 checkbox is-black"><input type="checkbox" value="boxes" onChange={this.handleOrderBoxesChange}/>&nbsp;Order Shipping Boxes</label>
               </div>
             </form>)
             }
