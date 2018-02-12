@@ -31,7 +31,7 @@ class AllDonations extends PureComponent {
     }
 
     const tableData = donations.length ? donations.map(item => {
-      const { _id: id, donor, dropSite, quantity, status, date, mmbId } = item;
+      const { _id: id, donor, dropSite, quantity, status, date, mmbId, notified, lastDonation } = item;
       const editing = this.state.editing === id ? true : false;
       const statusOptions = [ 'Pending','Received', 'Missing'];
       const currentStatusIndex = statusOptions.findIndex(status => status === item.status);
@@ -86,7 +86,7 @@ class AllDonations extends PureComponent {
 
             <form>
               <label class="checkbox">
-                <input type="checkbox"/>
+                <input type="checkbox" checked={notified} />
               </label>
             </form>
 
@@ -94,7 +94,7 @@ class AllDonations extends PureComponent {
           </td>
 
           <td>
-            {item.lastDonation ?
+            {lastDonation ?
               <span class="tag is-danger">Last Donation</span>
               : null}
           </td>
