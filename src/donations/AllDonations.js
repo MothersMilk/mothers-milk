@@ -81,6 +81,13 @@ class AllDonations extends PureComponent {
               null
             }
           </td>
+
+          <td>
+            {item.lastDonation ?
+              <span class="tag is-danger">Last Donation</span>
+              : null}
+          </td>
+
         </tr>
       );
     }): null;
