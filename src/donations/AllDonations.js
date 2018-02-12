@@ -83,6 +83,17 @@ class AllDonations extends PureComponent {
           </td>
 
           <td>
+
+            <form>
+              <label class="checkbox">
+                <input type="checkbox"/>
+              </label>
+            </form>
+
+
+          </td>
+
+          <td>
             {item.lastDonation ?
               <span class="tag is-danger">Last Donation</span>
               : null}
