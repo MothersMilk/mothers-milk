@@ -37,8 +37,7 @@ class AddDonations extends Component {
         dropSite,
         lastDonation: lastDonation.checked,
         donor: user._id,
-        status: 'Awaiting Pickup',
-        quantityReceived: 0
+        status: 'Awaiting Pickup'
       });
     this.setState({ showMessage: true });
     window.setTimeout(() => {
