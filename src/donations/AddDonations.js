@@ -35,7 +35,7 @@ class AddDonations extends Component {
       { 
         quantity: quantity.value,
         dropSite,
-        lastDonation: lastDonation.value,
+        lastDonation: lastDonation.checked,
         donor: user._id,
         status: 'Awaiting Pickup',
         quantityReceived: 0
