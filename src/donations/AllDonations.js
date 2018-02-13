@@ -74,6 +74,15 @@ class AllDonations extends PureComponent {
             }
           </td>
           { !staffView && editing ? <td><button className="button is-small" type="button" value="X" onClick={() => this.handleDelete(id)}>Remove donation</button></td> : null }
+          
+          <td>
+            {<form>
+              <label className="checkbox">
+                <input type="checkbox" checked={notified} onChange={() => this.handleNotified(notified, id)} />
+              </label>
+            </form>}
+          </td>
+          
           <td>
             { editing ? 
               <button className="button is-small" type="submit" value="Apply Changes" onClick={() => this.handleUpdate(id)}>Apply Changes</button> :
@@ -86,16 +95,6 @@ class AllDonations extends PureComponent {
               <div className="delete is-medium" type="submit" value="Apply Changes" onClick={() => this.setState({ editing: null })}></div> :
               null
             }
-          </td>
-
-          <td>
-
-            {<form>
-              <label className="checkbox">
-                <input type="checkbox" checked={notified} onChange={() => this.handleNotified(notified, id)} />
-              </label>
-            </form>}
-
           </td>
 
           <td>
@@ -120,6 +119,7 @@ class AllDonations extends PureComponent {
               <th>Drop Site</th>
               <th>Quantity</th>
               <th>Status</th>
+              <th>Notified</th>
             </tr>
           </thead>
           <tbody>
