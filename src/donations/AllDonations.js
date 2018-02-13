@@ -21,6 +21,11 @@ class AllDonations extends PureComponent {
   
   handleChange = ({ target: input }) => this.setState({ [input.name]: input.value });
 
+  handleNotified = (notified, _id) => {
+    const checked = { notified: !notified };
+    this.props.updateDonation({ ...checked, _id });
+  }
+
   render() {
     const { donations, staffView } = this.props;
 
@@ -31,7 +36,7 @@ class AllDonations extends PureComponent {
     }
 
     const tableData = donations.length ? donations.map(item => {
-      const { _id: id, donor, dropSite, quantity, status, date, mmbId } = item;
+      const { _id: id, donor, dropSite, quantity, status, date, mmbId, notified, lastDonation } = item;
       const editing = this.state.editing === id ? true : false;
       const statusOptions = [ 'Pending','Received', 'Missing'];
       const currentStatusIndex = statusOptions.findIndex(status => status === item.status);
@@ -69,12 +74,22 @@ class AllDonations extends PureComponent {
             }
           </td>
           { !staffView && editing ? <td><button className="button is-small" type="button" value="X" onClick={() => this.handleDelete(id)}>Remove donation</button></td> : null }
+          
+          <td>
+            {<form>
+              <label className="checkbox">
+                <input type="checkbox" checked={notified} onChange={() => this.handleNotified(notified, id)} />
+              </label>
+            </form>}
+          </td>
+          
           <td>
             { editing ? 
               <button className="button is-small" type="submit" value="Apply Changes" onClick={() => this.handleUpdate(id)}>Apply Changes</button> :
               <button className="button is-small" type="button" value="✎" onClick={() => this.setState({ editing: id, show: !this.state.show })}>Edit</button> 
             }
           </td>
+
           <td>
             { editing ? 
               <div className="delete is-medium" type="submit" value="Apply Changes" onClick={() => this.setState({ editing: null })}></div> :
@@ -83,8 +98,8 @@ class AllDonations extends PureComponent {
           </td>
 
           <td>
-            {item.lastDonation ?
-              <span class="tag is-danger">Last Donation</span>
+            {lastDonation ?
+              <span className="tag is-danger">Last Donation</span>
               : null}
           </td>
 
@@ -104,6 +119,7 @@ class AllDonations extends PureComponent {
               <th>Drop Site</th>
               <th>Quantity</th>
               <th>Status</th>
+              <th>Notified</th>
             </tr>
           </thead>
           <tbody>
