@@ -21,11 +21,10 @@ class AllDonations extends PureComponent {
   
   handleChange = ({ target: input }) => this.setState({ [input.name]: input.value });
 
-  handleNotified = (_id, notified) => {
-    this.setState({ notified: !notified });
-    this.props.updateDonation({ ...this.state, _id });
+  handleNotified = (notified, _id) => {
+    const checked = { notified: !notified };
+    this.props.updateDonation({ ...checked, _id });
   }
-
 
   render() {
     const { donations, staffView } = this.props;
@@ -81,6 +80,7 @@ class AllDonations extends PureComponent {
               <button className="button is-small" type="button" value="✎" onClick={() => this.setState({ editing: id, show: !this.state.show })}>Edit</button> 
             }
           </td>
+
           <td>
             { editing ? 
               <div className="delete is-medium" type="submit" value="Apply Changes" onClick={() => this.setState({ editing: null })}></div> :
@@ -90,12 +90,11 @@ class AllDonations extends PureComponent {
 
           <td>
 
-            <form>
+            {<form>
               <label className="checkbox">
-                <input type="checkbox" checked={notified} onChange={(_id => this.handleNotified(_id, notified))} />
+                <input type="checkbox" checked={notified} onChange={() => this.handleNotified(notified, id)} />
               </label>
-            </form>
-
+            </form>}
 
           </td>
 
