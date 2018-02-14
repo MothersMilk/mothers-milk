@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+
+//TODO: either use this component or get rid of it
 class DonorInfo extends Component {
   render() {
     return(
