@@ -52,9 +52,6 @@ class AllDonations extends PureComponent {
             {mmbId ? mmbId : null}
           </td>
           <td>
-            {donor ? donor.name : null}
-          </td>
-          <td>
             {dropSite ? dropSite.name : null}
           </td>
           <td>
@@ -115,7 +112,6 @@ class AllDonations extends PureComponent {
             <tr>
               <th>Date</th>
               <th>MMB ID#</th>
-              <th>Donor</th>
               <th>Drop Site</th>
               <th>Quantity</th>
               <th>Status</th>
