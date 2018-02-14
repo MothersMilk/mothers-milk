@@ -8,7 +8,6 @@ export function user(state = null, { type, payload }) {
     case actions.FETCHED_USER:
       return payload;
     case actions.LOGOUT:
-    case actions.AUTH_FAILED:
       return null;
     default:
       return state;
@@ -20,7 +19,6 @@ export function token(state = null, { type, payload }) {
     case actions.GOT_TOKEN:
       return payload;
     case actions.LOGOUT:
-    case actions.AUTH_FAILED:
       return null;
     default:
       return state;
@@ -29,8 +27,6 @@ export function token(state = null, { type, payload }) {
 
 export function error(state = null, { type, payload }) {
   switch(type) {
-    case actions.AUTH_FAILED:
-      return payload;
     case actions.GOT_TOKEN:
     case actions.LOGOUT:
     case actions.FETCHED_USER:
@@ -44,7 +40,6 @@ export function checkedToken(state = null, { type, payload }) {
   switch(type) {
     case actions.CHECKED_TOKEN:
     case actions.FETCHED_USER:
-    case actions.AUTH_FAILED:
       return true;
     default:
       return state;

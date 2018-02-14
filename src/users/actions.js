@@ -1,7 +1,7 @@
 import * as actions from './constants';
 import { LOAD_DONATIONS } from '../donations/constants';
-import usersApi from '../services/users-api';
-import donationApi from '../services/donation-api';
+import usersApi from '../services/usersApi';
+import donationApi from '../services/donationApi';
 
 
 export function loadUsers() {
