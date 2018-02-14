@@ -27,6 +27,7 @@ class AddDonations extends Component {
   handleDonate = event => {
     event.preventDefault();
     let { dropSite, quantity, lastDonation } = event.target.elements;
+    if (!quantity.value || isNaN(quantity.value)) return;
     const { user } = this.props;
     dropSite = this.state.isChecked ? this.state.dropSite : dropSite.value;
     this.setState({ myDropSite: dropSite._id });
