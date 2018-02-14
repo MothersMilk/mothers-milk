@@ -12,7 +12,8 @@ class AddDonations extends Component {
       // dropSite: '5a33ee322d693f852640e2ee', for dev 
       dropSite: '5a34258e7bf84a00216aad89',
       isChecked: false,
-      fedExName: ''
+      fedExName: '',
+      invalidWarning: false
     };
   }
 
@@ -27,23 +28,31 @@ class AddDonations extends Component {
   handleDonate = event => {
     event.preventDefault();
     let { dropSite, quantity, lastDonation } = event.target.elements;
-    if (!quantity.value || isNaN(quantity.value)) return;
-    const { user } = this.props;
-    dropSite = this.state.isChecked ? this.state.dropSite : dropSite.value;
-    this.setState({ myDropSite: dropSite._id });
-    this.props.checkForToken();
-    this.props.addDonation(
-      { 
-        quantity: quantity.value,
-        dropSite,
-        lastDonation: lastDonation.checked,
-        donor: user._id,
-        status: 'Awaiting Pickup'
+    if (!quantity.value || isNaN(quantity.value)) {
+      this.setState({ invalidWarning: true });
+    }
+
+    else {
+      const { user } = this.props;
+      dropSite = this.state.isChecked ? this.state.dropSite : dropSite.value;
+      this.setState({ 
+        myDropSite: dropSite._id, 
+        invalidWarning: false 
       });
-    this.setState({ showMessage: true });
-    window.setTimeout(() => {
-      this.setState({ showMessage: false });
-    }, 4000);
+      this.props.checkForToken();
+      this.props.addDonation(
+        { 
+          quantity: quantity.value,
+          dropSite,
+          lastDonation: lastDonation.checked,
+          donor: user._id,
+          status: 'Awaiting Pickup'
+        });
+      this.setState({ showMessage: true });
+      window.setTimeout(() => {
+        this.setState({ showMessage: false });
+      }, 4000);
+    }
   }
 
   render() {
@@ -67,7 +76,9 @@ class AddDonations extends Component {
               <br/><br/>
               <div className="subtitle is-6 label">Quantity(in ounces):</div>
               <input className="button is-outlined" name="quantity" placeholder="quantity"/>
-              <br/><br/>
+              <br/>
+              { this.state.invalidWarning && <span className="tag is-danger">Quantity must be a number</span> }
+              <br/>
               <div className="subtitle is-6 label">Is this your last donation?&nbsp;<input name="lastDonation" type="checkbox"/></div>
               <br/><br/>
               <button className="button is-primary" type="submit">Submit</button>
