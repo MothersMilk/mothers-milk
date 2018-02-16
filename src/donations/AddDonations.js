@@ -49,6 +49,7 @@ class AddDonations extends Component {
           donor: user._id,
           status: 'Awaiting Pickup'
         });
+      event.target.reset();
     }
   }
 
