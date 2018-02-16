@@ -38,7 +38,8 @@ class AddDonations extends Component {
       dropSite = this.state.isChecked ? this.state.dropSite : dropSite.value;
       this.setState({ 
         myDropSite: dropSite._id, 
-        invalidWarning: false 
+        invalidWarning: false,
+        justDonated: true
       });
       this.props.checkForToken();
       this.props.addDonation(
@@ -49,10 +50,10 @@ class AddDonations extends Component {
           donor: user._id,
           status: 'Awaiting Pickup'
         });
-      this.setState({ showMessage: true });
-      window.setTimeout(() => {
-        this.setState({ showMessage: false });
-      }, 4000);
+      // this.setState({ showMessage: true });
+      // window.setTimeout(() => {
+      //   this.setState({ showMessage: false });
+      // }, 4000);
     }
   }
 
@@ -82,7 +83,14 @@ class AddDonations extends Component {
               <br/>
               <div className="subtitle is-6 label">Is this your last donation?&nbsp;<input name="lastDonation" type="checkbox"/></div>
               <br/><br/>
-              <button className="button is-primary" type="submit">Submit</button>
+
+              { this.state.justDonated 
+                ? <div className="notification is-danger" onClick={() => this.setState({ justDonated: false })}>
+                  You're amazing! Thanks for helping us save babies across the Pacific Northwest and beyond
+                </div> 
+                : <button className="button is-primary" type="submit">Submit</button>
+              }
+
               <br/><br/>
             </form>             
           </div>)
