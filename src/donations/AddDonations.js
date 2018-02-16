@@ -13,7 +13,8 @@ class AddDonations extends Component {
       dropSite: '5a34258e7bf84a00216aad89',
       isChecked: false,
       fedExName: '',
-      invalidWarning: false
+      invalidWarning: false,
+      justDonated: false
     };
   }
 
