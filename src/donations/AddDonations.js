@@ -8,7 +8,6 @@ class AddDonations extends Component {
   constructor(){
     super();
     this.state = {
-      showMessage: false,
       // dropSite: '5a33ee322d693f852640e2ee', for dev 
       dropSite: '5a34258e7bf84a00216aad89',
       isChecked: false,
@@ -50,51 +49,44 @@ class AddDonations extends Component {
           donor: user._id,
           status: 'Awaiting Pickup'
         });
-      // this.setState({ showMessage: true });
-      // window.setTimeout(() => {
-      //   this.setState({ showMessage: false });
-      // }, 4000);
     }
   }
 
   render() {
-    const message = 'Thank you for donating!';
     const { dropSites, myDropSite } = this.props;
     return (
       <div className="tile is-parent hero is-light">        
-        {(this.state.showMessage) ? <p>{message}</p> : 
-          (<div>
-            <form onSubmit={event => this.handleDonate(event)}>
-              <p className="subtitle is-6">Ship milk by FedEx   &nbsp;<input type="checkbox" value="FedEx" onChange={this.handleChange}/>
-              </p>
-              {(this.state.fedExName !== 'FedEx') && (
-                <div>
-                  <p className="subtitle is-6">-- OR --</p>
-                  <p className="subtitle is-6">Drop at nearest milk drop location</p>
-                  <div className="subtitle is-6 label">Select a drop site location</div>
-                  <DropSites myDropSite={myDropSite} dropSites={dropSites}/>
-                </div>
-              )}
-              <br/><br/>
-              <div className="subtitle is-6 label">Quantity(in ounces):</div>
-              <input className="button is-outlined" name="quantity" placeholder="quantity"/>
-              <br/>
-              { this.state.invalidWarning && <span className="tag is-danger">Quantity must be a number</span> }
-              <br/>
-              <div className="subtitle is-6 label">Is this your last donation?&nbsp;<input name="lastDonation" type="checkbox"/></div>
-              <br/><br/>
+        <div>
+          <form onSubmit={event => this.handleDonate(event)}>
+            <p className="subtitle is-6">Ship milk by FedEx   &nbsp;<input type="checkbox" value="FedEx" onChange={this.handleChange}/>
+            </p>
+            {(this.state.fedExName !== 'FedEx') && (
+              <div>
+                <p className="subtitle is-6">-- OR --</p>
+                <p className="subtitle is-6">Drop at nearest milk drop location</p>
+                <div className="subtitle is-6 label">Select a drop site location</div>
+                <DropSites myDropSite={myDropSite} dropSites={dropSites}/>
+              </div>
+            )}
+            <br/><br/>
+            <div className="subtitle is-6 label">Quantity(in ounces):</div>
+            <input className="button is-outlined" name="quantity" placeholder="quantity"/>
+            <br/>
+            { this.state.invalidWarning && <span className="tag is-danger">Quantity must be a number</span> }
+            <br/>
+            <div className="subtitle is-6 label">Is this your last donation?&nbsp;<input name="lastDonation" type="checkbox"/></div>
+            <br/><br/>
 
-              { this.state.justDonated 
-                ? <div className="notification is-danger" onClick={() => this.setState({ justDonated: false })}>
+            { this.state.justDonated 
+              ? <div className="notification is-danger" onClick={() => this.setState({ justDonated: false })}>
                   You're amazing! Thanks for helping us save babies across the Pacific Northwest and beyond
-                </div> 
-                : <button className="button is-primary" type="submit">Submit</button>
-              }
+              </div> 
+              : <button className="button is-primary" type="submit">Submit</button>
+            }
 
-              <br/><br/>
-            </form>             
-          </div>)
-        }
+            <br/><br/>
+          </form>             
+        </div>
       </div>
     );
   }
