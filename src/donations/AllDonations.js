@@ -38,7 +38,7 @@ class AllDonations extends PureComponent {
     const tableData = donations.length ? donations.map(item => {
       const { _id: id, dropSite, quantity, status, date, mmbId, notified, lastDonation } = item;
       const editing = this.state.editing === id ? true : false;
-      const statusOptions = [ 'Pending','Received', 'Missing'];
+      const statusOptions = ['Awaiting Pickup', 'Received', 'At Milk Drop', 'Shipped to Milk Bank'];
       const currentStatusIndex = statusOptions.findIndex(status => status === item.status);
       const options = statusOptions.map((status, i) => i === currentStatusIndex ? <option key={i} value={status}>{status}</option> : <option key={i} value={status}>{status}</option>);
       
