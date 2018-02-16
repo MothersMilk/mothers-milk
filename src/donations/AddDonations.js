@@ -49,7 +49,7 @@ class AddDonations extends Component {
           donor: user._id,
           status: 'Awaiting Pickup'
         });
-      event.target.reset();
+      // event.target.reset();
     }
   }
 
@@ -71,7 +71,7 @@ class AddDonations extends Component {
             )}
             <br/><br/>
             <div className="subtitle is-6 label">Quantity(in ounces):</div>
-            <input className="button is-outlined" name="quantity" placeholder="quantity"/>
+            <input className="button is-outlined" id="quantity" placeholder="quantity"/>
             <br/>
             { this.state.invalidWarning && <span className="tag is-danger">Quantity must be a number</span> }
             <br/>
