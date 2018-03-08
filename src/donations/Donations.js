@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { loadMyDonations } from '../donations/actions';
 import { connect } from 'react-redux';
 import { checkForToken } from '../home/actions';
-import AddDonation from './AddDonations';
+import AddDonations from './AddDonations';
 
 class Donations extends Component {
 
@@ -37,7 +37,7 @@ class Donations extends Component {
           {displayMain &&
           <div>
             <hr/>
-            <AddDonation user={user}/>
+            <AddDonations user={user}/>
             <hr/>
             <button className="button is-light" onClick={() =>  this.setState({ display: true  })}>My Donation Total</button>
             {display && 

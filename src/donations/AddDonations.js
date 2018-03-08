@@ -21,6 +21,7 @@ class AddDonations extends Component {
       isChecked: true,
       milkDrop: milkDrop
     });
+    console.log('in milkDropChange isChecked', this.state.isChecked);
   }
 
   handleFedExChange = (event) => {
@@ -29,6 +30,8 @@ class AddDonations extends Component {
       isChecked: true,
       fedExName: fedExName
     });
+
+    console.log('in FedEx isChecked', this.state.isChecked);
   }
 
   handleDonate = event => {
@@ -69,6 +72,7 @@ class AddDonations extends Component {
                 <label for="FedEx-checkbox" className="subtitle is-6 checkbox is-black"><input type="checkbox" value="FedEx" onChange={this.handleFedExChange}/>&nbsp;Ship milk via FedEx</label>)}
               {(this.state.milkDrop === 'milkDrop') && (<div className="subtitle is-6 label">Select a drop site location&nbsp;
                 <DropSites dropSites={dropSites}/>
+                <div className="need-space"></div>
                 <Quantity/>
                 <LastDonation/>
                 <IllnessForm/>
@@ -87,52 +91,7 @@ class AddDonations extends Component {
     );
   }
 }
-{/* start of original code 
-    return (
-      <div className="tile is-parent hero is-light">        
-        {(this.state.showMessage) ? <p>{message}</p> : 
-          (<div>
-            <form onSubmit={event => this.handleDonate(event)}>
-              
-              <label for="FedEx-checkbox" className="subtitle is-6 checkbox is-black"><input type="checkbox" value="FedEx" onChange={this.handleChange}/>&nbsp;Ship milk by FedEx&nbsp;
-              </label>
-              
-              {(this.state.fedExName !== 'FedEx') && (
-                <div>
-                  <p className="subtitle is-6">-- OR --</p>
-                  <p className="subtitle is-6">Drop at nearest milk drop location
-                  </p>
-                  <div className="subtitle is-6 label">Select a drop site location</div>
-                  <DropSites dropSites={dropSites}/>
-                </div>
-              )}
-              <br/><br/>
-              <div className="field">
-                <label for="quantity" className="subtitle is-6 label">Quantity(in ounces):</label>
-                <div className="control">
-                  <input className="input" type="text" name="quantity" placeholder="quantity"/>
-                </div>
-              </div>
-              <br/><br/>
-              <div className="field">
-                <div className="control">
-                  <label className="subtitle is-6 label">Is this your last donation?&nbsp;
-                    <input name="lastDonation" type="checkbox"/>
-                  </label>
-                </div>
-              </div>
-              <br/><br/>
-              <button className="button is-primary" type="submit">Submit</button>
-              <br/><br/>
-            </form>             
-          </div>
-          )
-        }
-      </div>
-    );
-  }
-}
-*/}
+
 
 
 const DropSites = ({ dropSites }) => (
