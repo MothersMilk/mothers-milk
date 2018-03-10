@@ -1,7 +1,7 @@
 import * as actions from './constants';
 import { LOAD_DONATIONS } from '../donations/constants';
-import usersApi from '../services/users-api';
-import donationApi from '../services/donation-api';
+import usersApi from '../services/usersApi';
+import donationApi from '../services/donationApi';
 
 
 export function loadUsers() {
@@ -11,10 +11,10 @@ export function loadUsers() {
   };
 }
 
-export function updateUser(dropSite) {
+export function updateUser(user) {
   return {
     type: actions.UPDATE_USER,
-    payload: usersApi.update(dropSite)
+    payload: usersApi.update(user)
   };
 }
 
@@ -23,12 +23,10 @@ export function deleteUser(id) {
     dispatch({
       type: actions.DELETE_USER,
       payload: usersApi.remove(id).then(() => id) 
-    })
-      .then(() => {
-        return dispatch({
-          type: LOAD_DONATIONS,
-          payload: donationApi.get()
-        });
-      });
+    });
+    dispatch({
+      type: LOAD_DONATIONS,
+      payload: donationApi.get()
+    });
   };
 }

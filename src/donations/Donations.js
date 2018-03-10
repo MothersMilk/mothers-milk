@@ -39,7 +39,13 @@ class Donations extends Component {
             <hr/>
             <AddDonations user={user}/>
             <hr/>
-            <button className="button is-light" onClick={() =>  this.setState({ display: true  })}>My Donation Total</button>
+{/* Michele Code */}
+            {/* <button className="button is-light" onClick={() =>  this.setState({ display: true  })}>My Donation Total</button> */}
+{/* Robin code */}
+            <button className="button is-light" onClick={() => this.setState({ display: !this.state.display })}>My Donations</button>
+            
+            {display && TotalDisplay(donations)}
+
             {display && 
             <table className="table is-fullwidth is-striped">
               <thead>
@@ -87,21 +93,37 @@ class Row extends Component {
   }
 }
 
-class TotalDisplay extends Component {
+// class TotalDisplay extends Component {
   
-  render() {
-    const { donations } = this.props;
+//   render() {
+//     const { donations } = this.props;
     
-    const total = donations.reduce((acc = 0, e) => {
-      return acc + e.quantity;
-    }, 0);
+//     const total = donations.reduce((acc = 0, e) => {
+//       return acc + e.quantity;
+//     }, 0);
 
-    function convertToGal(num) {
-      return (num < 128) ? `${num} Oz.` : `${Math.floor(num/128)} gal. , ${num%128} oz.`;
-    }
+//     function convertToGal(num) {
+//       return (num < 128) ? `${num} Oz.` : `${Math.floor(num/128)} gal. , ${num%128} oz.`;
+//     }
 
-    return(
-      <h1>Estimated Total: {convertToGal(total)}</h1>
-    );
+//     return(
+//       <h1>Estimated Total: {convertToGal(total)}</h1>
+//     );
+//   }
+// }
+
+function TotalDisplay(donations){
+      
+  const total = donations.reduce((acc = 0, e) => {
+    return acc + e.quantity;
+  }, 0);
+  
+  function convertToGal(num) {
+    return (num < 128) ? `${num} Oz.` : `${Math.floor(num/128)} gal. , ${num%128} oz.`;
   }
+  
+  return(
+    <h1>Estimated Total: {convertToGal(total)}</h1>
+  );
+  
 }

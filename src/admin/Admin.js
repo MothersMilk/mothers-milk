@@ -10,25 +10,40 @@ class Admin extends Component {
 
   handleSignUp = event => {
     event.preventDefault();
-    const { email, password, name, roles } = event.target.elements;
-    this.props.signup(
-      { 
-        name: name.value,
-        email: email.value,
-        password: password.value, 
-        roles: roles.value
-      });
+    const { email, password, name, roles, mmbId } = event.target.elements;
+    event.persist();
+    try {
+      this.props.signup(
+        { 
+          mmbId: mmbId.value,
+          name: name.value,
+          email: email.value,
+          password: password.value, 
+          roles: roles.value
+        })
+        .then(() => event.target.reset());
+    }
+    catch(err) {
+      throw err;
+    }
   }
 
   handleAddDropSite = event => {
     event.preventDefault();
     const { address, name, hours } = event.target.elements;
-    this.props.addDropSite(
-      { 
-        name: name.value,
-        hours: hours.value,
-        address: address.value
-      });
+    event.persist();
+    try{
+      this.props.addDropSite(
+        { 
+          name: name.value,
+          hours: hours.value,
+          address: address.value
+        })
+        .then(() => event.target.reset());
+    }
+    catch(err) {
+      throw err;
+    }
   }
 
   render() {
@@ -50,6 +65,7 @@ class Admin extends Component {
         <div className="need-space"></div>
         <h3><strong>Create New User:</strong></h3>
         <form onSubmit={event => this.handleSignUp(event)}>
+          <label>MMB ID#: <input name="mmbId"/></label>
           <label>name: <input name="name"/></label>
           <label>role: 
             <select name="roles">

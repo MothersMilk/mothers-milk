@@ -19,7 +19,6 @@ export default {
   },
 
   remove(id) {
-
     return request.delete(`/donations/${id}`);
   }
 };

@@ -31,6 +31,12 @@ class AllUsers extends PureComponent {
           <tr className={editing ? 'animated fadeIn' : null} key={id}>
             <td>
               { editing ?
+                <input className="input is-small" type="text" defaultValue={item.mmbId} name="mmbId" onChange={event => this.handleChange(event)}/> :
+                item.mmbId
+              }
+            </td>
+            <td>
+              { editing ?
                 <input className="input is-small" type="text" defaultValue={item.email} name="email" onChange={event => this.handleChange(event)}/> :
                 item.email
               }
@@ -64,7 +70,7 @@ class AllUsers extends PureComponent {
             </td>
             <td>
               { editing ? 
-                <div className="delete is-medium" type="submit" value="Apply Changes" onClick={() => this.setState({ editing: null })}></div> :
+                <div className="delete is-medium" type="submit" onClick={() => this.setState({ editing: null })}></div> :
                 null
               }
             </td>
@@ -78,6 +84,7 @@ class AllUsers extends PureComponent {
           <table className="table is-striped is-hoverable">
             <thead>
               <tr>
+                <th>MMB ID#</th>
                 <th>Email</th>
                 <th>Name</th>
                 <th>Roles</th>
