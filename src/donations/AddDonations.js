@@ -10,30 +10,34 @@ class AddDonations extends Component {
     this.state = {
       // dropSite: '5a33ee322d693f852640e2ee', for dev 
       dropSite: '5a34258e7bf84a00216aad89',
-      isChecked: false,
+      isCheckedFedEx: false,
+      isCheckedMilkDrop: false,
       fedExName: '',
       invalidWarning: false,
       justDonated: false
     };
+    this.handleMilkDropChange = this.handleMilkDropChange.bind(this);
   }
 
-  handleMilkDropChange = (event) => {
+  handleMilkDropChange(event) {
+    const checked = this.state.isCheckedMilkDrop;
     const milkDrop = event.target.checked ? 'milkDrop' : '';
     this.setState({
-      isChecked: true,
+      isCheckedMilkDrop: !checked,
       milkDrop: milkDrop
     });
-    console.log('in milkDropChange isChecked', this.state.isChecked);
+    console.log('in milkDropChange isChecked', this.state.isCheckedMilkDrop);
   }
 
   handleFedExChange = (event) => {
+    const checked = this.state.isCheckedFedEx;
     const fedExName = event.target.checked ? 'FedEx' : '';
     this.setState({
-      isChecked: true,
+      isCheckedFedEx: !checked,
       fedExName: fedExName
     });
 
-    console.log('in FedEx isChecked', this.state.isChecked);
+    console.log('in FedEx isChecked', this.state.isCheckedFedEx);
   }
 
   handleDonate = event => {
@@ -45,7 +49,7 @@ class AddDonations extends Component {
 
     else {
       const { user } = this.props;
-      dropSite = this.state.isChecked ? this.state.dropSite : dropSite.value;
+      dropSite = this.state.isCheckedMilkDrop ? this.state.dropSite : dropSite.value;
       this.setState({ 
         myDropSite: dropSite._id, 
         invalidWarning: false,
@@ -77,10 +81,11 @@ class AddDonations extends Component {
           (<div>
             <form onSubmit={event => this.handleDonate(event)}>
               {(this.state.fedExName !== 'FedEx') && (
-                <label for="milk-drop-checkbox" className="subtitle is-6 checkbox is-black"><input type="checkbox" value="milkDrop" onChange={this.handleMilkDropChange}/>&nbsp;Drop off at nearest milk drop</label>)}       {(this.state.milkDrop !== 'milkDrop') && (this.state.fedExName !== 'FedEx') &&  
+                <label className="subtitle is-6 checkbox is-black"><input type="checkbox" value="milkDrop" onChange={this.handleMilkDropChange}/>&nbsp;Drop off at nearest milk drop</label>)}       
+              {(this.state.milkDrop !== 'milkDrop') && (this.state.fedExName !== 'FedEx') &&  
               <p className="subtitle is-6">--OR--</p>}
               {(this.state.milkDrop !== 'milkDrop') && (
-                <label for="FedEx-checkbox" className="subtitle is-6 checkbox is-black"><input type="checkbox" value="FedEx" onChange={this.handleFedExChange}/>&nbsp;Ship milk via FedEx</label>)}
+                <label className="subtitle is-6 checkbox is-black"><input type="checkbox" value="FedEx" onChange={this.handleFedExChange}/>&nbsp;Ship milk via FedEx</label>)}
               {(this.state.milkDrop === 'milkDrop') && (<div className="subtitle is-6 label">Select a drop site location&nbsp;
                 <DropSites myDropSite={myDropSite} dropSites={dropSites}/>
                 <div className="need-space"></div>
@@ -89,7 +94,8 @@ class AddDonations extends Component {
                 <IllnessForm/>
                 <SubmitDonation/>
               </div>)}
-              {(this.state.fedExName === 'FedEx') && (<div className="subtitle is-6"><Quantity/>
+              {(this.state.fedExName === 'FedEx') && (<div className="subtitle is-6">
+                <Quantity/>
                 <LastDonation/>
                 <IllnessForm/>
                 <SubmitDonation/>
@@ -110,9 +116,6 @@ class AddDonations extends Component {
     );
   }
 }
-
-
-
 
 const DropSites = ({ dropSites }) => (
   <div className="select">
@@ -140,7 +143,7 @@ const DropSites = ({ dropSites }) => (
 const Quantity = () => ( 
   <div className="field">
     <div className="subtitle is-6 label">Quantity(in ounces):
-      <input className="input" type="text" name="quantity" placeholder="quantity"/>
+      <input className="input" type="text" id="quantity" placeholder="quantity"/>
       {/* <input className="button is-outlined" id="quantity" placeholder="quantity" onSubmit={this.handleChange}/>
     <br/>
             { this.state.invalidWarning && <span className="tag is-danger">Quantity must be a number</span> }

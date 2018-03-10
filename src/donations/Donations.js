@@ -39,9 +39,9 @@ class Donations extends Component {
             <hr/>
             <AddDonations user={user}/>
             <hr/>
-{/* Michele Code */}
+            {/* Michele Code */}
             {/* <button className="button is-light" onClick={() =>  this.setState({ display: true  })}>My Donation Total</button> */}
-{/* Robin code */}
+            {/* Robin code */}
             <button className="button is-light" onClick={() => this.setState({ display: !this.state.display })}>My Donations</button>
             
             {display && TotalDisplay(donations)}
