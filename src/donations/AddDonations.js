@@ -12,8 +12,8 @@ class AddDonations extends Component {
       dropSite: '5a34258e7bf84a00216aad89',
       isCheckedFedEx: false,
       isCheckedMilkDrop: false,
-      fedExName: '',
       invalidWarning: false,
+      showMessage: false,
       justDonated: false
     };
     this.handleMilkDropChange = this.handleMilkDropChange.bind(this);
@@ -21,23 +21,16 @@ class AddDonations extends Component {
 
   handleMilkDropChange(event) {
     const checked = this.state.isCheckedMilkDrop;
-    const milkDrop = event.target.checked ? 'milkDrop' : '';
     this.setState({
-      isCheckedMilkDrop: !checked,
-      milkDrop: milkDrop
+      isCheckedMilkDrop: !checked
     });
-    console.log('in milkDropChange isChecked', this.state.isCheckedMilkDrop);
   }
 
   handleFedExChange = (event) => {
     const checked = this.state.isCheckedFedEx;
-    const fedExName = event.target.checked ? 'FedEx' : '';
     this.setState({
-      isCheckedFedEx: !checked,
-      fedExName: fedExName
+      isCheckedFedEx: !checked
     });
-
-    console.log('in FedEx isChecked', this.state.isCheckedFedEx);
   }
 
   handleDonate = event => {
@@ -49,10 +42,11 @@ class AddDonations extends Component {
 
     else {
       const { user } = this.props;
-      dropSite = this.state.isCheckedMilkDrop ? this.state.dropSite : dropSite.value;
+      dropSite = this.state.isCheckedMilkDrop ? this.state.dropSite : this.state.dropSite.value;
       this.setState({ 
         myDropSite: dropSite._id, 
         invalidWarning: false,
+        showMessage: true,
         justDonated: true
       });
       this.props.checkForToken();
@@ -70,8 +64,8 @@ class AddDonations extends Component {
 
   render() {
 
-    const message = 'Thank you for donating!';
-    const { dropSites, myDropSite } = this.props;
+    const message = 'You\'re amazing! Thanks for helping us save babies across the Pacific Northwest and beyond!';
+    const { dropSites, myDropSite, invalidWarning } = this.props;
 
     return (
       <div className="tile is-parent hero is-light">
@@ -80,32 +74,34 @@ class AddDonations extends Component {
           : 
           (<div>
             <form onSubmit={event => this.handleDonate(event)}>
-              {(this.state.fedExName !== 'FedEx') && (
+              {(!this.state.isCheckedFedEx) && (
                 <label className="subtitle is-6 checkbox is-black"><input type="checkbox" value="milkDrop" onChange={this.handleMilkDropChange}/>&nbsp;Drop off at nearest milk drop</label>)}       
-              {(this.state.milkDrop !== 'milkDrop') && (this.state.fedExName !== 'FedEx') &&  
+              {(!this.state.isCheckedMilkDrop) && (!this.state.isCheckedFedEx) &&  
               <p className="subtitle is-6">--OR--</p>}
-              {(this.state.milkDrop !== 'milkDrop') && (
+              {(!this.state.isCheckedMilkDrop) && (
                 <label className="subtitle is-6 checkbox is-black"><input type="checkbox" value="FedEx" onChange={this.handleFedExChange}/>&nbsp;Ship milk via FedEx</label>)}
-              {(this.state.milkDrop === 'milkDrop') && (<div className="subtitle is-6 label">Select a drop site location&nbsp;
+              {(this.state.isCheckedMilkDrop) && (<div className="subtitle is-6 label">Select a drop site location&nbsp;
                 <DropSites myDropSite={myDropSite} dropSites={dropSites}/>
                 <div className="need-space"></div>
-                <Quantity/>
+                <Quantity invalidWarning={invalidWarning}/>
+                
+      { !invalidWarning && <span className="tag is-danger">Quantity must be a number</span> }
                 <LastDonation/>
                 <IllnessForm/>
                 <SubmitDonation/>
               </div>)}
-              {(this.state.fedExName === 'FedEx') && (<div className="subtitle is-6">
+              {(this.state.isCheckedFedEx) && (<div className="subtitle is-6">
                 <Quantity/>
                 <LastDonation/>
                 <IllnessForm/>
                 <SubmitDonation/>
               </div>)}
               {/* { this.state.justDonated 
-              ? <div className="notification is-danger" onClick={() => this.setState({ justDonated: false })}>
+                ? <div className="notification is-danger" onClick={() => this.setState({ justDonated: false })}>
                   You're amazing! Thanks for helping us save babies across the Pacific Northwest and beyond
-              </div> 
-              : <button className="button is-primary" type="submit">Submit</button>
-            } */}
+                </div> 
+                : <button className="button is-primary" type="submit">Submit</button>
+              } */}
 
             </form>
           </div> 
@@ -117,37 +113,37 @@ class AddDonations extends Component {
   }
 }
 
-const DropSites = ({ dropSites }) => (
-  <div className="select">
-    <select name="dropSite" className="button is-outlined is-size-6">
-      {dropSites.map(dropSite => (
-        <option key={dropSite._id} value={dropSite._id}>{dropSite.name}</option>
-      ))}
-    </select>
-  </div>
-);
+// const DropSites = ({ dropSites }) => (
+//   <div className="select">
+//     <select name="dropSite" className="button is-outlined is-size-6">
+//       {dropSites.map(dropSite => (
+//         <option key={dropSite._id} value={dropSite._id}>{dropSite.name}</option>
+//       ))}
+//     </select>
+//   </div>
+// );
 // Robin's code
-// const DropSites = function ({ dropSites, myDropSite = null, onSubmit }){
-//   const selected = myDropSite ? dropSites.find(dropSite => dropSite._id === myDropSite) : dropSites[0]._id;
-//   return (
-//     <div className="select">
-//       <select defaultValue={selected._id} name="dropSite" className="button is-outlined is-size-6">
-//         {dropSites.map(dropSite => {
-//           return (<option key={dropSite._id} value={dropSite._id}> {dropSite.name} </option>);
-//         })}
-//       </select>
-//     </div>
-//   );
-// };
+const DropSites = function ({ dropSites, myDropSite = null, onSubmit }){
+  const selected = myDropSite ? dropSites.find(dropSite => dropSite._id === myDropSite) : dropSites[0]._id;
+  return (
+    <div className="select">
+      <select defaultValue={selected._id} name="dropSite" className="button is-outlined is-size-6">
+        {dropSites.map(dropSite => {
+          return (<option key={dropSite._id} value={dropSite._id}> {dropSite.name} </option>);
+        })}
+      </select>
+    </div>
+  );
+};
 
-const Quantity = () => ( 
+const Quantity = ({ invalidWarning }) => ( 
   <div className="field">
     <div className="subtitle is-6 label">Quantity(in ounces):
-      <input className="input" type="text" id="quantity" placeholder="quantity"/>
-      {/* <input className="button is-outlined" id="quantity" placeholder="quantity" onSubmit={this.handleChange}/>
-    <br/>
-            { this.state.invalidWarning && <span className="tag is-danger">Quantity must be a number</span> }
-            <br/> */}
+      {/* <input className="input" type="text" id="quantity" placeholder="quantity"/> */}
+      <input className="button is-outlined" id="quantity" placeholder="quantity" onSubmit={this.handleChange}/>
+      <br/>
+      { invalidWarning && <span className="tag is-danger">Quantity must be a number</span> }
+      <br/>
     </div>
   </div>
 );
@@ -161,18 +157,19 @@ const LastDonation = () => (
   </div>
 );
 
-const SubmitDonation = () => (
-  <div>
-    <br/>
-    <button className="button is-primary" type="submit">Submit</button>
-  </div>
-);
 
 const IllnessForm = () => (
   <div>
     <input name="illnessForm" type="checkbox"/>
     <div className="subtitle is-6 checkbox is-black">&nbsp;I have included an illness and travel update with my milk donation
     </div>
+  </div>
+);
+
+const SubmitDonation = () => (
+  <div>
+    <br/>
+    <button className="button is-primary" type="submit">Submit</button>
   </div>
 );
 
