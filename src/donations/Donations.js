@@ -30,18 +30,14 @@ class Donations extends Component {
     const { displayMain, display } = this.state;
     return (
       <div className="tile is-parent">
-        {/* <div className="tile is-child box hero is-info"> */}
-        <div className="tile is-child box hero">
-          <div className="sub-title">
+        <div className="tile is-child box hero is-info">
+          <div className="subtitle">
             <a className="subtitle has-text-success link-hover" onClick={this.handleClick}><strong>Make a Donation</strong></a></div>
           {displayMain &&
           <div>
             <hr/>
             <AddDonations user={user}/>
             <hr/>
-            {/* Michele Code */}
-            {/* <button className="button is-light" onClick={() =>  this.setState({ display: true  })}>My Donation Total</button> */}
-            {/* Robin code */}
             <button className="button is-light" onClick={() => this.setState({ display: !this.state.display })}>My Donations</button>
             
             {display && TotalDisplay(donations)}

@@ -8,8 +8,7 @@ class AddDonations extends Component {
   constructor(){
     super();
     this.state = {
-      // dropSite: '5a33ee322d693f852640e2ee', for dev 
-      dropSite: '5a34258e7bf84a00216aad89',
+      dropSite: '5a33ee322d693f852640e2ee',
       isCheckedFedEx: false,
       isCheckedMilkDrop: false,
       invalidWarning: false,
@@ -36,6 +35,7 @@ class AddDonations extends Component {
   handleDonate = event => {
     event.preventDefault();
     let { dropSite, quantity, lastDonation } = event.target.elements;
+    // console.log(dropSite, quantity, lastDonation);
     if (!quantity.value || isNaN(quantity.value)) {
       this.setState({ invalidWarning: true });
     }
@@ -43,8 +43,9 @@ class AddDonations extends Component {
     else {
       const { user } = this.props;
       dropSite = this.state.isCheckedMilkDrop ? this.state.dropSite : this.state.dropSite.value;
+      console.log('dropSite', this.state.dropSite);
       this.setState({ 
-        myDropSite: dropSite._id, 
+        // myDropSite: dropSite._id, 
         invalidWarning: false,
         showMessage: true,
         justDonated: true
@@ -65,10 +66,11 @@ class AddDonations extends Component {
   render() {
 
     const message = 'You\'re amazing! Thanks for helping us save babies across the Pacific Northwest and beyond!';
-    const { dropSites, myDropSite, invalidWarning } = this.props;
-
+    // const { dropSites, myDropSite, invalidWarning } = this.props;
+    const { dropSites, invalidWarning } = this.props;
+    
     return (
-      <div className="tile is-parent hero is-light">
+      <div className="tile is-parent hero is-info">
 
         {(this.state.showMessage) ? <p>{message}</p>
           : 
@@ -81,7 +83,8 @@ class AddDonations extends Component {
               {(!this.state.isCheckedMilkDrop) && (
                 <label className="subtitle is-6 checkbox is-black"><input type="checkbox" value="FedEx" onChange={this.handleFedExChange}/>&nbsp;Ship milk via FedEx</label>)}
               {(this.state.isCheckedMilkDrop) && (<div className="subtitle is-6 label">Select a drop site location&nbsp;
-                <DropSites myDropSite={myDropSite} dropSites={dropSites}/>
+                {/* <DropSites myDropSite={myDropSite} dropSites={dropSites}/> */}
+                <DropSites dropSites={dropSites}/>
                 <div className="need-space"></div>
                 <Quantity invalidWarning={invalidWarning}/>
                 
@@ -123,11 +126,15 @@ class AddDonations extends Component {
 //   </div>
 // );
 // Robin's code
-const DropSites = function ({ dropSites, myDropSite = null, onSubmit }){
-  const selected = myDropSite ? dropSites.find(dropSite => dropSite._id === myDropSite) : dropSites[0]._id;
+// const DropSites = function ({ dropSites, myDropSite = null, onSubmit }){
+const DropSites = function ({ dropSites, onSubmit }){
+  console.log('dropSites', dropSites);
+  // console.log('myDropSite', myDropSite);
+  // const selected = myDropSite ? dropSites.find(dropSite => dropSite._id === myDropSite) : dropSites[0]._id;
   return (
     <div className="select">
-      <select defaultValue={selected._id} name="dropSite" className="button is-outlined is-size-6">
+      {/* <select defaultValue={selected._id} name="dropSite" className="button is-outlined is-size-6"> */}
+      <select name="dropSite" className="button is-outlined is-size-6">
         {dropSites.map(dropSite => {
           return (<option key={dropSite._id} value={dropSite._id}> {dropSite.name} </option>);
         })}

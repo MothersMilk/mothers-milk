@@ -61,8 +61,6 @@ class SupplyRequest extends Component {
       <div className="tile is-parent">
         <div className="tile is-child box hero is-info">
           <div className="subtitle"><a className="subtitle has-text-success link-hover" onClick={this.handleClick}><strong>Request Supplies</strong></a>
-          </div>
-          <div>
             {this.state.display && (<form onSubmit={event => this.handleSupplyRequest(event)}>
               <div>
                 <hr/>
