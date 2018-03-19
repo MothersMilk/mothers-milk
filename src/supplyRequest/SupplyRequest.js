@@ -8,47 +8,50 @@ class SupplyRequest extends Component {
     this.state = { 
       display: false,
       ordering: false,
-      isBagChecked: false,
-      isBoxChecked: false,
-      bags: 0
+      isCheckedBags: false,
+      isCheckedBoxes: false,
+      selectedOption: 0,
+      bags: 0,
+      boxes: 0
     };
+    this.handleOrderBagsChange = this.handleOrderBagsChange.bind(this);
   }
 
-  handleOrderBagsChange = (event) => {
-    event.preventDefault();
-    const bags = event.target.checked ? 'bags' : '';
+  handleOrderBagsChange(event) {
+    const checked = this.state.isCheckedBags;
     this.setState({
-      isBagChecked: true,
-      bags: bags
+      isCheckedBags: !checked
     });
-    console.log('in order bags change isChecked', this.state.isChecked);
-    console.log('bags?', bags);
   }
 
   handleOrderBoxesChange = (event) => {
-    const boxes = event.target.checked ? 'boxes' : '';
+    const checked = this.state.isCheckedBoxes;
     this.setState({
-      isBoxChecked: true,
-      boxes: boxes
+      isCheckedBoxes: !checked,
+      boxes: 1
     });
-    console.log('in order boxes change isChecked', this.state.isChecked);
   }
   
   handleSupplyRequest = event => {
     event.preventDefault();
+    // this.state.isCheckedBoxes ? this.setState({ boxes: 1 }) : this.setState({ boxes: 0 });
+    console.log('isChecked', this.state.isCheckedBoxes);
+    console.log('boxes', this.state.boxes);
     const { bags, boxes } = event.target.elements;
+    console.log('bags boxes', this.state.boxes);
     const { user } = this.props;
     this.setState({ ordering: true });
-    this.props.requestSupply({ 
-      bags: bags.value,
-      boxes: boxes.value,
-      donor: user._id
-    });
+    // this.props.requestSupply({ 
+    //   bags: bags.value,
+    //   boxes: boxes.value,
+    //   donor: user._id
+    // });
   }
 
-  setBagNum(event) {
-    console.log(event.target.value);
-    console.log(this.state.bags.value);
+  handleOptionChange = (changeEvent) => {
+    this.setState({
+      selectedOption: changeEvent.target.value
+    });
   }
 
   handleClick = () => {
@@ -56,7 +59,7 @@ class SupplyRequest extends Component {
   }
 
   render(){
-    const inputs = [['0 bags', '0'], ['1 bag ', '1'], ['2 bags', '2']];
+    const inputs = [['0 unit(s)', '0'], ['1 unit(s) ', '1'], ['2 unit(s)', '2']];
     return (
       <div className="tile is-parent">
         <div className="tile is-child box hero is-info">
@@ -65,26 +68,12 @@ class SupplyRequest extends Component {
               <div>
                 <hr/>
                 <BagCheckbox onChange={this.handleOrderBagsChange}/>
-                {(this.state.bags === 'bags') && (
-                  <div className="subtitle is-6">Milk Collection Units (25 bags per unit):
-                    <div>
-                      {
-                        inputs.map(([text, value], i) => (
-                          <div key={i}>
-                            <input type="radio"
-                              checked={this.state.bags === value} 
-                              onChange={event => this.setBagNum(event)} 
-                              value={value} /> 
-                            { text }
-                          </div>
-                        ))
-                      }
-                      {/* <input type="radio" value="0"/>O bags<input type="radio" value="1" defaultChecked/>1 bag<input type="radio" value="2"/>2 bags */}
-                    </div>
-                  </div>
+                {(this.state.isCheckedBags) && (
+                  <BagQuantity inputs={inputs} bags={this.state.bags} selectedOption={this.state.selectedOption}/>
                 )}
                 <BoxCheckbox onChange={this.handleOrderBoxesChange}/>
                 <SubmitSupplyRequest/>
+                { this.state.ordering ? <p>Thank you for your order</p> : <p></p>}
               </div>
             </form>)
             }
@@ -97,24 +86,33 @@ class SupplyRequest extends Component {
 
 const BagCheckbox = ({ onChange }) => (
   <div>
-    <label className="subtitle is-6 checkbox is-black"><input type="checkbox" name="request" value="bags" onChange={onChange}/>&nbsp;Order Milk Collection Bags</label><br/>
+    <label className="subtitle is-6 checkbox is-black"><input type="checkbox" name="request" value="bags" onChange={onChange}/>&nbsp;Send Me Milk Collection Bags</label><br/>
   </div>
 );
 
-// class BagCheckbox extends Component {
-//   render() {
-//     const { handleOrderBagsChange } = this.props;
-//   };
-//   return(
-//     <div className="input-title">
-//     <label className="subtitle is-6 checkbox is-black"><input type="checkbox" value="bags" onChange={onChange}/>&nbsp;Order MilkCollection Bags</label><br/>
-//   </div>
-//   );
-// }
-
+const BagQuantity = ({ inputs, bags, selectedOption }) => (
+  <div className="subtitle is-6">Milk Collection Units (25 bags per unit):
+    <div id="radio-group">
+      {
+        inputs.map(([text, value], i) => (
+          <div className="control" key={i}>
+            <label className="radio">
+              <input type="radio" className="bag-quantity"
+                onChange={this.handleOptionChange} 
+                value={value} 
+                checked={selectedOption === value} 
+              /> 
+              &nbsp;{ text }
+            </label>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+);
 
 const BoxCheckbox = ({ onChange }) => (
-  <label className="subtitle is-6 checkbox is-black"><input type="checkbox" name="request" value="boxes" onChange={onChange}/>&nbsp;Order Shipping Boxes</label>
+  <label className="subtitle is-6 checkbox is-black"><input type="checkbox" name="request" value="boxes" onChange={onChange}/>&nbsp;Send Me Shipping Boxes</label>
 );
 
 const SubmitSupplyRequest = () => (

@@ -76,8 +76,8 @@ class AddDonations extends Component {
           : 
           (<div>
             <form onSubmit={event => this.handleDonate(event)}>
-              {(!this.state.isCheckedFedEx) && (
-                <label className="subtitle is-6 checkbox is-black"><input type="checkbox" value="milkDrop" onChange={this.handleMilkDropChange}/>&nbsp;Drop off at nearest milk drop</label>)}       
+              {(!this.state.isCheckedFedEx) && (<div className="field">
+                <label className="subtitle is-6 checkbox is-black"><input type="checkbox" value="milkDrop" onChange={this.handleMilkDropChange}/>&nbsp;Drop off at nearest milk drop</label></div>)}       
               {(!this.state.isCheckedMilkDrop) && (!this.state.isCheckedFedEx) &&  
               <p className="subtitle is-6">--OR--</p>}
               {(!this.state.isCheckedMilkDrop) && (
@@ -88,7 +88,7 @@ class AddDonations extends Component {
                 <div className="need-space"></div>
                 <Quantity invalidWarning={invalidWarning}/>
                 
-      { !invalidWarning && <span className="tag is-danger">Quantity must be a number</span> }
+                { !invalidWarning && <span className="tag is-danger">Quantity must be a number</span> }
                 <LastDonation/>
                 <IllnessForm/>
                 <SubmitDonation/>
@@ -157,19 +157,20 @@ const Quantity = ({ invalidWarning }) => (
 
 const LastDonation = () => (
   <div className="field">
-    <input name="lastDonation" type="checkbox"/>
-    <div className="subtitle is-6 checkbox is-black">&nbsp;
-    Is this your last donation?
-    </div>
+    <label className="subtitle is-6 checkbox is-black">
+      <input name="lastDonation" type="checkbox"/>
+    &nbsp;Is this your last donation?
+    </label>
   </div>
 );
 
 
 const IllnessForm = () => (
   <div>
-    <input name="illnessForm" type="checkbox"/>
-    <div className="subtitle is-6 checkbox is-black">&nbsp;I have included an illness and travel update with my milk donation
-    </div>
+    <label className="subtitle is-6 checkbox is-black">
+      <input name="illnessForm" type="checkbox"/>
+      &nbsp;I have included an illness and travel update with my milk donation
+    </label>
   </div>
 );
 
