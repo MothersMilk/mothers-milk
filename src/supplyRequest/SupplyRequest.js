@@ -10,7 +10,7 @@ class SupplyRequest extends Component {
       ordering: false,
       isCheckedBags: false,
       isCheckedBoxes: false,
-      selectedOption: 0
+      selectedBagsOption: 0
     };
     this.handleOrderBagsChange = this.handleOrderBagsChange.bind(this);
   }
@@ -24,18 +24,13 @@ class SupplyRequest extends Component {
 
   handleOrderBoxesChange = (event) => {
     const checked = this.state.isCheckedBoxes;
-    // let toggleBoxes = this.state.boxes;
-    // checked ? toggleBoxes=1 : toggleBoxes=0;
     this.setState({
-      isCheckedBoxes: !checked,
-      // boxes: toggleBoxes
+      isCheckedBoxes: !checked
     });
   }
   
   handleSupplyRequest = event => {
     event.preventDefault();
-    // this.state.isCheckedBoxes ? this.setState({ boxes: 1 }) : this.setState({ boxes: 0 });
-    // const { bags, boxes } = event.target.elements;
     const { user } = this.props;
     this.setState({ ordering: true });
     // this.props.requestSupply({ 
@@ -47,8 +42,8 @@ class SupplyRequest extends Component {
 
   handleOptionChange = (changeEvent) => {
     this.setState({
-      selectedOption: changeEvent.target.value
-    });
+      selectedBagsOption: parseInt(changeEvent.target.value, 10)
+    }, () => console.log(this.state.selectedBagsOption));
   }
 
   handleClick = () => {
@@ -56,7 +51,7 @@ class SupplyRequest extends Component {
   }
 
   render(){
-    const inputs = [['0 units', '0'], ['1 unit ', '1'], ['2 units', '2']];
+    const inputs = [['0 units', 0], ['1 unit ', 1], ['2 units', 2]];
     return (
       <div className="tile is-parent">
         <div className="tile is-child box hero is-info">
@@ -66,11 +61,11 @@ class SupplyRequest extends Component {
                 <hr/>
                 <BagCheckbox onChange={this.handleOrderBagsChange}/>
                 {(this.state.isCheckedBags) && (
-                  <BagQuantity inputs={inputs} bags={this.state.bags} selectedOption={this.state.selectedOption} onChange={this.handleOptionChange}/>
+                  <BagQuantity inputs={inputs} selectedOption={this.state.selectedBagsOption} onChange={this.handleOptionChange}/>
                 )}
                 <BoxCheckbox onChange={this.handleOrderBoxesChange}/>
                 <SubmitSupplyRequest/>
-                { this.state.ordering ? <p>Thank you for your order</p> : <p></p>}
+                { this.state.ordering ? <div><hr/><p>Thank you for your order</p></div> : <p></p>}
               </div>
             </form>)
             }
