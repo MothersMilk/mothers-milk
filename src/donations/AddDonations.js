@@ -25,7 +25,7 @@ class AddDonations extends Component {
     });
   }
 
-  handleFedExChange = (event) => {
+  handleFedExChange = event => {
     const checked = this.state.isCheckedFedEx;
     this.setState({
       isCheckedFedEx: !checked
@@ -35,15 +35,16 @@ class AddDonations extends Component {
   handleDonate = event => {
     event.preventDefault();
     let { dropSite, quantity, lastDonation } = event.target.elements;
-    // console.log(dropSite, quantity, lastDonation);
+    // console.log('target elements', dropSite._id, quantity.value, lastDonation.checked);
     if (!quantity.value || isNaN(quantity.value)) {
       this.setState({ invalidWarning: true });
     }
 
     else {
       const { user } = this.props;
-      dropSite = this.state.isCheckedMilkDrop ? this.state.dropSite : this.state.dropSite.value;
-      console.log('dropSite', this.state.dropSite);
+      // dropSite = this.state.isCheckedMilkDrop ? dropSite.value : this.state.dropSite.value;
+      console.log('drop site value', dropSite.value);
+      // console.log('mydropSite', this.state.dropSite);
       this.setState({ 
         // myDropSite: dropSite._id, 
         invalidWarning: false,
@@ -54,7 +55,7 @@ class AddDonations extends Component {
       this.props.addDonation(
         { 
           quantity: quantity.value,
-          dropSite,
+          dropSite: dropSite.value,
           lastDonation: lastDonation.checked,
           donor: user._id,
           status: 'Awaiting Pickup'
@@ -116,25 +117,16 @@ class AddDonations extends Component {
   }
 }
 
-// const DropSites = ({ dropSites }) => (
-//   <div className="select">
-//     <select name="dropSite" className="button is-outlined is-size-6">
-//       {dropSites.map(dropSite => (
-//         <option key={dropSite._id} value={dropSite._id}>{dropSite.name}</option>
-//       ))}
-//     </select>
-//   </div>
-// );
-// Robin's code
 // const DropSites = function ({ dropSites, myDropSite = null, onSubmit }){
-const DropSites = function ({ dropSites, onSubmit }){
+const DropSites = ({ dropSites, myDropSite = null }) => {
   console.log('dropSites', dropSites);
+  console.log('MydropSite', myDropSite);
   // console.log('myDropSite', myDropSite);
-  // const selected = myDropSite ? dropSites.find(dropSite => dropSite._id === myDropSite) : dropSites[0]._id;
+  const selected = myDropSite ? dropSites.find(dropSite => dropSite._id === myDropSite) : dropSites[0]._id;
   return (
     <div className="select">
       {/* <select defaultValue={selected._id} name="dropSite" className="button is-outlined is-size-6"> */}
-      <select name="dropSite" className="button is-outlined is-size-6">
+      <select defaultValue={selected._id} name="dropSite" className="button is-outlined is-size-6">
         {dropSites.map(dropSite => {
           return (<option key={dropSite._id} value={dropSite._id}> {dropSite.name} </option>);
         })}
