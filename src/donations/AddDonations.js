@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addDonation } from './actions';
-import { checkForToken } from '../home/actions';
 
 class AddDonations extends Component {
 
@@ -26,7 +25,7 @@ class AddDonations extends Component {
     });
   }
 
-  donationChange = ({ target }) => {
+  handleDonationChange = ({ target }) => {
     this.setState({ donationQuantity: target.value });
   }
 
@@ -45,7 +44,6 @@ class AddDonations extends Component {
         invalidWarning: false,
         justDonated: true
       });
-      // this.props.checkForToken();
       this.props.addDonation(
         { 
           quantity: this.state.donationQuantity,
@@ -60,10 +58,11 @@ class AddDonations extends Component {
 
   render() {
     const { dropSites, myDropSite } = this.props;
+    const { donationQuantity } = this.state;
     return (
       <div className="tile is-parent hero is-light">        
         <div>
-          <form onSubmit={event => this.handleDonate(event)}>
+          <form onSubmit={this.handleDonate}>
             <p className="subtitle is-6">Ship milk by FedEx   &nbsp;<input type="checkbox" value="FedEx" onChange={this.handleChange}/>
             </p>
             {(this.state.fedExName !== 'FedEx') && (
@@ -76,7 +75,7 @@ class AddDonations extends Component {
             )}
             <br/><br/>
             <div className="subtitle is-6 label">Quantity(in ounces):</div>
-            <input className="button is-outlined" id="quantity"  onChange={this.donationChange} value={this.state.donationQuantity}/>
+            <input className="button is-outlined" id="quantity"  placeholder="quantity" onChange={this.handleDonationChange} value={donationQuantity}/>
             <br/>
             { this.state.invalidWarning && <span className="tag is-danger">Quantity must be a number</span> }
             <br/>
@@ -113,5 +112,5 @@ const DropSites = function ({ dropSites, myDropSite = null, onSubmit }){
 
 export default connect(
   ({ donations, auth, dropSites = [] }) => ({ donations, dropSites, myDropSite: auth.user.myDropSite }),
-  { addDonation, checkForToken }
+  { addDonation }
 )(AddDonations);
