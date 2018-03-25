@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { addDonation } from './actions';
 
-class AddDonations extends Component {
+class AddDonations extends PureComponent {
 
   constructor(){
     super();
@@ -95,20 +95,29 @@ class AddDonations extends Component {
   }
 }
 
-const DropSites = function ({ dropSites, myDropSite = null, onSubmit }){
-  const selected = myDropSite ? dropSites.find(dropSite => dropSite._id === myDropSite) : dropSites[0]._id;
-  return (
-    <div className="select">
-      <select defaultValue={selected._id} name="dropSite" className="button is-outlined is-size-6">
-        {dropSites.map(dropSite => {
-          return (<option key={dropSite._id} value={dropSite._id}> {dropSite.name} </option>);
-        })}
-      </select>
-    </div>
-  );
-};
+
+class DropSites extends PureComponent {
+
+  render() {
+    const { dropSites, myDropSite } = this.props;
+    const selected = myDropSite ? dropSites.find(dropSite => dropSite._id === myDropSite) : dropSites[0]._id;
+    return (
+      <div className="select">
+        <select defaultValue={selected._id} name="dropSite" className="button is-outlined is-size-6">
+          {dropSites.map(dropSite => {
+            return (<option key={dropSite._id} value={dropSite._id}> {dropSite.name} </option>);
+          })}
+        </select>
+      </div>
+    );
+  }
+}
 
 export default connect(
-  ({ donations, auth, dropSites = [] }) => ({ donations, dropSites, myDropSite: auth.user.myDropSite }),
+  ({ donations, auth, dropSites = [] }) => ({ 
+    donations,
+    dropSites, 
+    myDropSite: auth.user.myDropSite || null 
+  }),
   { addDonation }
 )(AddDonations);
