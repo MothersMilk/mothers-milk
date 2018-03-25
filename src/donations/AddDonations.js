@@ -17,7 +17,7 @@ class AddDonations extends Component {
     };
   }
 
-  handleChange = (event) => {
+  handleChange = event => {
     const fedExName = event.target.checked ? 'FedEx' : '';
     this.setState({
       isChecked: true,
@@ -37,21 +37,21 @@ class AddDonations extends Component {
     }
 
     else {
-      const { user } = this.props;
-      dropSite = this.state.isChecked ? this.state.dropSite : dropSite.value;
+      const { user, addDonation } = this.props;
+      const { donationQuantity, isChecked } = this.state;
+      dropSite = isChecked ? dropSite : dropSite.value;
       this.setState({ 
         myDropSite: dropSite._id, 
         invalidWarning: false,
         justDonated: true
       });
-      this.props.addDonation(
-        { 
-          quantity: this.state.donationQuantity,
-          dropSite,
-          lastDonation: lastDonation.checked,
-          donor: user._id,
-          status: 'Awaiting Pickup'
-        });
+      addDonation({ 
+        quantity: donationQuantity,
+        dropSite,
+        lastDonation: lastDonation.checked,
+        donor: user._id,
+        status: 'Awaiting Pickup'
+      });
       this.setState({ donationQuantity: '' });
     }
   }
@@ -81,14 +81,12 @@ class AddDonations extends Component {
             <br/>
             <div className="subtitle is-6 label">Is this your last donation?&nbsp;<input name="lastDonation" type="checkbox"/></div>
             <br/><br/>
-
             { this.state.justDonated 
               ? <div className="notification is-danger" onClick={() => this.setState({ justDonated: false })}>
                   You're amazing! Thanks for helping us save babies across the Pacific Northwest and beyond
               </div> 
               : <button className="button is-primary" type="submit">Submit</button>
             }
-
             <br/><br/>
           </form>             
         </div>
