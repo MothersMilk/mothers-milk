@@ -13,7 +13,8 @@ class AddDonations extends Component {
       isChecked: false,
       fedExName: '',
       invalidWarning: false,
-      justDonated: false
+      justDonated: false,
+      donationQuantity: ''
     };
   }
 
@@ -23,6 +24,10 @@ class AddDonations extends Component {
       isChecked: true,
       fedExName: fedExName
     });
+  }
+
+  donationChange = ({ target }) => {
+    this.setState({ donationQuantity: target.value });
   }
 
   handleDonate = event => {
@@ -40,16 +45,16 @@ class AddDonations extends Component {
         invalidWarning: false,
         justDonated: true
       });
-      this.props.checkForToken();
+      // this.props.checkForToken();
       this.props.addDonation(
         { 
-          quantity: quantity.value,
+          quantity: this.state.donationQuantity,
           dropSite,
           lastDonation: lastDonation.checked,
           donor: user._id,
           status: 'Awaiting Pickup'
         });
-      document.getElementById('quantity').value = '';
+      this.setState({ donationQuantity: '' });
     }
   }
 
@@ -71,7 +76,7 @@ class AddDonations extends Component {
             )}
             <br/><br/>
             <div className="subtitle is-6 label">Quantity(in ounces):</div>
-            <input className="button is-outlined" id="quantity" placeholder="quantity" onSubmit={this.handleChange}/>
+            <input className="button is-outlined" id="quantity"  onChange={this.donationChange} value={this.state.donationQuantity}/>
             <br/>
             { this.state.invalidWarning && <span className="tag is-danger">Quantity must be a number</span> }
             <br/>
