@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { addDonation } from './actions';
+import { checkForToken } from '../home/actions'; 
 
 class AddDonations extends PureComponent {
 
@@ -59,7 +60,7 @@ class AddDonations extends PureComponent {
   }
 
   render() {
-    const { dropSites, myDropSite } = this.props;
+    const { dropSites, myDropSite, checkForToken } = this.props;
     const { donationQuantity } = this.state;
     return (
       <div className="tile is-parent hero is-light">        
@@ -72,7 +73,7 @@ class AddDonations extends PureComponent {
                 <p className="subtitle is-6">-- OR --</p>
                 <p className="subtitle is-6">Drop at nearest milk drop location</p>
                 <div className="subtitle is-6 label">Select a drop site location</div>
-                <DropSites myDropSite={myDropSite} dropSites={dropSites}/>
+                <DropSites checkForToken={checkForToken} myDropSite={myDropSite} dropSites={dropSites}/>
               </div>
             )}
             <br/><br/>
@@ -99,6 +100,10 @@ class AddDonations extends PureComponent {
 
 
 class DropSites extends PureComponent {
+  componentDidMount() {
+    this.props.checkForToken();
+  }
+
 
   render() {
     const { dropSites, myDropSite } = this.props;
@@ -121,5 +126,5 @@ export default connect(
     dropSites, 
     myDropSite: auth.user.myDropSite || null 
   }),
-  { addDonation }
+  { addDonation, checkForToken }
 )(AddDonations);
