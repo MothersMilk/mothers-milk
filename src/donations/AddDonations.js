@@ -40,11 +40,7 @@ class AddDonations extends PureComponent {
       const { user, addDonation } = this.props;
       const { donationQuantity, isChecked } = this.state;
       dropSite = isChecked ? dropSite : dropSite.value;
-      this.setState({ 
-        myDropSite: dropSite._id, 
-        invalidWarning: false,
-        justDonated: true
-      });
+
       addDonation({ 
         quantity: donationQuantity,
         dropSite,
@@ -52,7 +48,13 @@ class AddDonations extends PureComponent {
         donor: user._id,
         status: 'Awaiting Pickup'
       });
-      this.setState({ donationQuantity: '' });
+      
+      this.setState({
+        donationQuantity: '',
+        myDropSite: dropSite._id, 
+        invalidWarning: false,
+        justDonated: true
+      });
     }
   }
 
