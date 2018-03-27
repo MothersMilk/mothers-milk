@@ -12,15 +12,13 @@ class Donations extends PureComponent {
       displayMain: false,
       display: false
     };
-    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
-    const { loadMyDonations } = this.props;
-    loadMyDonations();
+    this.props.loadMyDonations();
   }
 
-  handleClick() {
+  handleClick = () => {
     this.setState({ displayMain: !this.state.displayMain });
   }
 
@@ -39,7 +37,7 @@ class Donations extends PureComponent {
             <hr/>
             <button className="button is-light" onClick={() => this.setState({ display: !this.state.display })}>My Donations</button>
             
-            {display && <TotalDisplay donations={donations} />}
+            {display && <TotalDisplay donations={donations}/>}
 
             {display && 
             <table className="table is-fullwidth is-striped">
