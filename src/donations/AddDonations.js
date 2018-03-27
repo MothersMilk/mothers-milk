@@ -104,7 +104,6 @@ class DropSites extends PureComponent {
     this.props.checkForToken();
   }
 
-
   render() {
     const { dropSites, myDropSite } = this.props;
     const selected = myDropSite ? dropSites.find(dropSite => dropSite._id === myDropSite) : dropSites[0]._id;
