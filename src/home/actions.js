@@ -17,6 +17,10 @@ export function checkForToken() {
     dispatch({
       type: actions.FETCHED_USER,
       payload: authApi.verify().then(id => authApi.getUser(id))
+        .then(dog => {
+          console.log('got user', dog.myDropSite);
+          return dog;
+        })
     });
   };
 }

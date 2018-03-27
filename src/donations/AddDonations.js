@@ -18,8 +18,16 @@ class AddDonations extends PureComponent {
     };
   }
 
-  handleChange = event => {
-    const fedExName = event.target.checked ? 'FedEx' : '';
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.myDropSite && nextProps.myDropSite !== this.state.myDropSite) {
+      console.log('in componentwillrecievngdg, setting myDropSite to', nextProps.myDropSite);
+      this.setState({ myDropSite : nextProps.myDropSite });
+    }
+  }
+
+
+  handleChange = ({ target }) => {
+    const fedExName = target.checked ? 'FedEx' : '';
     this.setState({
       isChecked: true,
       fedExName: fedExName
@@ -52,7 +60,7 @@ class AddDonations extends PureComponent {
       
       this.setState({
         donationQuantity: '',
-        myDropSite: dropSite._id, 
+        myDropSite: dropSite, 
         invalidWarning: false,
         justDonated: true
       });
@@ -60,8 +68,8 @@ class AddDonations extends PureComponent {
   }
 
   render() {
-    const { dropSites, myDropSite, checkForToken } = this.props;
-    const { donationQuantity } = this.state;
+    const { dropSites, checkForToken } = this.props;
+    const { donationQuantity, myDropSite } = this.state;
     return (
       <div className="tile is-parent hero is-light">        
         <div>
@@ -100,13 +108,25 @@ class AddDonations extends PureComponent {
 
 
 class DropSites extends PureComponent {
+  
+  state = {
+    myDropSite : '',
+    dropSites: []
+  }
+  
   componentDidMount() {
     this.props.checkForToken();
+    // this.setState({ 
+    //   myDropSite : this.props.myDropSite,
+    //   dropSites: this.props.dropSites
+    // });
   }
 
   render() {
-    const { dropSites, myDropSite } = this.props;
+    const { myDropSite, dropSites } = this.props;
+    if (!myDropSite || !dropSites || dropSites.length === 0) return null;
     const selected = myDropSite ? dropSites.find(dropSite => dropSite._id === myDropSite) : dropSites[0]._id;
+    console.log('in Dropsite component, loading', selected._id);
     return (
       <div className="select">
         <select defaultValue={selected._id} name="dropSite" className="button is-outlined is-size-6">
