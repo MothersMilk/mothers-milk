@@ -116,10 +116,6 @@ class DropSites extends PureComponent {
   
   componentDidMount() {
     this.props.checkForToken();
-    // this.setState({ 
-    //   myDropSite : this.props.myDropSite,
-    //   dropSites: this.props.dropSites
-    // });
   }
 
   render() {
