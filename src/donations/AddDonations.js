@@ -52,7 +52,7 @@ class AddDonations extends PureComponent {
     else {
       const { user, addDonation } = this.props;
       const { donationQuantity, isChecked } = this.state;
-      // dropSite = isChecked ? dropSite : dropSite.value;
+      dropSite = isChecked ? dropSite : dropSite.value;
 
       addDonation({ 
         quantity: donationQuantity,
@@ -74,7 +74,7 @@ class AddDonations extends PureComponent {
   render() {
 
     const message = 'You\'re amazing! Thanks for helping us save babies across the Pacific Northwest and beyond!';
-    const { dropSites } = this.props;
+    const { dropSites, checkForToken, myDropSite } = this.props;
     const { invalidWarning } = this.state;
     
     return (
@@ -93,7 +93,7 @@ class AddDonations extends PureComponent {
               {(!this.state.isCheckedMilkDrop) && (
                 <label className="subtitle is-6 checkbox is-black"><input type="checkbox" value="FedEx" onChange={this.handleFedExChange}/>&nbsp;Ship milk via FedEx</label>)}
               {(this.state.isCheckedMilkDrop) && (<div className="subtitle is-6 label">Select a drop site location&nbsp;
-                <DropSites dropSites={dropSites}/>
+                <DropSites dropSites={dropSites} checkForToken={checkForToken} myDropSite={myDropSite}/>
                 <div className="need-space"></div>
                 <Quantity invalidWarning={invalidWarning}/>
                 <LastDonation/>
