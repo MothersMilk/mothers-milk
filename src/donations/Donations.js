@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { loadMyDonations } from '../donations/actions';
 import { connect } from 'react-redux';
 import { checkForToken } from '../home/actions';
-import AddDonation from './AddDonations';
+import AddDonations from './AddDonations';
 
 class Donations extends PureComponent {
 
@@ -28,12 +28,13 @@ class Donations extends PureComponent {
     const { displayMain, display } = this.state;
     return (
       <div className="tile is-parent">
-        <div className="tile is-child box">
-          <a className="subtitle has-text-primary link-hover" onClick={this.handleClick}>Donations</a>
+        <div className="tile is-child box hero is-info">
+          <div className="subtitle">
+            <a className="subtitle has-text-success link-hover" onClick={this.handleClick}><strong>Make a Donation</strong></a></div>
           {displayMain &&
           <div>
             <hr/>
-            <AddDonation user={user}/>
+            <AddDonations user={user}/>
             <hr/>
             <button className="button is-light" onClick={() => this.setState({ display: !this.state.display })}>My Donations</button>
             
