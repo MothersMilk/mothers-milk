@@ -68,12 +68,15 @@ class AddDonations extends Component {
 
     const message = 'You\'re amazing! Thanks for helping us save babies across the Pacific Northwest and beyond!';
     // const { dropSites, myDropSite, invalidWarning } = this.props;
-    const { dropSites, invalidWarning } = this.props;
+    const { dropSites } = this.props;
+    const { invalidWarning } = this.state;
     
     return (
       <div className="tile is-parent hero is-info">
 
-        {(this.state.showMessage) ? <p>{message}</p>
+        {(this.state.showMessage) 
+          ? 
+          <p>{message}</p>
           : 
           (<div>
             <form onSubmit={event => this.handleDonate(event)}>
@@ -89,7 +92,6 @@ class AddDonations extends Component {
                 <div className="need-space"></div>
                 <Quantity invalidWarning={invalidWarning}/>
                 
-                { !invalidWarning && <span className="tag is-danger">Quantity must be a number</span> }
                 <LastDonation/>
                 <IllnessForm/>
                 <SubmitDonation/>
