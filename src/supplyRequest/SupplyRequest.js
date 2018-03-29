@@ -12,17 +12,16 @@ class SupplyRequest extends Component {
       isCheckedBoxes: false,
       selectedBagsOption: 0
     };
-    this.handleOrderBagsChange = this.handleOrderBagsChange.bind(this);
   }
 
-  handleOrderBagsChange(event) {
+  handleOrderBagsChange = event => {
     const checked = this.state.isCheckedBags;
     this.setState({
       isCheckedBags: !checked
     });
   }
 
-  handleOrderBoxesChange = (event) => {
+  handleOrderBoxesChange = event => {
     const checked = this.state.isCheckedBoxes;
     this.setState({
       isCheckedBoxes: !checked
@@ -31,19 +30,13 @@ class SupplyRequest extends Component {
   
   handleSupplyRequest = event => {
     event.preventDefault();
-    const { user } = this.props;
     this.setState({ ordering: true });
-    // this.props.requestSupply({ 
-    //   bags: bags.value,
-    //   boxes: boxes.value,
-    //   donor: user._id
-    // });
   }
 
-  handleOptionChange = (changeEvent) => {
+  handleOptionChange = changeEvent => {
     this.setState({
       selectedBagsOption: parseInt(changeEvent.target.value, 10)
-    }, () => console.log(this.state.selectedBagsOption));
+    });
   }
 
   handleClick = () => {
