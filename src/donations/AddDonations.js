@@ -94,7 +94,7 @@ class AddDonations extends PureComponent {
             <br/><br/>
             { this.state.justDonated 
               ? <div className="notification is-danger" onClick={() => this.setState({ justDonated: false })}>
-                  You're amazing! Thanks for helping us save babies across the Pacific Northwest and beyond
+                  You\'re amazing! Thanks for helping us save babies across the Pacific Northwest and beyond
               </div> 
               : <button className="button is-primary" type="submit">Submit</button>
             }
