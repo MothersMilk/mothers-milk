@@ -35,18 +35,13 @@ class AddDonations extends Component {
   handleDonate = event => {
     event.preventDefault();
     let { dropSite, quantity, lastDonation } = event.target.elements;
-    // console.log('target elements', dropSite._id, quantity.value, lastDonation.checked);
     if (!quantity.value || isNaN(quantity.value)) {
       this.setState({ invalidWarning: true });
     }
 
     else {
       const { user } = this.props;
-      // dropSite = this.state.isCheckedMilkDrop ? dropSite.value : this.state.dropSite.value;
-      console.log('drop site value', dropSite.value);
-      // console.log('mydropSite', this.state.dropSite);
       this.setState({ 
-        // myDropSite: dropSite._id, 
         invalidWarning: false,
         showMessage: true,
         justDonated: true
@@ -67,7 +62,6 @@ class AddDonations extends Component {
   render() {
 
     const message = 'You\'re amazing! Thanks for helping us save babies across the Pacific Northwest and beyond!';
-    // const { dropSites, myDropSite, invalidWarning } = this.props;
     const { dropSites } = this.props;
     const { invalidWarning } = this.state;
     
@@ -87,11 +81,9 @@ class AddDonations extends Component {
               {(!this.state.isCheckedMilkDrop) && (
                 <label className="subtitle is-6 checkbox is-black"><input type="checkbox" value="FedEx" onChange={this.handleFedExChange}/>&nbsp;Ship milk via FedEx</label>)}
               {(this.state.isCheckedMilkDrop) && (<div className="subtitle is-6 label">Select a drop site location&nbsp;
-                {/* <DropSites myDropSite={myDropSite} dropSites={dropSites}/> */}
                 <DropSites dropSites={dropSites}/>
                 <div className="need-space"></div>
                 <Quantity invalidWarning={invalidWarning}/>
-                
                 <LastDonation/>
                 <IllnessForm/>
                 <SubmitDonation/>
@@ -102,13 +94,6 @@ class AddDonations extends Component {
                 <IllnessForm/>
                 <SubmitDonation/>
               </div>)}
-              {/* { this.state.justDonated 
-                ? <div className="notification is-danger" onClick={() => this.setState({ justDonated: false })}>
-                  You're amazing! Thanks for helping us save babies across the Pacific Northwest and beyond
-                </div> 
-                : <button className="button is-primary" type="submit">Submit</button>
-              } */}
-
             </form>
           </div> 
           
@@ -119,15 +104,10 @@ class AddDonations extends Component {
   }
 }
 
-// const DropSites = function ({ dropSites, myDropSite = null, onSubmit }){
 const DropSites = ({ dropSites, myDropSite = null }) => {
-  console.log('dropSites', dropSites);
-  console.log('MydropSite', myDropSite);
-  // console.log('myDropSite', myDropSite);
   const selected = myDropSite ? dropSites.find(dropSite => dropSite._id === myDropSite) : dropSites[0]._id;
   return (
     <div className="select">
-      {/* <select defaultValue={selected._id} name="dropSite" className="button is-outlined is-size-6"> */}
       <select defaultValue={selected._id} name="dropSite" className="button is-outlined is-size-6">
         {dropSites.map(dropSite => {
           return (<option key={dropSite._id} value={dropSite._id}> {dropSite.name} </option>);
@@ -140,7 +120,6 @@ const DropSites = ({ dropSites, myDropSite = null }) => {
 const Quantity = ({ invalidWarning }) => ( 
   <div className="field">
     <div className="subtitle is-6 label">Quantity(in ounces):
-      {/* <input className="input" type="text" id="quantity" placeholder="quantity"/> */}
       <input className="button is-outlined" id="quantity" placeholder="quantity" onSubmit={this.handleChange}/>
       <br/>
       { invalidWarning && <span className="tag is-danger">Quantity must be a number</span> }
@@ -157,7 +136,6 @@ const LastDonation = () => (
     </label>
   </div>
 );
-
 
 const IllnessForm = () => (
   <div>
