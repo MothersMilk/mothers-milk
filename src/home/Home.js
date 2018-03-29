@@ -19,7 +19,7 @@ class Home extends Component {
         <Header/>
         {user ? view :
           <main>
-            <img className="home" alt="baby" src="/images/babyfeet.jpeg"/>
+            <img className="home" alt="baby" src="/images/babyincubator.jpg"/>
           </main>
         }
       </div>
