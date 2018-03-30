@@ -6,7 +6,7 @@ class Volunteer extends Component {
   render() {
     return(
       <div>
-        <DonorView staffView={true}/>
+        <DonorView/>
       </div>
     );
   }

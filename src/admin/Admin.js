@@ -7,10 +7,20 @@ import { signup } from '../home/actions';
 import { addDropSite } from '../dropSites/actions';
 
 class Admin extends Component {
+  constructor() {
+    super();
+    this.state = {
+      mmbIdWarning: false
+    };
+  }
 
   handleSignUp = event => {
     event.preventDefault();
     const { email, password, name, roles, mmbId } = event.target.elements;
+    if (roles.value === 'donor' && !mmbId.value) {
+      this.setState({ mmbIdWarning: true });
+      return;
+    }
     event.persist();
     try {
       this.props.signup(
@@ -21,7 +31,10 @@ class Admin extends Component {
           password: password.value, 
           roles: roles.value
         })
-        .then(() => event.target.reset());
+        .then(() => {
+          event.target.reset();
+          this.setState({ mmbIdWarning: false });
+        });
     }
     catch(err) {
       throw err;
@@ -47,6 +60,8 @@ class Admin extends Component {
   }
 
   render() {
+    const { mmbIdWarning } = this.state;
+
     return(
       <div>
         <br/>
@@ -63,6 +78,7 @@ class Admin extends Component {
         <br/>
         <AllUsers/>
         <div className="need-space"></div>
+        { mmbIdWarning && <span className="tag is-danger">Donors must have an MMB ID</span> }
         <h3><strong>Create New User:</strong></h3>
         <form onSubmit={this.handleSignUp}>
           <label>MMB ID#: <input name="mmbId"/></label>
