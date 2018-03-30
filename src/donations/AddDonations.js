@@ -15,7 +15,6 @@ class AddDonations extends PureComponent {
       donationQuantity: '',
       showMessage: false
     };
-    this.handleMilkDropChange = this.handleMilkDropChange.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,7 +23,7 @@ class AddDonations extends PureComponent {
     }
   }
 
-  handleMilkDropChange(event) {
+  handleMilkDropChange = event => {
     const checked = this.state.isCheckedMilkDrop;
     this.setState({
       isCheckedMilkDrop: !checked
