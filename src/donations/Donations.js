@@ -95,7 +95,7 @@ class Row extends PureComponent {
       <tr>
         <td>{ quantity } oz.</td>
         <td>{ status }</td>
-        <td><button onClick={() => remove(id)}>X</button></td>
+        {status === 'Awaiting Pickup' && <td><button onClick={() => remove(id)}>X</button></td>}
       </tr>
     );
   }
