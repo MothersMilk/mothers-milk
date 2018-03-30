@@ -51,8 +51,8 @@ class AddDonations extends PureComponent {
 
     else {
       const { user, addDonation } = this.props;
-      const { donationQuantity, isChecked } = this.state;
-      dropSite = isChecked ? dropSite : dropSite.value;
+      const { donationQuantity } = this.state;
+      dropSite = typeof dropSite === 'string' ? dropSite : dropSite.value;
 
       addDonation({ 
         quantity: donationQuantity,
@@ -130,7 +130,7 @@ class DropSites extends PureComponent {
 
   render() {
     const { myDropSite, dropSites } = this.props;
-    if (!myDropSite || !dropSites || dropSites.length === 0) return null;
+    // if (!myDropSite || !dropSites || dropSites.length === 0) return null;
     const selected = myDropSite ? dropSites.find(dropSite => dropSite._id === myDropSite) : dropSites[0]._id;
     return (
       <div className="select">
