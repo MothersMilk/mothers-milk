@@ -55,6 +55,7 @@ class Donations extends PureComponent {
                 <tr>
                   <th>Amount</th>
                   <th>Status</th>
+                  <th>DropSite</th>
                 </tr>
               </thead>
               <tbody>
@@ -107,7 +108,7 @@ class Row extends PureComponent {
   handleChange = ({ target: input }) => this.setState({ [input.name]: input.value });
 
   handleSubmit = () => {
-    const donation = this.state;
+    const donation = { ...this.state };
     delete donation.editing;
     this.props.edit(donation);
     this.toggleEdit();
@@ -125,34 +126,31 @@ class Row extends PureComponent {
         <td> 
           {!editing 
             ? quantity + ' .oz'
-            : <input name='quantity' onChange={this.handleChange}/>  
+            : <input name='quantity' defaultValue={quantity} onChange={this.handleChange}/>  
           }        
         </td>
 
-        <td> !editing
-          ? { status }
-          : <DropSites dropSite={dropSite} dropSites={dropSites} handleDropSiteChange={this.handleDropSiteChange}/>
-        </td>
-
         <td>
-          <button onClick={this.handleSubmit}>ggds</button>
+          {status}
         </td>
 
+        <td> 
+          {!editing
+            ? dropSites.find(d => d._id === dropSite._id).name
+            : <DropSites dropSite={dropSite} dropSites={dropSites} handleDropSiteChange={this.handleDropSiteChange}/>
+          }
+        </td>
 
-        {status === 'Awaiting Pickup' && <td><button onClick={() => remove(id)}>X</button></td>}
+        {editing && <td><button onClick={() => remove(id)}>Remove</button></td>}
+        {editing && <td><button onClick={this.handleSubmit}>Apply</button></td>}       
+        {status === 'Awaiting Pickup' && <td><button onClick={this.toggleEdit}>{!editing ? 'Edit' : 'Cancel'}</button></td>}
 
-        <td><button onClick={this.toggleEdit}>Edit</button></td>
       </tr>
     );
   }
 }
 
 class DropSites extends PureComponent {
-  
-  state = {
-    dropSites: []
-  }
-
   render() {
     const { dropSite, dropSites, handleDropSiteChange } = this.props;
     return (
