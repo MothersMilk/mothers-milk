@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { addDonation } from './actions';
-import { checkForToken } from '../home/actions';
+import { checkForToken } from '../home/actions'; 
 
-class AddDonations extends Component {
+class AddDonations extends PureComponent {
 
   constructor(){
     super();
@@ -12,10 +12,16 @@ class AddDonations extends Component {
       isCheckedFedEx: false,
       isCheckedMilkDrop: false,
       invalidWarning: false,
-      showMessage: false,
-      justDonated: false
+      donationQuantity: '',
+      showMessage: false
     };
     this.handleMilkDropChange = this.handleMilkDropChange.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.myDropSite && nextProps.myDropSite !== this.state.myDropSite) {
+      this.setState({ myDropSite : nextProps.myDropSite });
+    }
   }
 
   handleMilkDropChange(event) {
@@ -32,6 +38,10 @@ class AddDonations extends Component {
     });
   }
 
+  handleDonationChange = ({ target }) => {
+    this.setState({ donationQuantity: target.value });
+  }
+
   handleDonate = event => {
     event.preventDefault();
     let { dropSite, quantity, lastDonation } = event.target.elements;
@@ -40,30 +50,32 @@ class AddDonations extends Component {
     }
 
     else {
-      const { user } = this.props;
-      this.setState({ 
+      const { user, addDonation } = this.props;
+      const { donationQuantity, isChecked } = this.state;
+      dropSite = isChecked ? dropSite : dropSite.value;
+
+      addDonation({ 
+        quantity: donationQuantity,
+        dropSite,
+        lastDonation: lastDonation.checked,
+        donor: user._id,
+        status: 'Awaiting Pickup'
+      });
+      
+      this.setState({
+        donationQuantity: '',
+        myDropSite: dropSite, 
         invalidWarning: false,
         showMessage: true,
-        justDonated: true
       });
-      this.props.checkForToken();
-      this.props.addDonation(
-        { 
-          quantity: quantity.value,
-          dropSite: dropSite.value,
-          lastDonation: lastDonation.checked,
-          donor: user._id,
-          status: 'Awaiting Pickup'
-        });
-      document.getElementById('quantity').value = '';
     }
   }
 
   render() {
 
     const message = 'You\'re amazing! Thanks for helping us save babies across the Pacific Northwest and beyond!';
-    const { dropSites } = this.props;
-    const { invalidWarning } = this.state;
+    const { dropSites, checkForToken, myDropSite } = this.props;
+    const { invalidWarning, donationQuantity } = this.state;
     
     return (
       <div className="tile is-parent hero is-info">
@@ -81,9 +93,9 @@ class AddDonations extends Component {
               {(!this.state.isCheckedMilkDrop) && (
                 <label className="subtitle is-6 checkbox is-black"><input type="checkbox" value="FedEx" onChange={this.handleFedExChange}/>&nbsp;Ship milk via FedEx</label>)}
               {(this.state.isCheckedMilkDrop) && (<div className="subtitle is-6 label">Select a drop site location&nbsp;
-                <DropSites dropSites={dropSites}/>
+                <DropSites dropSites={dropSites} checkForToken={checkForToken} myDropSite={myDropSite}/>
                 <div className="need-space"></div>
-                <Quantity invalidWarning={invalidWarning}/>
+                <Quantity donationQuantity={donationQuantity} invalidWarning={invalidWarning} handleDonationChange={this.handleDonationChange}/>
                 <LastDonation/>
                 <IllnessForm/>
                 <SubmitDonation/>
@@ -104,23 +116,38 @@ class AddDonations extends Component {
   }
 }
 
-const DropSites = ({ dropSites, myDropSite = null }) => {
-  const selected = myDropSite ? dropSites.find(dropSite => dropSite._id === myDropSite) : dropSites[0]._id;
-  return (
-    <div className="select">
-      <select defaultValue={selected._id} name="dropSite" className="button is-outlined is-size-6">
-        {dropSites.map(dropSite => {
-          return (<option key={dropSite._id} value={dropSite._id}> {dropSite.name} </option>);
-        })}
-      </select>
-    </div>
-  );
-};
 
-const Quantity = ({ invalidWarning }) => ( 
+class DropSites extends PureComponent {
+  
+  state = {
+    myDropSite : '',
+    dropSites: []
+  }
+  
+  componentDidMount() {
+    this.props.checkForToken();
+  }
+
+  render() {
+    const { myDropSite, dropSites } = this.props;
+    if (!myDropSite || !dropSites || dropSites.length === 0) return null;
+    const selected = myDropSite ? dropSites.find(dropSite => dropSite._id === myDropSite) : dropSites[0]._id;
+    return (
+      <div className="select">
+        <select defaultValue={selected._id} name="dropSite" className="button is-outlined is-size-6">
+          {dropSites.map(dropSite => {
+            return (<option key={dropSite._id} value={dropSite._id}> {dropSite.name} </option>);
+          })}
+        </select>
+      </div>
+    );
+  }
+}
+
+const Quantity = ({ invalidWarning, donationQuantity, handleDonationChange }) => ( 
   <div className="field">
     <div className="subtitle is-6 label">Quantity(in ounces):
-      <input className="button is-outlined" id="quantity" placeholder="quantity" onSubmit={this.handleChange}/>
+      <input className="button is-outlined" id="quantity" placeholder="quantity" value={donationQuantity} onChange={handleDonationChange}/>
       <br/>
       { invalidWarning && <span className="tag is-danger">Quantity must be a number</span> }
       <br/>
@@ -154,6 +181,10 @@ const SubmitDonation = () => (
 );
 
 export default connect(
-  ({ donations, auth, dropSites = [] }) => ({ donations, dropSites, myDropSite: auth.user.myDropSite }),
+  ({ donations, auth, dropSites = [] }) => ({ 
+    donations,
+    dropSites, 
+    myDropSite: auth.user.myDropSite || null 
+  }),
   { addDonation, checkForToken }
 )(AddDonations);

@@ -13,6 +13,7 @@ class DropSites extends Component {
         {dropSite.hours}
       </li>
     ));
+    
     return (
       <div className="tile is-parent">
         <div className="tile is-child box">

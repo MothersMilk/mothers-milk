@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { loadMyDonations } from '../donations/actions';
 import { connect } from 'react-redux';
 import { checkForToken } from '../home/actions';
 import AddDonations from './AddDonations';
 
-class Donations extends Component {
+class Donations extends PureComponent {
 
   constructor(){
     super();
@@ -12,15 +12,13 @@ class Donations extends Component {
       displayMain: false,
       display: false
     };
-    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
-    const { loadMyDonations } = this.props;
-    loadMyDonations();
+    this.props.loadMyDonations();
   }
 
-  handleClick() {
+  handleClick = () => {
     this.setState({ displayMain: !this.state.displayMain });
   }
 
@@ -40,7 +38,7 @@ class Donations extends Component {
             <hr/>
             <button className="button is-light" onClick={() => this.setState({ display: !this.state.display })}>My Donations</button>
             
-            {display && TotalDisplay(donations)}
+            {display && <TotalDisplay donations={donations}/>}
 
             {display && 
             <table className="table is-fullwidth is-striped">
@@ -76,8 +74,7 @@ export default connect(
   { loadMyDonations, checkForToken }
 )(Donations);
 
-class Row extends Component {
-  
+class Row extends PureComponent {
   render() {
     const { quantity, status } = this.props;   
     return(
@@ -89,37 +86,20 @@ class Row extends Component {
   }
 }
 
-// class TotalDisplay extends Component {
-  
-//   render() {
-//     const { donations } = this.props;
+class TotalDisplay extends PureComponent {
+  render() {
+    const { donations } = this.props;
     
-//     const total = donations.reduce((acc = 0, e) => {
-//       return acc + e.quantity;
-//     }, 0);
+    const total = donations.reduce((acc = 0, e) => {
+      return acc + e.quantity;
+    }, 0);
 
-//     function convertToGal(num) {
-//       return (num < 128) ? `${num} Oz.` : `${Math.floor(num/128)} gal. , ${num%128} oz.`;
-//     }
+    function convertToGal(num) {
+      return (num < 128) ? `${num} Oz.` : `${Math.floor(num/128)} gal.  ${num%128} oz.`;
+    }
 
-//     return(
-//       <h1>Estimated Total: {convertToGal(total)}</h1>
-//     );
-//   }
-// }
-
-function TotalDisplay(donations){
-      
-  const total = donations.reduce((acc = 0, e) => {
-    return acc + e.quantity;
-  }, 0);
-  
-  function convertToGal(num) {
-    return (num < 128) ? `${num} Oz.` : `${Math.floor(num/128)} gal. , ${num%128} oz.`;
+    return(
+      <h1>Estimated Total: {convertToGal(total)}</h1>
+    );
   }
-  
-  return(
-    <h1>Estimated Total: {convertToGal(total)}</h1>
-  );
-  
 }
