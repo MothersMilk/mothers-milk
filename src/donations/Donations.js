@@ -33,7 +33,7 @@ class Donations extends PureComponent {
 
   render() {
 
-    const { donations, user } = this.props;
+    const { donations, dropSites, user } = this.props;
     const { displayMain, display } = this.state;
     return (
       <div className="tile is-parent">
@@ -61,7 +61,9 @@ class Donations extends PureComponent {
                 {donations.map((donation) => (
                   <Row 
                     key={donation._id} 
-                    id={donation._id} 
+                    id={donation._id}
+                    dropSite={donation.dropSite}
+                    dropSites={dropSites} 
                     quantity={donation.quantity}
                     remove={id => this.handleRemove(id)}
                     edit={donation => this.handleEdit(donation)} 
@@ -80,7 +82,8 @@ class Donations extends PureComponent {
 function mapStateToProps(state) {
   return {
     donations: state.donations,
-    user: state.auth.user
+    user: state.auth.user,
+    dropSites: state.dropSites
   };
 }
 
@@ -107,26 +110,59 @@ class Row extends PureComponent {
     const donation = this.state;
     delete donation.editing;
     this.props.edit(donation);
+    this.toggleEdit();
+  }
+
+  handleDropSiteChange = ({ target }) => {
+    this.setState({ dropSite: target.value });
   }
 
   render() {
-    const { quantity, status, id, remove } = this.props;   
+    const { quantity, status, id, dropSite, dropSites, remove } = this.props;
+    const { editing } = this.state;   
     return(
       <tr>
-        <td>{ quantity } oz.</td>
-
-        <td>
-          <input name='quantity' onChange={this.handleChange}/>
+        <td> 
+          {!editing 
+            ? quantity + ' .oz'
+            : <input name='quantity' onChange={this.handleChange}/>  
+          }        
         </td>
+
+        <td> !editing
+          ? { status }
+          : <DropSites dropSite={dropSite} dropSites={dropSites} handleDropSiteChange={this.handleDropSiteChange}/>
+        </td>
+
         <td>
           <button onClick={this.handleSubmit}>ggds</button>
         </td>
 
-        <td>{ status }</td>
 
         {status === 'Awaiting Pickup' && <td><button onClick={() => remove(id)}>X</button></td>}
-        <td><button>Edit</button></td>
+
+        <td><button onClick={this.toggleEdit}>Edit</button></td>
       </tr>
+    );
+  }
+}
+
+class DropSites extends PureComponent {
+  
+  state = {
+    dropSites: []
+  }
+
+  render() {
+    const { dropSite, dropSites, handleDropSiteChange } = this.props;
+    return (
+      <div className="select">
+        <select defaultValue={dropSite._id} name="dropSite" className="button is-outlined is-size-6" onChange={handleDropSiteChange}>
+          {dropSites.map(dropSite => {
+            return (<option key={dropSite._id} value={dropSite._id}> {dropSite.name} </option>);
+          })}
+        </select>
+      </div>
     );
   }
 }
