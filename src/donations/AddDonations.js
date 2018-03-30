@@ -75,7 +75,7 @@ class AddDonations extends PureComponent {
 
     const message = 'You\'re amazing! Thanks for helping us save babies across the Pacific Northwest and beyond!';
     const { dropSites, checkForToken, myDropSite } = this.props;
-    const { invalidWarning } = this.state;
+    const { invalidWarning, donationQuantity } = this.state;
     
     return (
       <div className="tile is-parent hero is-info">
@@ -95,7 +95,7 @@ class AddDonations extends PureComponent {
               {(this.state.isCheckedMilkDrop) && (<div className="subtitle is-6 label">Select a drop site location&nbsp;
                 <DropSites dropSites={dropSites} checkForToken={checkForToken} myDropSite={myDropSite}/>
                 <div className="need-space"></div>
-                <Quantity invalidWarning={invalidWarning}/>
+                <Quantity donationQuantity={donationQuantity} invalidWarning={invalidWarning} handleDonationChange={this.handleDonationChange}/>
                 <LastDonation/>
                 <IllnessForm/>
                 <SubmitDonation/>
@@ -144,10 +144,10 @@ class DropSites extends PureComponent {
   }
 }
 
-const Quantity = ({ invalidWarning }) => ( 
+const Quantity = ({ invalidWarning, donationQuantity, handleDonationChange }) => ( 
   <div className="field">
     <div className="subtitle is-6 label">Quantity(in ounces):
-      <input className="button is-outlined" id="quantity" placeholder="quantity" onSubmit={this.handleChange}/>
+      <input className="button is-outlined" id="quantity" placeholder="quantity" value={donationQuantity} onChange={handleDonationChange}/>
       <br/>
       { invalidWarning && <span className="tag is-danger">Quantity must be a number</span> }
       <br/>
