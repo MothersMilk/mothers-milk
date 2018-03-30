@@ -17,7 +17,19 @@ export function loadDonations() {
         type: actions.ADD_DONATION,
         payload: donation
       });
-    }); 
+    });
+    socket.on('updateMyDonation', donation => {
+      dispatch({
+        type: actions.UPDATE_DONATION,
+        payload: donation
+      });
+    });
+    socket.on('removeMyDonation', id => {
+      dispatch({
+        type: actions.DELETE_DONATION,
+        payload: id
+      });
+    });
   };
 }
 
@@ -32,6 +44,24 @@ export function loadMyDonations() {
         type: actions.UPDATE_DONATION,
         payload: donation
       });
+    });
+  };
+}
+
+export function removeMyDonation(id) {
+  return dispatch => {
+    dispatch({
+      type: actions.DELETE_DONATION,
+      payload: donationApi.removeMy(id).then(() => id)
+    });
+  };
+}
+
+export function updateMyDonation(donation) {
+  return dispatch => {
+    dispatch({
+      type: actions.UPDATE_DONATION,
+      payload: donationApi.updateMy(donation)
     });
   };
 }
@@ -66,4 +96,6 @@ export function deleteDonation(id) {
 export function removeAllListeners() {
   socket.off('newDonation');
   socket.off('updatedDonation');
+  socket.off('updateMyDonation');
+  socket.off('removeMyDonation');
 }
