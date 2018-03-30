@@ -23,7 +23,13 @@ export function loadDonations() {
         type: actions.UPDATE_DONATION,
         payload: donation
       });
-    }); 
+    });
+    socket.on('removeMyDonation', id => {
+      dispatch({
+        type: actions.DELETE_DONATION,
+        payload: id
+      });
+    });
   };
 }
 
@@ -91,4 +97,5 @@ export function removeAllListeners() {
   socket.off('newDonation');
   socket.off('updatedDonation');
   socket.off('updateMyDonation');
+  socket.off('removeMyDonation');
 }
