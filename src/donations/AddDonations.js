@@ -13,7 +13,8 @@ class AddDonations extends PureComponent {
       isCheckedMilkDrop: false,
       invalidWarning: false,
       donationQuantity: '',
-      showMessage: false
+      showMessage: false,
+      illnessWarning: false
     };
   }
 
@@ -43,9 +44,15 @@ class AddDonations extends PureComponent {
 
   handleDonate = event => {
     event.preventDefault();
-    let { dropSite, quantity, lastDonation } = event.target.elements;
+    let { dropSite, quantity, lastDonation, illnessForm } = event.target.elements;
     if (!quantity.value || isNaN(quantity.value)) {
       this.setState({ invalidWarning: true });
+      return;
+    }
+
+    else if (illnessForm.checked === false) {
+      this.setState({ illnessWarning: true });
+      return;
     }
 
     else {
@@ -65,16 +72,16 @@ class AddDonations extends PureComponent {
         donationQuantity: '',
         myDropSite: dropSite, 
         invalidWarning: false,
+        illnessWarning: false,
         showMessage: true,
       });
     }
   }
 
   render() {
-
     const message = 'You\'re amazing! Thanks for helping us save babies across the Pacific Northwest and beyond!';
     const { dropSites, checkForToken, myDropSite } = this.props;
-    const { invalidWarning, donationQuantity } = this.state;
+    const { invalidWarning, donationQuantity, illnessWarning } = this.state;
     
     return (
       <div className="tile is-parent hero is-info">
@@ -84,7 +91,7 @@ class AddDonations extends PureComponent {
           <p>{message}</p>
           : 
           (<div>
-            <form onSubmit={event => this.handleDonate(event)}>
+            <form onSubmit={this.handleDonate}>
               {(!this.state.isCheckedFedEx) && (<div className="field">
                 <label className="subtitle is-6 checkbox is-black"><input type="checkbox" value="milkDrop" onChange={this.handleMilkDropChange}/>&nbsp;Drop off at nearest milk drop</label></div>)}       
               {(!this.state.isCheckedMilkDrop) && (!this.state.isCheckedFedEx) &&  
@@ -96,7 +103,7 @@ class AddDonations extends PureComponent {
                 <div className="need-space"></div>
                 <Quantity donationQuantity={donationQuantity} invalidWarning={invalidWarning} handleDonationChange={this.handleDonationChange}/>
                 <LastDonation/>
-                <IllnessForm/>
+                <IllnessForm illnessWarning={illnessWarning}/>
                 <SubmitDonation/>
               </div>)}
               {(this.state.isCheckedFedEx) && (<div className="subtitle is-6">
@@ -118,7 +125,6 @@ class AddDonations extends PureComponent {
 
 
 class DropSites extends PureComponent {
-  
   state = {
     myDropSite : '',
     dropSites: []
@@ -130,7 +136,6 @@ class DropSites extends PureComponent {
 
   render() {
     const { myDropSite, dropSites } = this.props;
-    // if (!myDropSite || !dropSites || dropSites.length === 0) return null;
     const selected = myDropSite ? dropSites.find(dropSite => dropSite._id === myDropSite) : dropSites[0]._id;
     return (
       <div className="select">
@@ -164,8 +169,9 @@ const LastDonation = () => (
   </div>
 );
 
-const IllnessForm = () => (
+const IllnessForm = ({ illnessWarning }) => (
   <div>
+    { illnessWarning && <span className="tag is-danger">Please verify that you have included an illness and travel update</span> }
     <label className="subtitle is-6 checkbox is-black">
       <input name="illnessForm" type="checkbox"/>
       &nbsp;I have included an illness and travel update with my milk donation
