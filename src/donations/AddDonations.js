@@ -104,6 +104,7 @@ class AddDonations extends PureComponent {
                 <Quantity/>
                 <LastDonation/>
                 <IllnessForm/>
+                <ShippingVideo/>
                 <SubmitDonation/>
               </div>)}
             </form>
@@ -170,6 +171,13 @@ const IllnessForm = () => (
       <input name="illnessForm" type="checkbox"/>
       &nbsp;I have included an illness and travel update with my milk donation
     </label>
+  </div>
+);
+
+const ShippingVideo = () => (
+  <div><br/>
+    <a href="https://youtu.be/igc-HqYsXsM" target="_blank" rel="noopener noreferrer">For a video with shipping instructions click here.
+    </a>
   </div>
 );
 
