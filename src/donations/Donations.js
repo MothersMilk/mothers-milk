@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { loadMyDonations } from '../donations/actions';
+import { loadMyDonations, removeMyDonation } from '../donations/actions';
 import { connect } from 'react-redux';
 import { checkForToken } from '../home/actions';
 import AddDonations from './AddDonations';
@@ -21,6 +21,11 @@ class Donations extends PureComponent {
   handleClick = () => {
     this.setState({ displayMain: !this.state.displayMain });
   }
+
+  handleRemove = id => {
+    this.props.removeMyDonation(id);
+  }
+
 
   render() {
 
@@ -50,7 +55,12 @@ class Donations extends PureComponent {
               </thead>
               <tbody>
                 {donations.map((donation) => (
-                  <Row key={donation._id} id={donation._id} quantity={donation.quantity} status={donation.status}/>
+                  <Row 
+                    key={donation._id} 
+                    id={donation._id} 
+                    quantity={donation.quantity}
+                    remove={id => this.handleRemove(id)} 
+                    status={donation.status}/>
                 ))}
               </tbody>
             </table>}
@@ -71,16 +81,21 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { loadMyDonations, checkForToken }
+  { loadMyDonations, removeMyDonation, checkForToken }
 )(Donations);
 
 class Row extends PureComponent {
+  state = {
+    editing: false
+  }
+
   render() {
-    const { quantity, status } = this.props;   
+    const { quantity, status, id, remove } = this.props;   
     return(
       <tr>
         <td>{ quantity } oz.</td>
         <td>{ status }</td>
+        <td><button onClick={() => remove(id)}>X</button></td>
       </tr>
     );
   }

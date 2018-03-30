@@ -10,6 +10,10 @@ export default {
     return request.get('/donations/me');
   },
 
+  removeMy(id) {
+    return request.delete(`/donations/me/${id}`);
+  },
+
   add(donation) {
     return request.post('/donations', donation);
   },
