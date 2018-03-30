@@ -36,7 +36,7 @@ class Donations extends PureComponent {
             <hr/>
             <AddDonations user={user}/>
             <hr/>
-            <button className="button is-light" onClick={() => this.setState({ display: !this.state.display })}>My Donations</button>
+            <button className="button is-light" onClick={() => this.setState({ display: !this.state.display })}>My Donation Total</button>
             
             {display && <TotalDisplay donations={donations}/>}
 
