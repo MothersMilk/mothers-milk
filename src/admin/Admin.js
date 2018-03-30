@@ -54,7 +54,7 @@ class Admin extends Component {
         <div className="need-space"></div>
         <AllDropSites/>
         <h3><strong>Create New DropSite:</strong></h3>
-        <form onSubmit={event => this.handleAddDropSite(event)}>
+        <form onSubmit={this.handleAddDropSite}>
           <label>Name: <input name="name"/></label>
           <label>Address: <input name="address"/></label>
           <label>Hours: <input name="hours"/></label>
@@ -64,7 +64,7 @@ class Admin extends Component {
         <AllUsers/>
         <div className="need-space"></div>
         <h3><strong>Create New User:</strong></h3>
-        <form onSubmit={event => this.handleSignUp(event)}>
+        <form onSubmit={this.handleSignUp}>
           <label>MMB ID#: <input name="mmbId"/></label>
           <label>name: <input name="name"/></label>
           <label>role: 
