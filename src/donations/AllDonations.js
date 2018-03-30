@@ -112,7 +112,7 @@ class AllDonations extends PureComponent {
             <tr>
               <th>Date</th>
               <th>MMB ID#</th>
-              <th>Drop Site</th>
+              <th>Milk Drops</th>
               <th>Quantity</th>
               <th>Status</th>
               <th>Notified</th>
