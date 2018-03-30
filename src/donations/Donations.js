@@ -136,7 +136,7 @@ class Row extends PureComponent {
 
         <td> 
           {!editing
-            ? dropSites.find(d => d._id === dropSite._id).name
+            ? dropSites.find(d => d._id === dropSite._id || d._id === dropSite).name
             : <DropSites dropSite={dropSite} dropSites={dropSites} handleDropSiteChange={this.handleDropSiteChange}/>
           }
         </td>
