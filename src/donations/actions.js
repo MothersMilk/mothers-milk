@@ -17,6 +17,12 @@ export function loadDonations() {
         type: actions.ADD_DONATION,
         payload: donation
       });
+    });
+    socket.on('updateMyDonation', donation => {
+      dispatch({
+        type: actions.UPDATE_DONATION,
+        payload: donation
+      });
     }); 
   };
 }
@@ -84,4 +90,5 @@ export function deleteDonation(id) {
 export function removeAllListeners() {
   socket.off('newDonation');
   socket.off('updatedDonation');
+  socket.off('updateMyDonation');
 }
