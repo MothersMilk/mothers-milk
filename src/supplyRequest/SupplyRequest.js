@@ -31,6 +31,7 @@ class SupplyRequest extends Component {
   handleSupplyRequest = event => {
     event.preventDefault();
     this.setState({ ordering: true });
+
   }
 
   handleOptionChange = changeEvent => {
@@ -44,7 +45,8 @@ class SupplyRequest extends Component {
   }
 
   render(){
-    const inputs = [['0 units', 0], ['1 unit ', 1], ['2 units', 2]];
+    const bagInputs = [['0 units', 0], ['1 unit ', 1], ['2 units', 2]];
+    const boxInputs = [['<100 oz(3000mL)', 0], ['100-250 oz(3000-7500mL)', 1], ['250-500 oz(7500-15000mL)', 2], ['>500 oz(15000mL', 3] ];
     return (
       <div className="tile is-parent">
         <div className="tile is-child box hero is-info">
@@ -54,9 +56,12 @@ class SupplyRequest extends Component {
                 <hr/>
                 <BagCheckbox onChange={this.handleOrderBagsChange}/>
                 {(this.state.isCheckedBags) && (
-                  <BagQuantity inputs={inputs} selectedOption={this.state.selectedBagsOption} onChange={this.handleOptionChange}/>
+                  <BagQuantity inputs={bagInputs} selectedOption={this.state.selectedBagsOption} onChange={this.handleOptionChange}/>
                 )}
                 <BoxCheckbox onChange={this.handleOrderBoxesChange}/>
+                {(this.state.isCheckedBoxes) && (
+                  <BoxQuantity inputs={boxInputs} selectedOption={this.state.selectedBoxesOption} onChange={this.handleOptionChange}/>
+                )}
                 <SubmitSupplyRequest/>
                 { this.state.ordering ? <div><hr/><p>Thank you for your order</p></div> : <p></p>}
               </div>
@@ -75,9 +80,9 @@ const BagCheckbox = ({ onChange }) => (
   </div>
 );
 
-const BagQuantity = ({ inputs, bags, selectedOption, onChange }) => (
-  <div className="subtitle is-6">Milk Collection Units (25 bags per unit):
-    <div id="radio-group">
+const BagQuantity = ({ inputs, selectedOption, onChange }) => (
+  <div className="subtitle is-6">Milk Collection Units <br/>(25 bags per unit):
+    {/* <div id="radio-group">
       {
         inputs.map(([text, value], i) => (
           <div className="control" key={i}>
@@ -92,12 +97,39 @@ const BagQuantity = ({ inputs, bags, selectedOption, onChange }) => (
           </div>
         ))
       }
+    </div> */}
+    <div className="select">
+      <select name="bags" className="button is-outlined is-size-6">
+        {
+          inputs.map(([text, value], i) => {
+            return (<option key={i}
+              value={value}>  
+              { text }
+            </option>);
+          })}
+      </select>
     </div>
   </div>
 );
 
 const BoxCheckbox = ({ onChange }) => (
   <label className="subtitle is-6 checkbox is-black"><input type="checkbox" name="request" value="boxes" onChange={onChange}/>&nbsp;Send Me Shipping Boxes</label>
+);
+
+const BoxQuantity = ({ inputs, selectedOption, onChange }) => (
+  <div className="subtitle is-6">Esimated donation amount:
+    <div className="select">
+      <select name="boxes" className="button is-outlined is-size-6">
+        {
+          inputs.map(([text, value], i) => {
+            return (<option key={i}
+              value={value}>  
+              { text }
+            </option>);
+          })}
+      </select>
+    </div>
+  </div>
 );
 
 const SubmitSupplyRequest = () => (
