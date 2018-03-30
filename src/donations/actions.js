@@ -45,6 +45,15 @@ export function removeMyDonation(id) {
   };
 }
 
+export function updateMyDonation(donation) {
+  return dispatch => {
+    dispatch({
+      type: actions.UPDATE_DONATION,
+      payload: donationApi.updateMy(donation)
+    });
+  };
+}
+
 export function addDonation(donation) {
   return dispatch => {
     dispatch({

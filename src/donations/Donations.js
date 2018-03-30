@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { loadMyDonations, removeMyDonation } from '../donations/actions';
+import { loadMyDonations, removeMyDonation, updateMyDonation } from '../donations/actions';
 import { connect } from 'react-redux';
 import { checkForToken } from '../home/actions';
 import AddDonations from './AddDonations';
@@ -24,6 +24,10 @@ class Donations extends PureComponent {
 
   handleRemove = id => {
     this.props.removeMyDonation(id);
+  }
+
+  handleEdit = donation => {
+    this.props.updateMyDonation(donation);
   }
 
 
@@ -59,7 +63,8 @@ class Donations extends PureComponent {
                     key={donation._id} 
                     id={donation._id} 
                     quantity={donation.quantity}
-                    remove={id => this.handleRemove(id)} 
+                    remove={id => this.handleRemove(id)}
+                    edit={donation => this.handleEdit(donation)} 
                     status={donation.status}/>
                 ))}
               </tbody>
@@ -81,12 +86,27 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { loadMyDonations, removeMyDonation, checkForToken }
+  { loadMyDonations, removeMyDonation, updateMyDonation, checkForToken }
 )(Donations);
 
 class Row extends PureComponent {
   state = {
-    editing: false
+    editing: false,
+    _id: this.props.id
+  }
+
+  toggleEdit = () => {
+    this.setState(prev => {
+      return { editing : !prev.editing };
+    });
+  }
+
+  handleChange = ({ target: input }) => this.setState({ [input.name]: input.value });
+
+  handleSubmit = () => {
+    const donation = this.state;
+    delete donation.editing;
+    this.props.edit(donation);
   }
 
   render() {
@@ -94,8 +114,18 @@ class Row extends PureComponent {
     return(
       <tr>
         <td>{ quantity } oz.</td>
+
+        <td>
+          <input name='quantity' onChange={this.handleChange}/>
+        </td>
+        <td>
+          <button onClick={this.handleSubmit}>ggds</button>
+        </td>
+
         <td>{ status }</td>
+
         {status === 'Awaiting Pickup' && <td><button onClick={() => remove(id)}>X</button></td>}
+        <td><button>Edit</button></td>
       </tr>
     );
   }
