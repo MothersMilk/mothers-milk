@@ -4,15 +4,17 @@ import DonorView from '../donor/DonorView';
 
 class Volunteer extends Component {
   render() {
+    const { volunteerDropSite } = this.props;
+
     return(
       <div>
-        <DonorView/>
+        <DonorView volunteerDropSite={volunteerDropSite}/>
       </div>
     );
   }
 }
  
 export default connect(
-  null,
+  ({ auth }) => ({ volunteerDropSite : auth.user.myDropSite }),
   null
 )(Volunteer);

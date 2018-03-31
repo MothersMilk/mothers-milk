@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import DonorView from '../donor/DonorView';
 import Admin from '../admin/Admin';
 import Staff from '../staff/Staff';
+import Volunteer from '../volunteer/Volunteer';
 
 class Home extends Component {
   
@@ -11,8 +12,12 @@ class Home extends Component {
     const { user } = this.props;
     const isAdmin = user ? user.roles.includes('admin') : false;
     const isStaff = user ? user.roles.includes('staff') : false;
-    let view = isAdmin ? <Admin/> : <DonorView/> ;
-    view = isStaff ? <Staff/> : view;
+    const isVolunteer = user && user.roles.includes('volunteer');
+
+    let view = <DonorView/>;
+    if (isAdmin) view = <Admin/>;
+    if (isStaff) view = <Staff/>;
+    if (isVolunteer) view = <Volunteer/>;
 
     return(
       <div>
