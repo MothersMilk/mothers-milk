@@ -117,7 +117,7 @@ class Row extends PureComponent {
 
         <td> 
           {!editing 
-            ? quantity + ' .oz'
+            ? quantity + ' oz.'
             : <input name='quantity' defaultValue={quantity} onChange={this.handleChange}/>  
           }        
         </td>
@@ -138,7 +138,6 @@ class Row extends PureComponent {
         {status === 'Awaiting Pickup' && <td><button onClick={this.toggleEdit}>{!editing ? 'Edit' : 'Cancel'}</button></td>}
       
       </tr>
-
     );
   }
 }
