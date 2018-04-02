@@ -116,7 +116,10 @@ class Row extends PureComponent {
         </td>
 
         <td>
-          {mmbId}
+          {!editing
+            ? mmbId
+            : <input name='mmbId' defaultValue={mmbId} onChange={this.handleChange}/> 
+          }
         </td>
 
         {editing && <td><button onClick={() => remove(id)}>Remove</button></td>}
