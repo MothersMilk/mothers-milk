@@ -8,9 +8,11 @@ class AddDonations extends PureComponent {
   constructor() {
     super();
     this.state = {
-      invalidWarning: false,
+      invalidQtyWarning: false,
+      invalidMmbWarning: false,
       donationQuantity: '',
       showMessage: false,
+      mmbId: ''
     };
   }
 
@@ -18,20 +20,25 @@ class AddDonations extends PureComponent {
     this.setState({ donationQuantity: target.value });
   }
 
+  handleMmbChange = ({ target }) => {
+    this.setState({ mmbId: target.value });
+  }
+
   handleDonate = event => {
     event.preventDefault();
     let { quantity } = event.target.elements;
     if (!quantity.value || isNaN(quantity.value)) {
-      this.setState({ invalidWarning: true });
+      this.setState({ invalidQtyWarning: true });
       return;
     }
 
     else {
       const { user, addDonation } = this.props;
-      const { donationQuantity } = this.state;
+      const { donationQuantity, mmbId } = this.state;
 
       addDonation({ 
         quantity: donationQuantity,
+        mmbId,
         dropSite: user.myDropSite,
         donor: user._id,
         status: 'Awaiting Pickup'
@@ -39,7 +46,7 @@ class AddDonations extends PureComponent {
       
       this.setState({
         donationQuantity: '',
-        invalidWarning: false,
+        invalidQtyWarning: false,
         showMessage: true,
       });
     }
@@ -47,7 +54,7 @@ class AddDonations extends PureComponent {
 
   render() {
     const message = 'Donation added. thank u for using the system :) TODO: change message';
-    const { invalidWarning, donationQuantity } = this.state;
+    const { invalidQtyWarning, donationQuantity } = this.state;
     
     return (
       <div className="tile is-parent hero is-info">
@@ -57,7 +64,8 @@ class AddDonations extends PureComponent {
           : (<div>
             <form onSubmit={this.handleDonate}>
               <div className="need-space"></div>
-              <Quantity donationQuantity={donationQuantity} invalidWarning={invalidWarning} handleDonationChange={this.handleDonationChange}/>
+              <Quantity donationQuantity={donationQuantity} invalidQtyWarning={invalidQtyWarning} handleDonationChange={this.handleDonationChange}/>
+              <MmbId handleMmbChange={this.handleMmbChange}/>
               <SubmitDonation/>
             </form>
           </div>)}
@@ -67,17 +75,27 @@ class AddDonations extends PureComponent {
   }
 }
 
-const Quantity = ({ invalidWarning, donationQuantity, handleDonationChange }) => ( 
+const MmbId = ({ handleMmbChange, invalidMmbWarning }) => (
   <div className="field">
-    <div className="subtitle is-6 label">Quantity(in ounces):
-      <input className="button is-outlined" id="quantity" placeholder="quantity" value={donationQuantity} onChange={handleDonationChange}/>
+    <div className="subtitle is-6 label">MMB ID:
+      <input className="button is-outlined" id="mmbId" placeholder="MMB#" onChange={handleMmbChange}/>
       <br/>
-      { invalidWarning && <span className="tag is-danger">Quantity must be a number</span> }
+      { invalidMmbWarning && <span className="tag is-danger">Invalid mmb id</span> }
       <br/>
     </div>
   </div>
 );
 
+const Quantity = ({ invalidQtyWarning, donationQuantity, handleDonationChange }) => ( 
+  <div className="field">
+    <div className="subtitle is-6 label">Quantity(in ounces):
+      <input className="button is-outlined" id="quantity" placeholder="quantity" value={donationQuantity} onChange={handleDonationChange}/>
+      <br/>
+      { invalidQtyWarning && <span className="tag is-danger">Quantity must be a number</span> }
+      <br/>
+    </div>
+  </div>
+);
 
 const SubmitDonation = () => (
   <div>

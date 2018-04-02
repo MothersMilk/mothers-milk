@@ -43,11 +43,11 @@ class Donations extends PureComponent {
                 </tr>
               </thead>
               <tbody>
-                {donations.map((donation) => (
+                {donations.map(donation => (
                   <Row 
-                    key={donation._id} 
-                    id={donation._id}
-                    dropSite={donation.dropSite}
+                    key={donation._id}
+                    id={donation._id} 
+                    mmbId={donation.mmbId}
                     quantity={donation.quantity}
                     remove={id => this.handleRemove(id)}
                     edit={donation => this.handleEdit(donation)} 
@@ -100,7 +100,7 @@ class Row extends PureComponent {
   }
 
   render() {
-    const { quantity, status, id, remove } = this.props;
+    const { quantity, status, id, remove, mmbId } = this.props;
     const { editing } = this.state;   
     return(
       <tr>
@@ -116,13 +116,15 @@ class Row extends PureComponent {
         </td>
 
         <td>
+          {mmbId}
         </td>
 
         {editing && <td><button onClick={() => remove(id)}>Remove</button></td>}
         {editing && <td><button onClick={this.handleSubmit}>Apply</button></td>}       
         {status === 'Awaiting Pickup' && <td><button onClick={this.toggleEdit}>{!editing ? 'Edit' : 'Cancel'}</button></td>}
-
+      
       </tr>
+
     );
   }
 }
