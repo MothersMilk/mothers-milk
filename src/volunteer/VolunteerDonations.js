@@ -31,7 +31,6 @@ class Donations extends PureComponent {
       <div className="tile is-parent">
         <div className="tile is-child box hero is-info">
           <div>
-            <hr/>
             <AddDonations user={user}/>
             <hr/>
             <table className="table is-fullwidth is-striped">

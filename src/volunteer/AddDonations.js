@@ -38,7 +38,6 @@ class AddDonations extends PureComponent {
       return;
     }
 
-
     else {
       const { user, addDonation } = this.props;
       const { donationQuantity, mmbId } = this.state;
