@@ -24,7 +24,6 @@ class Donations extends PureComponent {
 
 
   render() {
-
     const { donations, user } = this.props;
     
     return (
@@ -107,6 +106,7 @@ class Row extends PureComponent {
 
   render() {
     const { quantity, status, id, remove, mmbId, date } = this.props;
+
     const { editing } = this.state;   
     return(
       <tr>
