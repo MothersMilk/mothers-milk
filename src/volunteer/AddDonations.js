@@ -27,14 +27,14 @@ class AddDonations extends PureComponent {
     event.preventDefault();
     let { donationQuantity, mmbId } = this.state;
     if (!donationQuantity|| isNaN(donationQuantity)) {
-      this.setState({ invalidQtyWarning: true });
+      this.setState({ invalidQtyWarning: true, successMessage: false });
       return;
     }
 
     else this.setState({ invalidQtyWarning: false });
 
     if (!mmbId || isNaN(mmbId) || mmbId.length !== 4) {
-      this.setState({ invalidMmbWarning: true });
+      this.setState({ invalidMmbWarning: true, successMessage: false });
       return;
     }
 
@@ -55,12 +55,14 @@ class AddDonations extends PureComponent {
         donationQuantity: '',
         mmbId: '',
         invalidQtyWarning: false,
+        invalidMmbWarning: false,
+        successMessage: true
       });
     }
   }
 
   render() {
-    const { invalidQtyWarning, donationQuantity, invalidMmbWarning, mmbId } = this.state;
+    const { invalidQtyWarning, donationQuantity, invalidMmbWarning, mmbId, successMessage } = this.state;
     
     return (
       <div className="tile is-parent hero is-info">
@@ -71,6 +73,7 @@ class AddDonations extends PureComponent {
             <Quantity donationQuantity={donationQuantity} invalidQtyWarning={invalidQtyWarning} handleDonationChange={this.handleDonationChange}/>
             <MmbId mmbId={mmbId} invalidMmbWarning={invalidMmbWarning} handleMmbChange={this.handleMmbChange}/>
             <SubmitDonation/>
+            {successMessage && <span className="tag is-danger">Donation Added Successfully :)</span>}
           </form>
         </div>
 
