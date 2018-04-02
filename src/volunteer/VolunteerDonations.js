@@ -37,8 +37,8 @@ class Donations extends PureComponent {
               <thead>
                 <tr>
                   <th>Amount</th>
-                  <th>Status</th>
                   <th>ID</th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -89,6 +89,11 @@ class Row extends PureComponent {
 
   handleSubmit = () => {
     const donation = { ...this.state };
+    if (donation.mmbId.length !== 4) {
+      this.toggleEdit();
+      return;
+    }
+    
     delete donation.editing;
     this.props.edit(donation);
     this.toggleEdit();
@@ -111,14 +116,14 @@ class Row extends PureComponent {
         </td>
 
         <td>
-          {status}
-        </td>
-
-        <td>
           {!editing
             ? mmbId
             : <input name='mmbId' defaultValue={mmbId} onChange={this.handleChange}/> 
           }
+        </td>
+
+        <td>
+          {status}
         </td>
 
         {editing && <td><button onClick={() => remove(id)}>Remove</button></td>}
