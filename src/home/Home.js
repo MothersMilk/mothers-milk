@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import DonorView from '../donor/DonorView';
 import Admin from '../admin/Admin';
 import Staff from '../staff/Staff';
-import Volunteer from '../volunteer/Volunteer';
+import VolunteerView from '../volunteer/VolunteerView';
 
 class Home extends Component {
   
@@ -17,7 +17,7 @@ class Home extends Component {
     let view = <DonorView/>;
     if (isAdmin) view = <Admin/>;
     if (isStaff) view = <Staff/>;
-    if (isVolunteer) view = <Volunteer/>;
+    if (isVolunteer) view = <VolunteerView/>;
 
     return(
       <div>
