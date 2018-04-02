@@ -26,9 +26,14 @@ class AddDonations extends PureComponent {
 
   handleDonate = event => {
     event.preventDefault();
-    let { quantity } = event.target.elements;
-    if (!quantity.value || isNaN(quantity.value)) {
+    let { donationQuantity, mmbId } = this.state;
+    if (!donationQuantity|| isNaN(donationQuantity)) {
       this.setState({ invalidQtyWarning: true });
+      return;
+    }
+
+    if (!mmbId || isNaN(mmbId) || mmbId.length !== 4) {
+      this.setState({ invalidMmbWarning: true });
       return;
     }
 
