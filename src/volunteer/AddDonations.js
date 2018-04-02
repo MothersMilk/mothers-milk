@@ -11,7 +11,6 @@ class AddDonations extends PureComponent {
       invalidQtyWarning: false,
       invalidMmbWarning: false,
       donationQuantity: '',
-      showMessage: false,
       mmbId: ''
     };
   }
@@ -32,10 +31,13 @@ class AddDonations extends PureComponent {
       return;
     }
 
+    else this.setState({ invalidQtyWarning: false });
+
     if (!mmbId || isNaN(mmbId) || mmbId.length !== 4) {
       this.setState({ invalidMmbWarning: true });
       return;
     }
+
 
     else {
       const { user, addDonation } = this.props;
@@ -51,39 +53,36 @@ class AddDonations extends PureComponent {
       
       this.setState({
         donationQuantity: '',
+        mmbId: '',
         invalidQtyWarning: false,
-        showMessage: true,
       });
     }
   }
 
   render() {
-    const message = 'Donation added. thank u for using the system :) TODO: change message';
-    const { invalidQtyWarning, donationQuantity } = this.state;
+    const { invalidQtyWarning, donationQuantity, invalidMmbWarning, mmbId } = this.state;
     
     return (
       <div className="tile is-parent hero is-info">
 
-        {(this.state.showMessage) 
-          ? <p>{message}</p>
-          : (<div>
-            <form onSubmit={this.handleDonate}>
-              <div className="need-space"></div>
-              <Quantity donationQuantity={donationQuantity} invalidQtyWarning={invalidQtyWarning} handleDonationChange={this.handleDonationChange}/>
-              <MmbId handleMmbChange={this.handleMmbChange}/>
-              <SubmitDonation/>
-            </form>
-          </div>)}
+        <div>
+          <form onSubmit={this.handleDonate}>
+            <div className="need-space"></div>
+            <Quantity donationQuantity={donationQuantity} invalidQtyWarning={invalidQtyWarning} handleDonationChange={this.handleDonationChange}/>
+            <MmbId mmbId={mmbId} invalidMmbWarning={invalidMmbWarning} handleMmbChange={this.handleMmbChange}/>
+            <SubmitDonation/>
+          </form>
+        </div>
 
       </div>
     );
   }
 }
 
-const MmbId = ({ handleMmbChange, invalidMmbWarning }) => (
+const MmbId = ({ mmbId, handleMmbChange, invalidMmbWarning }) => (
   <div className="field">
     <div className="subtitle is-6 label">MMB ID:
-      <input className="button is-outlined" id="mmbId" placeholder="MMB#" onChange={handleMmbChange}/>
+      <input className="button is-outlined" id="mmbId" value={mmbId} placeholder="MMB#" onChange={handleMmbChange}/>
       <br/>
       { invalidMmbWarning && <span className="tag is-danger">Invalid mmb id</span> }
       <br/>
