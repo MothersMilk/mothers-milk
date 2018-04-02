@@ -72,7 +72,7 @@ class AddDonations extends PureComponent {
             <Quantity donationQuantity={donationQuantity} invalidQtyWarning={invalidQtyWarning} handleDonationChange={this.handleDonationChange}/>
             <MmbId mmbId={mmbId} invalidMmbWarning={invalidMmbWarning} handleMmbChange={this.handleMmbChange}/>
             <SubmitDonation/>
-            {successMessage && <span className="tag is-danger">Donation Added Successfully :)</span>}
+            {successMessage && <span className="tag is-danger">Donation Added Successfully</span>}
           </form>
         </div>
 
@@ -83,7 +83,7 @@ class AddDonations extends PureComponent {
 
 const MmbId = ({ mmbId, handleMmbChange, invalidMmbWarning }) => (
   <div className="field">
-    <div className="subtitle is-6 label">MMB ID:
+    <div className="subtitle is-6 label">Donor's MMB ID:
       <input className="button is-outlined" id="mmbId" value={mmbId} placeholder="MMB#" onChange={handleMmbChange}/>
       <br/>
       { invalidMmbWarning && <span className="tag is-danger">Invalid mmb id</span> }

@@ -36,6 +36,7 @@ class Donations extends PureComponent {
             <table className="table is-fullwidth is-striped">
               <thead>
                 <tr>
+                  <th>Date</th>
                   <th>Amount</th>
                   <th>ID</th>
                   <th>Status</th>
@@ -47,6 +48,7 @@ class Donations extends PureComponent {
                     key={donation._id}
                     id={donation._id} 
                     mmbId={donation.mmbId}
+                    date={donation.date}
                     quantity={donation.quantity}
                     remove={id => this.handleRemove(id)}
                     edit={donation => this.handleEdit(donation)} 
@@ -93,7 +95,7 @@ class Row extends PureComponent {
       this.toggleEdit();
       return;
     }
-    
+
     delete donation.editing;
     this.props.edit(donation);
     this.toggleEdit();
@@ -104,10 +106,15 @@ class Row extends PureComponent {
   }
 
   render() {
-    const { quantity, status, id, remove, mmbId } = this.props;
+    const { quantity, status, id, remove, mmbId, date } = this.props;
     const { editing } = this.state;   
     return(
       <tr>
+
+        <td>
+          {new Date(date).toLocaleString()}
+        </td>
+
         <td> 
           {!editing 
             ? quantity + ' .oz'
