@@ -6,12 +6,16 @@ export default {
     return request.get(path);
   },
 
+  getMy() {
+    return request.get('/supplies/me');
+  },
+
   add(supply) {
     return request.post('/supplies', supply);
   },
 
   update(supply) {
-    return request.put(`/supplies/${supply._id}`, supply);
+    return request.update(`/supplies/${supply._id}`, supply);
   },
 
   remove(id) {
