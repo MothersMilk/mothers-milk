@@ -5,6 +5,7 @@ import AllDropSites from '../dropSites/AllDropSites';
 import AllUsers from '../users/AllUsers';
 import { signup } from '../home/actions';
 import { addDropSite } from '../dropSites/actions';
+import AllSupplyRequests from '../supplyRequest/AllSupplyRequests';
 
 class Admin extends Component {
 
@@ -52,6 +53,7 @@ class Admin extends Component {
         <br/>
         <AllDonations/>
         <div className="need-space"></div>
+        <AllSupplyRequests/>
         <AllDropSites/>
         <h3><strong>Create New DropSite:</strong></h3>
         <form onSubmit={event => this.handleAddDropSite(event)}>
