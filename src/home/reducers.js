@@ -1,7 +1,7 @@
 import * as actions from './constants';
 import { combineReducers } from 'redux';
 
-export default (state = {}, action) => combineReducers({ user, token, error, checkedToken })(state, action);
+export default (state = {}, action) => combineReducers({ user, token, error })(state, action);
 
 export function user(state = null, { type, payload }) {
   switch(type) {
@@ -31,16 +31,6 @@ export function error(state = null, { type, payload }) {
     case actions.LOGOUT:
     case actions.FETCHED_USER:
       return null;
-    default:
-      return state;
-  }
-}
-
-export function checkedToken(state = null, { type, payload }) {
-  switch(type) {
-    case actions.CHECKED_TOKEN:
-    case actions.FETCHED_USER:
-      return true;
     default:
       return state;
   }
