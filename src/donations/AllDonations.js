@@ -39,9 +39,7 @@ class AllDonations extends PureComponent {
       const { _id: id, dropSite, quantity, status, date, mmbId, notified, lastDonation } = item;
       const editing = this.state.editing === id ? true : false;
       const statusOptions = ['Awaiting Pickup', 'Received', 'At Milk Drop', 'Shipped to Milk Bank'];
-      const currentStatusIndex = statusOptions.findIndex(status => status === item.status);
-      const options = statusOptions.map((status, i) => i === currentStatusIndex ? <option key={i} value={status}>{status}</option> : <option key={i} value={status}>{status}</option>);
-      
+      const options = statusOptions.map((status, i) => <option key={i} value={status}>{status}</option>);
 
       return (
         <tr className={editing ? 'animated fadeIn' : null} key={id}>
@@ -56,18 +54,18 @@ class AllDonations extends PureComponent {
           </td>
           <td>
             { editing ?
-              <input className="input is-small" type="text" defaultValue={quantity} name="quantity" onChange={event => this.handleChange(event)}/> :
+              <input className="input is-small" type="text" defaultValue={quantity} name="quantity" onChange={this.handleChange}/> :
               quantity
             }
           </td>
           <td>
-            { editing ? 
-              <div className="select is-small is-primary">
-                <select type="text" name="status" onChange={event => this.handleChange(event)}>
+            { editing 
+              ? <div className="select is-small is-primary">
+                <select type="text" name="status" defaultValue={status} onChange={this.handleChange}>
                   {options}
                 </select>
-              </div> :
-              status
+              </div> 
+              : status
             }
           </td>
           { !staffView && editing ? <td><button className="button is-small" type="button" value="X" onClick={() => this.handleDelete(id)}>Remove donation</button></td> : null }
