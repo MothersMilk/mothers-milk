@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { requestSupply } from './actions';
+import { loadSupplyRequests, addSupplyRequest } from './actions';
+// import AllSupplyRequests from './AllSupplyRequests'; 
 
 class SupplyRequest extends Component {
   constructor() {
@@ -10,7 +11,8 @@ class SupplyRequest extends Component {
       ordering: false,
       isCheckedBags: false,
       isCheckedBoxes: false,
-      selectedBagsOption: 0
+      bags: 0,
+      boxes: 0
     };
   }
 
@@ -31,12 +33,26 @@ class SupplyRequest extends Component {
   handleSupplyRequest = event => {
     event.preventDefault();
     this.setState({ ordering: true });
+    const { user, addSupplyRequest } = this.props;
+
+    addSupplyRequest({ 
+      donor: user._id,
+      bags: this.state.bags,
+      boxes: this.state.boxes,
+      status: 'Requested'
+    });
 
   }
 
-  handleOptionChange = changeEvent => {
+  handleBagNumberChange = ({ target }) => {
     this.setState({
-      selectedBagsOption: parseInt(changeEvent.target.value, 10)
+      bags: parseInt(target.value, 10)
+    });
+  }
+
+  handleBoxNumberChange = ({ target }) => {
+    this.setState({
+      boxes: target.value
     });
   }
 
@@ -56,11 +72,11 @@ class SupplyRequest extends Component {
                 <hr/>
                 <BagCheckbox onChange={this.handleOrderBagsChange}/>
                 {(this.state.isCheckedBags) && (
-                  <BagQuantity inputs={bagInputs} selectedOption={this.state.selectedBagsOption} onChange={this.handleOptionChange}/>
+                  <BagQuantity inputs={bagInputs} selectedOption={this.state.selectedBagsOption} onChange={this.handleBagNumberChange}/>
                 )}
                 <BoxCheckbox onChange={this.handleOrderBoxesChange}/>
                 {(this.state.isCheckedBoxes) && (
-                  <BoxQuantity inputs={boxInputs} selectedOption={this.state.selectedBoxesOption} onChange={this.handleOptionChange}/>
+                  <BoxQuantity inputs={boxInputs} selectedOption={this.state.selectedBoxesOption} onChange={this.handleBoxNumberChange}/>
                 )}
                 <SubmitSupplyRequest/>
                 { this.state.ordering ? <div><hr/><p>Thank you for your order</p></div> : <p></p>}
@@ -82,24 +98,8 @@ const BagCheckbox = ({ onChange }) => (
 
 const BagQuantity = ({ inputs, selectedOption, onChange }) => (
   <div className="subtitle is-6">Milk Collection Units <br/>(25 bags per unit):
-    {/* <div id="radio-group">
-      {
-        inputs.map(([text, value], i) => (
-          <div className="control" key={i}>
-            <label className="radio">
-              <input type="radio" className="bag-quantity"
-                onChange={onChange} 
-                value={value} 
-                checked={selectedOption === value} 
-              /> 
-              &nbsp;{ text }
-            </label>
-          </div>
-        ))
-      }
-    </div> */}
     <div className="select">
-      <select name="bags" className="button is-outlined is-size-6">
+      <select name="bags" onChange={onChange} className="button is-outlined is-size-6">
         {
           inputs.map(([text, value], i) => {
             return (<option key={i}
@@ -119,7 +119,7 @@ const BoxCheckbox = ({ onChange }) => (
 const BoxQuantity = ({ inputs, selectedOption, onChange }) => (
   <div className="subtitle is-6">Esimated donation amount:
     <div className="select">
-      <select name="boxes" className="button is-outlined is-size-6">
+      <select name="boxes" onChange={onChange} className="button is-outlined is-size-6">
         {
           inputs.map(([text, value], i) => {
             return (<option key={i}
@@ -141,5 +141,5 @@ const SubmitSupplyRequest = () => (
 
 export default connect(
   ({ auth }) => ({ user: auth.user }),
-  { requestSupply }
+  { loadSupplyRequests, addSupplyRequest }
 )(SupplyRequest);

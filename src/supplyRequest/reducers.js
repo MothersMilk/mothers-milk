@@ -4,7 +4,7 @@ export default function supplies(state = [], { type, payload }) {
   switch(type) {
     case actions.LOAD_SUPPLIES:
       return payload;
-    case actions.REQUEST_SUPPLIES:
+    case actions.ADD_SUPPLIES:
       return [
         ...state,
         payload

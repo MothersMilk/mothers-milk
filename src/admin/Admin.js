@@ -5,6 +5,7 @@ import AllDropSites from '../dropSites/AllDropSites';
 import AllUsers from '../users/AllUsers';
 import { signup } from '../home/actions';
 import { addDropSite } from '../dropSites/actions';
+import AllSupplyRequests from '../supplyRequest/AllSupplyRequests';
 
 class Admin extends PureComponent {
   constructor() {
@@ -74,6 +75,7 @@ class Admin extends PureComponent {
         <br/>
         <AllDonations/>
         <div className="need-space"></div>
+        <AllSupplyRequests/>
         <AllDropSites/>
         <h3><strong>Create New DropSite:</strong></h3>
         <form onSubmit={this.handleAddDropSite}>

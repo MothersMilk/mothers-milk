@@ -79,7 +79,7 @@ class AllUsers extends PureComponent {
       }): null;
   
       return(
-        <div className="column is-6 is-offset-3">
+        <div className="column is-6 is-offset-1">
           <h3 className="title is-4">Users</h3>
           <table className="table is-striped is-hoverable">
             <thead>
